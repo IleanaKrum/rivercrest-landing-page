@@ -80,6 +80,79 @@ export const appRouter = router({
         db.updateStudentProgress(input.enrollmentId, input.sessionId, input.completed)
       ),
   }),
+
+  admin: router({
+    getAllApplications: protectedProcedure.query(async ({ ctx }) => {
+      if (ctx.user.role !== 'admin') throw new Error('Unauthorized');
+      return db.getAllApplications();
+    }),
+
+    updateApplicationStatus: protectedProcedure
+      .input(z.object({
+        applicationId: z.number(),
+        status: z.enum(['pending', 'approved', 'rejected']),
+      }))
+      .mutation(async ({ input, ctx }) => {
+        if (ctx.user.role !== 'admin') throw new Error('Unauthorized');
+        return db.updateApplicationStatus(input.applicationId, input.status);
+      }),
+
+    getAllCourses: protectedProcedure.query(async ({ ctx }) => {
+      if (ctx.user.role !== 'admin') throw new Error('Unauthorized');
+      return db.getAllCourses();
+    }),
+
+    createCourse: protectedProcedure
+      .input(z.object({
+        trackId: z.number(),
+        title: z.string(),
+        description: z.string().optional(),
+        syllabus: z.string().optional(),
+        sessionsCount: z.number().optional(),
+        commitmentHours: z.number().optional(),
+      }))
+      .mutation(async ({ input, ctx }) => {
+        if (ctx.user.role !== 'admin') throw new Error('Unauthorized');
+        return db.createCourse(input);
+      }),
+
+    updateCourse: protectedProcedure
+      .input(z.object({
+        courseId: z.number(),
+        title: z.string().optional(),
+        description: z.string().optional(),
+        syllabus: z.string().optional(),
+        sessionsCount: z.number().optional(),
+        commitmentHours: z.number().optional(),
+      }))
+      .mutation(async ({ input, ctx }) => {
+        if (ctx.user.role !== 'admin') throw new Error('Unauthorized');
+        const { courseId, ...updates } = input;
+        return db.updateCourse(courseId, updates);
+      }),
+
+    deleteCourse: protectedProcedure
+      .input(z.object({ courseId: z.number() }))
+      .mutation(async ({ input, ctx }) => {
+        if (ctx.user.role !== 'admin') throw new Error('Unauthorized');
+        return db.deleteCourse(input.courseId);
+      }),
+
+    getAllEnrollments: protectedProcedure.query(async ({ ctx }) => {
+      if (ctx.user.role !== 'admin') throw new Error('Unauthorized');
+      return db.getAllEnrollments();
+    }),
+
+    updateEnrollmentStatus: protectedProcedure
+      .input(z.object({
+        enrollmentId: z.number(),
+        status: z.enum(['enrolled', 'in_progress', 'completed']),
+      }))
+      .mutation(async ({ input, ctx }) => {
+        if (ctx.user.role !== 'admin') throw new Error('Unauthorized');
+        return db.updateEnrollmentStatus(input.enrollmentId, input.status);
+      }),
+  }),
 });
 
 export type AppRouter = typeof appRouter;

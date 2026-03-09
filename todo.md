@@ -48,3 +48,30 @@
   - [x] Protect student pages with login requirement
   - [x] Link applications to user accounts
   - [x] Test login flows
+
+## In Progress - Admin Dashboard
+- [ ] Add admin database queries and tRPC procedures
+  - [ ] Get all applications with filtering
+  - [ ] Update application status
+  - [ ] Get all courses and sessions
+  - [ ] Create/update/delete courses
+  - [ ] Get all enrollments and progress
+- [ ] Build admin dashboard layout
+  - [ ] Create admin navigation
+  - [ ] Build dashboard overview
+  - [ ] Add role-based access control
+- [ ] Application management section
+  - [ ] List all applications
+  - [ ] Review application details
+  - [ ] Approve/reject applications
+  - [ ] Filter by status and track
+- [ ] Course management section
+  - [ ] List all courses
+  - [ ] Create new courses
+  - [ ] Edit course details
+  - [ ] Manage course sessions
+- [ ] Student progress tracking
+  - [ ] View all students
+  - [ ] Track enrollment status
+  - [ ] Monitor session completion
+  - [ ] Generate progress reports

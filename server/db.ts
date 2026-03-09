@@ -1,6 +1,6 @@
 import { eq, and } from "drizzle-orm";
 import { drizzle } from "drizzle-orm/mysql2";
-import { InsertUser, users, trainingTracks, courses, courseSessions, applications, enrollments, studentProgress, InsertApplication, InsertEnrollment, InsertStudentProgress } from "../drizzle/schema";
+import { InsertUser, users, trainingTracks, courses, courseSessions, applications, enrollments, studentProgress, InsertApplication, InsertEnrollment, InsertStudentProgress, InsertCourse, InsertCourseSession } from "../drizzle/schema";
 import { ENV } from './_core/env';
 
 let _db: ReturnType<typeof drizzle> | null = null;
@@ -165,4 +165,83 @@ export async function updateStudentProgress(enrollmentId: number, sessionId: num
       completed: completed ? 1 : 0,
     });
   }
+}
+
+// Admin queries
+export async function getAllApplications() {
+  const db = await getDb();
+  if (!db) return [];
+  return db.select().from(applications);
+}
+
+export async function getApplicationById(appId: number) {
+  const db = await getDb();
+  if (!db) return undefined;
+  const result = await db.select().from(applications).where(eq(applications.id, appId)).limit(1);
+  return result.length > 0 ? result[0] : undefined;
+}
+
+export async function updateApplicationStatus(appId: number, status: "pending" | "approved" | "rejected") {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+  return db.update(applications)
+    .set({ status, updatedAt: new Date() })
+    .where(eq(applications.id, appId));
+}
+
+export async function getAllCourses() {
+  const db = await getDb();
+  if (!db) return [];
+  return db.select().from(courses);
+}
+
+export async function createCourse(course: InsertCourse) {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+  return db.insert(courses).values(course);
+}
+
+export async function updateCourse(courseId: number, updates: Partial<InsertCourse>) {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+  return db.update(courses).set(updates).where(eq(courses.id, courseId));
+}
+
+export async function deleteCourse(courseId: number) {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+  return db.delete(courses).where(eq(courses.id, courseId));
+}
+
+export async function createCourseSession(session: InsertCourseSession) {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+  return db.insert(courseSessions).values(session);
+}
+
+export async function updateCourseSession(sessionId: number, updates: Partial<InsertCourseSession>) {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+  return db.update(courseSessions).set(updates).where(eq(courseSessions.id, sessionId));
+}
+
+export async function getAllEnrollments() {
+  const db = await getDb();
+  if (!db) return [];
+  return db.select().from(enrollments);
+}
+
+export async function getEnrollmentById(enrollmentId: number) {
+  const db = await getDb();
+  if (!db) return undefined;
+  const result = await db.select().from(enrollments).where(eq(enrollments.id, enrollmentId)).limit(1);
+  return result.length > 0 ? result[0] : undefined;
+}
+
+export async function updateEnrollmentStatus(enrollmentId: number, status: "enrolled" | "in_progress" | "completed") {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+  return db.update(enrollments)
+    .set({ status, completedAt: status === "completed" ? new Date() : undefined })
+    .where(eq(enrollments.id, enrollmentId));
 }
