@@ -50,7 +50,7 @@ export default function Home() {
             <img
               src="https://d2xsxph8kpxj0f.cloudfront.net/310519663416906571/kBmgeZHWTyHuceHoeAKRrp/RivercrestFreeMethodistChurch-Logo25_203a03dd.png"
               alt="Rivercrest Free Methodist Church Logo"
-              className="h-14 w-auto"
+              className="h-20 w-auto"
             />
           </div>
           <div className="flex items-center gap-6">
