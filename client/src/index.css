@@ -43,39 +43,41 @@
 }
 
 :root {
-  --primary: var(--color-blue-700);
-  --primary-foreground: var(--color-blue-50);
-  --sidebar-primary: var(--color-blue-600);
-  --sidebar-primary-foreground: var(--color-blue-50);
-  --chart-1: var(--color-blue-300);
-  --chart-2: var(--color-blue-500);
-  --chart-3: var(--color-blue-600);
-  --chart-4: var(--color-blue-700);
-  --chart-5: var(--color-blue-800);
+  /* Rivercrest FMC - Modern Spiritual Minimalism */
+  /* Primary: Deep Navy/Teal (#1a4d5c), Accent: Green (#2d7a6e), Background: Warm Cream (#faf8f5) */
+  --primary: #1a4d5c;
+  --primary-foreground: #faf8f5;
+  --sidebar-primary: #1a4d5c;
+  --sidebar-primary-foreground: #faf8f5;
+  --chart-1: #2d7a6e;
+  --chart-2: #1a4d5c;
+  --chart-3: #4a5568;
+  --chart-4: #1a4d5c;
+  --chart-5: #0f3a47;
   --radius: 0.65rem;
-  --background: oklch(1 0 0);
-  --foreground: oklch(0.235 0.015 65);
-  --card: oklch(1 0 0);
-  --card-foreground: oklch(0.235 0.015 65);
-  --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.235 0.015 65);
-  --secondary: oklch(0.98 0.001 286.375);
-  --secondary-foreground: oklch(0.4 0.015 65);
-  --muted: oklch(0.967 0.001 286.375);
-  --muted-foreground: oklch(0.552 0.016 285.938);
-  --accent: oklch(0.967 0.001 286.375);
-  --accent-foreground: oklch(0.141 0.005 285.823);
-  --destructive: oklch(0.577 0.245 27.325);
-  --destructive-foreground: oklch(0.985 0 0);
-  --border: oklch(0.92 0.004 286.32);
-  --input: oklch(0.92 0.004 286.32);
-  --ring: oklch(0.623 0.214 259.815);
-  --sidebar: oklch(0.985 0 0);
-  --sidebar-foreground: oklch(0.235 0.015 65);
-  --sidebar-accent: oklch(0.967 0.001 286.375);
-  --sidebar-accent-foreground: oklch(0.141 0.005 285.823);
-  --sidebar-border: oklch(0.92 0.004 286.32);
-  --sidebar-ring: oklch(0.623 0.214 259.815);
+  --background: #faf8f5;
+  --foreground: #2d3748;
+  --card: #ffffff;
+  --card-foreground: #2d3748;
+  --popover: #ffffff;
+  --popover-foreground: #2d3748;
+  --secondary: #2d7a6e;
+  --secondary-foreground: #faf8f5;
+  --muted: #e2ddd8;
+  --muted-foreground: #718096;
+  --accent: #2d7a6e;
+  --accent-foreground: #faf8f5;
+  --destructive: #e53e3e;
+  --destructive-foreground: #faf8f5;
+  --border: #e2ddd8;
+  --input: #ffffff;
+  --ring: #1a4d5c;
+  --sidebar: #ffffff;
+  --sidebar-foreground: #2d3748;
+  --sidebar-accent: #2d7a6e;
+  --sidebar-accent-foreground: #faf8f5;
+  --sidebar-border: #e2ddd8;
+  --sidebar-ring: #1a4d5c;
 }
 
 .dark {
@@ -119,6 +121,11 @@
   }
   body {
     @apply bg-background text-foreground;
+    font-family: 'Inter', sans-serif;
+  }
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'Crimson Text', serif;
+    font-weight: 600;
   }
   button:not(:disabled),
   [role="button"]:not([aria-disabled="true"]),
