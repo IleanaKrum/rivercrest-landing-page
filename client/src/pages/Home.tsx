@@ -235,82 +235,81 @@ export default function Home() {
         />
       </div>
 
-      {/* Social Proof Section */}
+      {/* Community Gallery Section */}
       <section className="py-20 bg-background">
         <div className="container">
           <div className="max-w-2xl mb-16">
             <p className="text-sm font-semibold text-accent uppercase tracking-wide mb-4">
-              Community Voices
+              Community Gallery
             </p>
             <h2 className="text-4xl lg:text-5xl font-bold text-primary mb-6">
-              What Our Members Say
+              Our Community in Action
             </h2>
+            <p className="text-lg text-foreground/70">
+              See the vibrant life and ministry happening at Rivercrest Free Methodist Church as we serve our community and grow together in faith.
+            </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            {/* Testimonial 1 */}
-            <Card className="p-8 border-l-4 border-accent bg-white">
-              <div className="flex items-start gap-4 mb-4">
-                <div className="w-12 h-12 rounded-full bg-accent/20 flex items-center justify-center flex-shrink-0">
-                  <span className="text-accent font-bold">JM</span>
-                </div>
-                <div>
-                  <p className="font-semibold text-foreground">James Mitchell</p>
-                  <p className="text-sm text-muted-foreground">Member for 5 years</p>
-                </div>
-              </div>
-              <p className="text-foreground/70 leading-relaxed">
-                "Rivercrest has become my spiritual home. The community here is welcoming, the teaching is profound, and I've grown so much in my faith journey."
-              </p>
-            </Card>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {/* Gallery Image 1 */}
+            <div className="group relative overflow-hidden rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300 h-64">
+              <img
+                src="https://d2xsxph8kpxj0f.cloudfront.net/310519663416906571/kBmgeZHWTyHuceHoeAKRrp/rivercrest_community_01-LWnNdxnwCTrCr7XaVw9geF.webp"
+                alt="Community worship and prayer"
+                className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-primary/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+            </div>
 
-            {/* Testimonial 2 */}
-            <Card className="p-8 border-l-4 border-accent bg-white">
-              <div className="flex items-start gap-4 mb-4">
-                <div className="w-12 h-12 rounded-full bg-accent/20 flex items-center justify-center flex-shrink-0">
-                  <span className="text-accent font-bold">SM</span>
-                </div>
-                <div>
-                  <p className="font-semibold text-foreground">Sarah Martinez</p>
-                  <p className="text-sm text-muted-foreground">New member</p>
-                </div>
-              </div>
-              <p className="text-foreground/70 leading-relaxed">
-                "I visited for the first time last month and felt immediately welcomed. The message was powerful and the people genuinely care about each other."
-              </p>
-            </Card>
+            {/* Gallery Image 2 */}
+            <div className="group relative overflow-hidden rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300 h-64">
+              <img
+                src="https://d2xsxph8kpxj0f.cloudfront.net/310519663416906571/kBmgeZHWTyHuceHoeAKRrp/rivercrest_community_02-Dzc8FXefC6MLaFtxoXg6KM.webp"
+                alt="Community fellowship and connection"
+                className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-primary/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+            </div>
 
-            {/* Testimonial 3 */}
-            <Card className="p-8 border-l-4 border-accent bg-white">
-              <div className="flex items-start gap-4 mb-4">
-                <div className="w-12 h-12 rounded-full bg-accent/20 flex items-center justify-center flex-shrink-0">
-                  <span className="text-accent font-bold">DK</span>
-                </div>
-                <div>
-                  <p className="font-semibold text-foreground">David Kim</p>
-                  <p className="text-sm text-muted-foreground">Member for 2 years</p>
-                </div>
-              </div>
-              <p className="text-foreground/70 leading-relaxed">
-                "The outreach programs here have transformed my understanding of what it means to serve. I'm grateful for this community of faith."
-              </p>
-            </Card>
+            {/* Gallery Image 3 */}
+            <div className="group relative overflow-hidden rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300 h-64">
+              <img
+                src="https://d2xsxph8kpxj0f.cloudfront.net/310519663416906571/kBmgeZHWTyHuceHoeAKRrp/rivercrest_community_03-9utNfJ7foJPYoMBALiq4rb.webp"
+                alt="Community outreach and service"
+                className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-primary/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+            </div>
 
-            {/* Testimonial 4 */}
-            <Card className="p-8 border-l-4 border-accent bg-white">
-              <div className="flex items-start gap-4 mb-4">
-                <div className="w-12 h-12 rounded-full bg-accent/20 flex items-center justify-center flex-shrink-0">
-                  <span className="text-accent font-bold">ER</span>
-                </div>
-                <div>
-                  <p className="font-semibold text-foreground">Emily Rodriguez</p>
-                  <p className="text-sm text-muted-foreground">Member for 8 years</p>
-                </div>
-              </div>
-              <p className="text-foreground/70 leading-relaxed">
-                "Rev. Iliana's leadership and vision have helped our church grow spiritually. I love how we're making a real difference in Wichita."
-              </p>
-            </Card>
+            {/* Gallery Image 4 */}
+            <div className="group relative overflow-hidden rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300 h-64">
+              <img
+                src="https://d2xsxph8kpxj0f.cloudfront.net/310519663416906571/kBmgeZHWTyHuceHoeAKRrp/rivercrest_community_04-kU5meeyJcxiGgDNQszoCqx.webp"
+                alt="Community celebration and joy"
+                className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-primary/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+            </div>
+
+            {/* Gallery Image 5 */}
+            <div className="group relative overflow-hidden rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300 h-64">
+              <img
+                src="https://d2xsxph8kpxj0f.cloudfront.net/310519663416906571/kBmgeZHWTyHuceHoeAKRrp/rivercrest_community_05-LWnNdxnwCTrCr7XaVw9geF.webp"
+                alt="Community ministry and leadership"
+                className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-primary/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+            </div>
+
+            {/* Gallery Image 6 */}
+            <div className="group relative overflow-hidden rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300 h-64">
+              <img
+                src="https://d2xsxph8kpxj0f.cloudfront.net/310519663416906571/kBmgeZHWTyHuceHoeAKRrp/rivercrest_community_06-9utNfJ7foJPYoMBALiq4rb.webp"
+                alt="Community growth and discipleship"
+                className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-primary/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+            </div>
           </div>
         </div>
       </section>
