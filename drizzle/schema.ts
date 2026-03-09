@@ -148,3 +148,50 @@ export const submissions = mysqlTable("submissions", {
 
 export type Submission = typeof submissions.$inferSelect;
 export type InsertSubmission = typeof submissions.$inferInsert;
+
+
+// Course checklists and weekly milestones
+export const courseChecklists = mysqlTable("course_checklists", {
+  id: int("id").autoincrement().primaryKey(),
+  courseId: int("courseId").notNull(),
+  title: varchar("title", { length: 255 }).notNull(), // e.g., "8-Week Intensive Checklist"
+  description: text("description"),
+  totalWeeks: int("totalWeeks").default(8),
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+});
+
+export type CourseChecklist = typeof courseChecklists.$inferSelect;
+export type InsertCourseChecklist = typeof courseChecklists.$inferInsert;
+
+// Weekly milestones within a checklist
+export const weeklyMilestones = mysqlTable("weekly_milestones", {
+  id: int("id").autoincrement().primaryKey(),
+  checklistId: int("checklistId").notNull(),
+  weekNumber: int("weekNumber").notNull(),
+  phase: varchar("phase", { length: 255 }), // e.g., "Phase 1: FM History"
+  title: varchar("title", { length: 255 }).notNull(),
+  description: text("description"),
+  milestones: text("milestones"), // JSON array of milestone items
+  assignments: text("assignments"), // JSON array of assignments for the week
+  readingMaterials: text("readingMaterials"), // JSON array of required readings
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+});
+
+export type WeeklyMilestone = typeof weeklyMilestones.$inferSelect;
+export type InsertWeeklyMilestone = typeof weeklyMilestones.$inferInsert;
+
+// Student progress on checklist items
+export const checklistProgress = mysqlTable("checklist_progress", {
+  id: int("id").autoincrement().primaryKey(),
+  enrollmentId: int("enrollmentId").notNull(),
+  checklistId: int("checklistId").notNull(),
+  weekNumber: int("weekNumber").notNull(),
+  itemIndex: int("itemIndex").notNull(), // Index of the milestone item
+  completed: int("completed").default(0), // 0 or 1
+  completedAt: timestamp("completedAt"),
+  notes: text("notes"),
+  updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
+});
+
+export type ChecklistProgress = typeof checklistProgress.$inferSelect;
+export type InsertChecklistProgress = typeof checklistProgress.$inferInsert;
