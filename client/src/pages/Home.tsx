@@ -46,14 +46,12 @@ export default function Home() {
       {/* Navigation */}
       <nav className="sticky top-0 z-50 bg-white/95 backdrop-blur-sm border-b border-border shadow-sm">
         <div className="container flex items-center justify-between py-4">
-          <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-full bg-primary flex items-center justify-center">
-              <span className="text-primary-foreground font-bold text-lg">R</span>
-            </div>
-            <div className="hidden sm:block">
-              <h1 className="text-lg font-semibold text-primary">Rivercrest</h1>
-              <p className="text-xs text-muted-foreground">Free Methodist Church</p>
-            </div>
+          <div className="flex items-center gap-2">
+            <img
+              src="https://d2xsxph8kpxj0f.cloudfront.net/310519663416906571/kBmgeZHWTyHuceHoeAKRrp/RivercrestFreeMethodistChurch-Logo25_203a03dd.png"
+              alt="Rivercrest Free Methodist Church Logo"
+              className="h-14 w-auto"
+            />
           </div>
           <div className="flex items-center gap-6">
             <a
