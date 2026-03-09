@@ -6,9 +6,12 @@ import { trpc } from "@/lib/trpc";
 import { useLocation } from "wouter";
 import { getLoginUrl } from "@/const";
 import { useState } from "react";
+import { useLanguage } from "@/contexts/LanguageContext";
+import { LanguageSelector } from "@/components/LanguageSelector";
 
 export default function StudentDashboard() {
   const { user, logout, isAuthenticated } = useAuth();
+  const { t } = useLanguage();
   const [, setLocation] = useLocation();
   const [selectedCourse, setSelectedCourse] = useState<number | null>(null);
 
@@ -77,9 +80,10 @@ export default function StudentDashboard() {
               <p className="text-sm font-semibold text-foreground">{user?.name}</p>
               <p className="text-xs text-muted-foreground">{user?.email}</p>
             </div>
+            <LanguageSelector />
             <Button variant="outline" size="sm" onClick={handleLogout} className="flex items-center gap-2">
               <LogOut className="w-4 h-4" />
-              Logout
+              {t('nav.logout')}
             </Button>
           </div>
         </div>
@@ -91,7 +95,7 @@ export default function StudentDashboard() {
           {/* Left Sidebar - Enrollments */}
           <div className="lg:col-span-1">
             <Card className="p-6 border-0 shadow-lg">
-              <h2 className="text-2xl font-bold text-primary mb-6">My Courses</h2>
+              <h2 className="text-2xl font-bold text-primary mb-6">{t('dashboard.enrollments')}</h2>
 
               {enrollmentsLoading ? (
                 <p className="text-muted-foreground">Loading courses...</p>
@@ -121,7 +125,7 @@ export default function StudentDashboard() {
                 </div>
               ) : (
                 <div className="text-center py-8">
-                  <p className="text-muted-foreground mb-4">No courses enrolled yet</p>
+                  <p className="text-muted-foreground mb-4">{t('dashboard.noEnrollments')}</p>
                   <Button
                     variant="outline"
                     className="border-primary text-primary hover:bg-primary/5"
@@ -134,7 +138,7 @@ export default function StudentDashboard() {
 
               {applications && applications.length > 0 && (
                 <div className="mt-8 pt-8 border-t border-border">
-                  <h3 className="font-semibold text-foreground mb-4">Applications</h3>
+                  <h3 className="font-semibold text-foreground mb-4">{t('dashboard.title')}</h3>
                   <div className="space-y-3">
                     {applications.map((app) => (
                       <Card key={app.id} className="p-4 bg-background border border-border">
@@ -160,11 +164,11 @@ export default function StudentDashboard() {
                   <p className="text-foreground/70 mb-6 leading-relaxed">{courseDetails.description}</p>
                   <div className="grid grid-cols-2 gap-4">
                     <div className="p-4 bg-white rounded-lg border border-border">
-                      <p className="text-xs text-muted-foreground mb-1">Sessions</p>
+                      <p className="text-xs text-muted-foreground mb-1">{t('course.sessions')}</p>
                       <p className="text-2xl font-bold text-primary">{courseDetails.sessionsCount}</p>
                     </div>
                     <div className="p-4 bg-white rounded-lg border border-border">
-                      <p className="text-xs text-muted-foreground mb-1">Commitment Hours</p>
+                      <p className="text-xs text-muted-foreground mb-1">{t('course.hoursRequired')}</p>
                       <p className="text-2xl font-bold text-primary">{courseDetails.commitmentHours}</p>
                     </div>
                   </div>
@@ -174,7 +178,7 @@ export default function StudentDashboard() {
                 {enrollments && enrollments.length > 0 && (
                   <Card className="p-6 border-0 shadow-lg">
                     <div className="flex items-center justify-between mb-4">
-                      <h3 className="text-lg font-semibold text-foreground">Your Progress</h3>
+                      <h3 className="text-lg font-semibold text-foreground">{t('dashboard.progress')}</h3>
                       <span className="text-2xl font-bold text-primary">{getProgressPercentage()}%</span>
                     </div>
                     <div className="w-full bg-border rounded-full h-3 overflow-hidden">
@@ -189,7 +193,7 @@ export default function StudentDashboard() {
                 {/* Syllabus */}
                 {courseDetails.syllabus && (
                   <Card className="p-8 border-0 shadow-lg">
-                    <h3 className="text-xl font-bold text-primary mb-4">Course Syllabus</h3>
+                    <h3 className="text-xl font-bold text-primary mb-4">{t('course.syllabus')}</h3>
                     <div className="prose prose-sm max-w-none text-foreground/80 whitespace-pre-wrap">
                       {courseDetails.syllabus}
                     </div>
@@ -199,7 +203,7 @@ export default function StudentDashboard() {
                 {/* Sessions */}
                 {courseSessions && courseSessions.length > 0 && (
                   <Card className="p-8 border-0 shadow-lg">
-                    <h3 className="text-xl font-bold text-primary mb-6">Course Sessions</h3>
+                    <h3 className="text-xl font-bold text-primary mb-6">{t('course.sessions')}</h3>
                     <div className="space-y-4">
                       {courseSessions.map((session) => {
                         const progressItem = studentProgress?.find((p) => p.sessionId === session.id);
