@@ -1,3 +1,4 @@
+import { useAuth } from "@/_core/hooks/useAuth";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Mail, MapPin, Phone, Send } from "lucide-react";
@@ -12,6 +13,10 @@ import { useState } from "react";
  */
 
 export default function Home() {
+  // The userAuth hooks provides authentication state
+  // To implement login/logout functionality, simply call logout() or redirect to getLoginUrl()
+  let { user, loading, error, isAuthenticated, logout } = useAuth();
+
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -56,6 +61,12 @@ export default function Home() {
               className="text-sm text-foreground hover:text-primary transition-colors"
             >
               Services
+            </a>
+            <a
+              href="/giving"
+              className="text-sm text-foreground hover:text-primary transition-colors"
+            >
+              Giving
             </a>
             <a
               href="#contact"
