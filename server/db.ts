@@ -1,6 +1,6 @@
 import { eq, and } from "drizzle-orm";
 import { drizzle } from "drizzle-orm/mysql2";
-import { InsertUser, users, trainingTracks, courses, courseSessions, applications, enrollments, studentProgress, InsertApplication, InsertEnrollment, InsertStudentProgress, InsertCourse, InsertCourseSession } from "../drizzle/schema";
+import { InsertUser, users, trainingTracks, courses, courseSessions, applications, enrollments, studentProgress, assignments, submissions, InsertApplication, InsertEnrollment, InsertStudentProgress, InsertCourse, InsertCourseSession, InsertAssignment, InsertSubmission } from "../drizzle/schema";
 import { ENV } from './_core/env';
 
 let _db: ReturnType<typeof drizzle> | null = null;
@@ -244,4 +244,59 @@ export async function updateEnrollmentStatus(enrollmentId: number, status: "enro
   return db.update(enrollments)
     .set({ status, completedAt: status === "completed" ? new Date() : undefined })
     .where(eq(enrollments.id, enrollmentId));
+}
+
+// Assignment and submission queries
+export async function createAssignment(assignment: InsertAssignment) {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+  return db.insert(assignments).values(assignment);
+}
+
+export async function getAssignmentsByCourse(courseId: number) {
+  const db = await getDb();
+  if (!db) return [];
+  return db.select().from(assignments).where(eq(assignments.courseId, courseId));
+}
+
+export async function getAssignmentById(assignmentId: number) {
+  const db = await getDb();
+  if (!db) return undefined;
+  const result = await db.select().from(assignments).where(eq(assignments.id, assignmentId)).limit(1);
+  return result.length > 0 ? result[0] : undefined;
+}
+
+export async function createSubmission(submission: InsertSubmission) {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+  return db.insert(submissions).values(submission);
+}
+
+export async function getSubmissionsByAssignment(assignmentId: number) {
+  const db = await getDb();
+  if (!db) return [];
+  return db.select().from(submissions).where(eq(submissions.assignmentId, assignmentId));
+}
+
+export async function getSubmissionsByStudent(userId: number) {
+  const db = await getDb();
+  if (!db) return [];
+  return db.select().from(submissions).where(eq(submissions.userId, userId));
+}
+
+export async function getSubmissionById(submissionId: number) {
+  const db = await getDb();
+  if (!db) return undefined;
+  const result = await db.select().from(submissions).where(eq(submissions.id, submissionId)).limit(1);
+  return result.length > 0 ? result[0] : undefined;
+}
+
+export async function updateSubmissionStatus(submissionId: number, status: "submitted" | "under_review" | "graded" | "returned", grade?: string, feedback?: string) {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+  const updateData: any = { status, updatedAt: new Date() };
+  if (grade) updateData.grade = grade;
+  if (feedback) updateData.feedback = feedback;
+  if (status === "graded") updateData.gradedAt = new Date();
+  return db.update(submissions).set(updateData).where(eq(submissions.id, submissionId));
 }

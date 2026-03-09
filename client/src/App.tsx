@@ -9,6 +9,8 @@ import Giving from "./pages/Giving";
 import CenterOfStudies from "./pages/CenterOfStudies";
 import StudentDashboard from "./pages/StudentDashboard";
 import AdminDashboard from "./pages/AdminDashboard";
+import StudentSubmissions from "./pages/StudentSubmissions";
+import AdminSubmissions from "./pages/AdminSubmissions";
 
 function Router() {
   // make sure to consider if you need authentication for certain routes
@@ -19,6 +21,8 @@ function Router() {
       <Route path={"/center-of-studies"} component={CenterOfStudies} />
       <Route path={"/student-dashboard"} component={StudentDashboard} />
       <Route path={"/admin"} component={AdminDashboard} />
+      <Route path={"/student-submissions"} component={StudentSubmissions} />
+      <Route path={"/admin-submissions"} component={AdminSubmissions} />
       <Route path={"/404"} component={NotFound} />
       {/* Final fallback route */}
       <Route component={NotFound} />

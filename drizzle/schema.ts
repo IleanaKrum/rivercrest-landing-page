@@ -112,3 +112,39 @@ export const studentProgress = mysqlTable("student_progress", {
 
 export type StudentProgress = typeof studentProgress.$inferSelect;
 export type InsertStudentProgress = typeof studentProgress.$inferInsert;
+// Course assignments (essays, projects, etc.)
+export const assignments = mysqlTable("assignments", {
+  id: int("id").autoincrement().primaryKey(),
+  courseId: int("courseId").notNull(),
+  sessionId: int("sessionId"),
+  title: varchar("title", { length: 255 }).notNull(),
+  description: text("description"),
+  assignmentType: mysqlEnum("assignmentType", ["essay", "project", "presentation", "reflection", "other"]).notNull(),
+  dueDate: timestamp("dueDate"),
+  instructions: text("instructions"),
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+});
+
+export type Assignment = typeof assignments.$inferSelect;
+export type InsertAssignment = typeof assignments.$inferInsert;
+
+// Student submissions for assignments
+export const submissions = mysqlTable("submissions", {
+  id: int("id").autoincrement().primaryKey(),
+  assignmentId: int("assignmentId").notNull(),
+  enrollmentId: int("enrollmentId").notNull(),
+  userId: int("userId").notNull(),
+  fileUrl: varchar("fileUrl", { length: 512 }),
+  fileName: varchar("fileName", { length: 255 }),
+  fileSize: int("fileSize"), // in bytes
+  submissionText: text("submissionText"), // for text submissions
+  status: mysqlEnum("status", ["submitted", "under_review", "graded", "returned"]).default("submitted"),
+  grade: varchar("grade", { length: 10 }), // A, B, C, F, etc.
+  feedback: text("feedback"),
+  submittedAt: timestamp("submittedAt").defaultNow().notNull(),
+  gradedAt: timestamp("gradedAt"),
+  updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
+});
+
+export type Submission = typeof submissions.$inferSelect;
+export type InsertSubmission = typeof submissions.$inferInsert;
