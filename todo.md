@@ -25,3 +25,26 @@
 - [ ] Email receipts for donors
 - [ ] Recurring donation support
 - [ ] Anonymous giving option
+
+## Completed Features (Center of Studies)
+- [x] Database schema for courses, applications, and student progress
+  - [x] Create courses table with track types
+  - [x] Create applications table
+  - [x] Create student_progress table
+  - [x] Create course_sessions table
+- [x] Public Center of Studies overview page
+  - [x] Display four training tracks
+  - [x] Build application form
+  - [x] Validate and store applications
+- [x] Protected student dashboard
+  - [x] Display enrolled courses
+  - [x] Show progress tracking
+  - [x] List available course syllabuses
+- [x] Course syllabuses page
+  - [x] Display course descriptions
+  - [x] Show session details and commitments
+  - [x] Access control for enrolled students
+- [x] Authentication integration
+  - [x] Protect student pages with login requirement
+  - [x] Link applications to user accounts
+  - [x] Test login flows

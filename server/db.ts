@@ -1,6 +1,6 @@
-import { eq } from "drizzle-orm";
+import { eq, and } from "drizzle-orm";
 import { drizzle } from "drizzle-orm/mysql2";
-import { InsertUser, users } from "../drizzle/schema";
+import { InsertUser, users, trainingTracks, courses, courseSessions, applications, enrollments, studentProgress, InsertApplication, InsertEnrollment, InsertStudentProgress } from "../drizzle/schema";
 import { ENV } from './_core/env';
 
 let _db: ReturnType<typeof drizzle> | null = null;
@@ -89,4 +89,80 @@ export async function getUserByOpenId(openId: string) {
   return result.length > 0 ? result[0] : undefined;
 }
 
-// TODO: add feature queries here as your schema grows.
+// Center of Studies queries
+export async function getTrainingTracks() {
+  const db = await getDb();
+  if (!db) return [];
+  return db.select().from(trainingTracks);
+}
+
+export async function getCoursesByTrack(trackId: number) {
+  const db = await getDb();
+  if (!db) return [];
+  return db.select().from(courses).where(eq(courses.trackId, trackId));
+}
+
+export async function getCourseById(courseId: number) {
+  const db = await getDb();
+  if (!db) return undefined;
+  const result = await db.select().from(courses).where(eq(courses.id, courseId)).limit(1);
+  return result.length > 0 ? result[0] : undefined;
+}
+
+export async function getCourseSessionsByCourse(courseId: number) {
+  const db = await getDb();
+  if (!db) return [];
+  return db.select().from(courseSessions).where(eq(courseSessions.courseId, courseId));
+}
+
+export async function createApplication(app: InsertApplication) {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+  const result = await db.insert(applications).values(app);
+  return result;
+}
+
+export async function getApplicationsByUserId(userId: number) {
+  const db = await getDb();
+  if (!db) return [];
+  return db.select().from(applications).where(eq(applications.userId, userId));
+}
+
+export async function getEnrollmentsByUserId(userId: number) {
+  const db = await getDb();
+  if (!db) return [];
+  return db.select().from(enrollments).where(eq(enrollments.userId, userId));
+}
+
+export async function createEnrollment(enrollment: InsertEnrollment) {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+  return db.insert(enrollments).values(enrollment);
+}
+
+export async function getStudentProgress(enrollmentId: number) {
+  const db = await getDb();
+  if (!db) return [];
+  return db.select().from(studentProgress).where(eq(studentProgress.enrollmentId, enrollmentId));
+}
+
+export async function updateStudentProgress(enrollmentId: number, sessionId: number, completed: boolean) {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+  
+  const existing = await db.select().from(studentProgress)
+    .where(and(eq(studentProgress.enrollmentId, enrollmentId), eq(studentProgress.sessionId, sessionId)))
+    .limit(1);
+  
+  if (existing.length > 0) {
+    return db.update(studentProgress)
+      .set({ completed: completed ? 1 : 0, updatedAt: new Date() })
+      .where(eq(studentProgress.id, existing[0].id));
+  } else {
+    return db.insert(studentProgress).values({
+      enrollmentId,
+      sessionId,
+      completed: completed ? 1 : 0,
+    });
+  }
+}

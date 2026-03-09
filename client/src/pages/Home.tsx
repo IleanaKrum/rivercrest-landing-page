@@ -69,6 +69,12 @@ export default function Home() {
               Giving
             </a>
             <a
+              href="/center-of-studies"
+              className="text-sm text-foreground hover:text-primary transition-colors"
+            >
+              Center of Studies
+            </a>
+            <a
               href="#contact"
               className="text-sm text-foreground hover:text-primary transition-colors"
             >
