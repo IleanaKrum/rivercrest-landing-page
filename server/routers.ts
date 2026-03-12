@@ -152,6 +152,54 @@ export const appRouter = router({
         if (ctx.user.role !== 'admin') throw new Error('Unauthorized');
         return db.updateEnrollmentStatus(input.enrollmentId, input.status);
       }),
+
+    getAllCourseRegistrations: protectedProcedure.query(async ({ ctx }) => {
+      if (ctx.user.role !== 'admin') throw new Error('Unauthorized');
+      return db.getAllCourseRegistrations();
+    }),
+
+    updateCourseRegistrationPaymentStatus: protectedProcedure
+      .input(z.object({
+        registrationId: z.number(),
+        status: z.enum(['pending', 'received', 'not_required']),
+      }))
+      .mutation(async ({ input, ctx }) => {
+        if (ctx.user.role !== 'admin') throw new Error('Unauthorized');
+        return db.updateCourseRegistrationPaymentStatus(input.registrationId, input.status, new Date());
+      }),
+  }),
+
+  courseRegistration: router({
+    registerForCourse: publicProcedure
+      .input(z.object({
+        courseId: z.number(),
+        studentName: z.string(),
+        studentEmail: z.string().email(),
+        studentPhone: z.string().optional(),
+        country: z.string(),
+        state: z.string().optional(),
+        wantsPrintedMaterials: z.boolean(),
+      }))
+      .mutation(async ({ input }) => {
+        const isUSA = input.country.toLowerCase() === 'usa' || input.country.toLowerCase() === 'united states';
+        const wantsMaterials = input.wantsPrintedMaterials && isUSA;
+        
+        return db.createCourseRegistration({
+          courseId: input.courseId,
+          studentName: input.studentName,
+          studentEmail: input.studentEmail,
+          studentPhone: input.studentPhone,
+          country: input.country,
+          state: input.state,
+          wantsPrintedMaterials: wantsMaterials ? 1 : 0,
+          printedMaterialsCost: wantsMaterials ? 4500 : 0,
+          paymentStatus: wantsMaterials ? 'pending' : 'not_required',
+        });
+      }),
+
+    getCourseRegistrationsByCourse: publicProcedure
+      .input(z.object({ courseId: z.number() }))
+      .query(({ input }) => db.getCourseRegistrationsByCourse(input.courseId)),
   }),
 });
 

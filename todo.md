@@ -83,3 +83,30 @@
   - [ ] Display Genesis 12:3 and Psalm 22:27-28 passages
   - [ ] Integrate into Center of Studies overview
   - [ ] Add to student orientation materials
+
+
+## Completed - Course Registration with Printed Materials
+- [x] Add database schema for course registrations
+  - [x] Create registrations table with student info
+  - [x] Add printed materials flag and payment status
+  - [x] Track registration date and payment amount
+- [x] Build student course registration form
+  - [x] Collect student contact information
+  - [x] Add printed materials option ($45 USA only)
+  - [x] Show payment instructions
+  - [x] Confirmation message after registration
+- [x] Add tRPC procedures for course registration
+  - [x] registerForCourse mutation with USA validation
+  - [x] getCourseRegistrationsByCourse query
+  - [x] Admin getAllCourseRegistrations query
+  - [x] Admin updateCourseRegistrationPaymentStatus mutation
+- [x] Write comprehensive vitest tests
+  - [x] Test registration creation with/without materials
+  - [x] Test payment status transitions
+  - [x] Test USA country validation
+  - [x] Test printed materials cost calculation
+- [ ] Add admin interface for registrations (future)
+  - [ ] View all course registrations
+  - [ ] Filter by course and payment status
+  - [ ] Export registration list
+  - [ ] Mark payments as received

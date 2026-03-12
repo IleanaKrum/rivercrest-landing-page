@@ -29,6 +29,13 @@
       "when": 1773082720275,
       "tag": "0003_greedy_spot",
       "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "5",
+      "when": 1773355461268,
+      "tag": "0004_complete_stone_men",
+      "breakpoints": true
     }
   ]
 }

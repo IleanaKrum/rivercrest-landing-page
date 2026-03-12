@@ -195,3 +195,27 @@ export const checklistProgress = mysqlTable("checklist_progress", {
 
 export type ChecklistProgress = typeof checklistProgress.$inferSelect;
 export type InsertChecklistProgress = typeof checklistProgress.$inferInsert;
+
+
+// Course registrations with printed materials option
+export const courseRegistrations = mysqlTable("course_registrations", {
+  id: int("id").autoincrement().primaryKey(),
+  courseId: int("courseId").notNull(),
+  userId: int("userId"),
+  studentName: varchar("studentName", { length: 255 }).notNull(),
+  studentEmail: varchar("studentEmail", { length: 320 }).notNull(),
+  studentPhone: varchar("studentPhone", { length: 20 }),
+  country: varchar("country", { length: 100 }).notNull(),
+  state: varchar("state", { length: 100 }),
+  wantsPrintedMaterials: int("wantsPrintedMaterials").default(0), // 0 or 1
+  printedMaterialsCost: int("printedMaterialsCost").default(0), // 4500 for $45.00
+  paymentStatus: mysqlEnum("paymentStatus", ["pending", "received", "not_required"]).default("pending"),
+  paymentDate: timestamp("paymentDate"),
+  registrationDate: timestamp("registrationDate").defaultNow().notNull(),
+  notes: text("notes"),
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+  updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
+});
+
+export type CourseRegistration = typeof courseRegistrations.$inferSelect;
+export type InsertCourseRegistration = typeof courseRegistrations.$inferInsert;

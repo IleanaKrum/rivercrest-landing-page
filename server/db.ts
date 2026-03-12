@@ -1,6 +1,6 @@
 import { eq, and } from "drizzle-orm";
 import { drizzle } from "drizzle-orm/mysql2";
-import { InsertUser, users, trainingTracks, courses, courseSessions, applications, enrollments, studentProgress, assignments, submissions, InsertApplication, InsertEnrollment, InsertStudentProgress, InsertCourse, InsertCourseSession, InsertAssignment, InsertSubmission } from "../drizzle/schema";
+import { InsertUser, users, trainingTracks, courses, courseSessions, applications, enrollments, studentProgress, assignments, submissions, courseRegistrations, InsertApplication, InsertEnrollment, InsertStudentProgress, InsertCourse, InsertCourseSession, InsertAssignment, InsertSubmission, InsertCourseRegistration } from "../drizzle/schema";
 import { ENV } from './_core/env';
 
 let _db: ReturnType<typeof drizzle> | null = null;
@@ -299,4 +299,38 @@ export async function updateSubmissionStatus(submissionId: number, status: "subm
   if (feedback) updateData.feedback = feedback;
   if (status === "graded") updateData.gradedAt = new Date();
   return db.update(submissions).set(updateData).where(eq(submissions.id, submissionId));
+}
+
+// Course registration queries
+export async function createCourseRegistration(registration: InsertCourseRegistration) {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+  return db.insert(courseRegistrations).values(registration);
+}
+
+export async function getCourseRegistrationsByCourse(courseId: number) {
+  const db = await getDb();
+  if (!db) return [];
+  return db.select().from(courseRegistrations).where(eq(courseRegistrations.courseId, courseId));
+}
+
+export async function getAllCourseRegistrations() {
+  const db = await getDb();
+  if (!db) return [];
+  return db.select().from(courseRegistrations);
+}
+
+export async function getCourseRegistrationById(registrationId: number) {
+  const db = await getDb();
+  if (!db) return undefined;
+  const result = await db.select().from(courseRegistrations).where(eq(courseRegistrations.id, registrationId)).limit(1);
+  return result.length > 0 ? result[0] : undefined;
+}
+
+export async function updateCourseRegistrationPaymentStatus(registrationId: number, status: "pending" | "received" | "not_required", paymentDate?: Date) {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+  const updateData: any = { paymentStatus: status, updatedAt: new Date() };
+  if (paymentDate) updateData.paymentDate = paymentDate;
+  return db.update(courseRegistrations).set(updateData).where(eq(courseRegistrations.id, registrationId));
 }
