@@ -71,6 +71,21 @@ export default function CenterOfStudies() {
 
   return (
     <div className="min-h-screen bg-background text-foreground">
+      {/* Mission Statement Banner */}
+      <div className="bg-primary/10 border-b border-primary/20 py-6">
+        <div className="container">
+          <p className="text-center text-sm font-semibold text-accent uppercase tracking-wide mb-2">
+            Our Theological Foundation
+          </p>
+          <h2 className="text-center text-2xl font-bold text-primary mb-3">
+            The Abrahamic Root: A Father of Many Nations
+          </h2>
+          <p className="text-center text-foreground/70 max-w-2xl mx-auto">
+            Equipping Swahili-speaking leaders to serve not just their local communities, but to participate in God's global redemptive work across nations.
+          </p>
+        </div>
+      </div>
+
       {/* Navigation */}
       <nav className="sticky top-0 z-50 bg-white/95 backdrop-blur-sm border-b border-border shadow-sm">
         <div className="container flex items-center justify-between py-4">

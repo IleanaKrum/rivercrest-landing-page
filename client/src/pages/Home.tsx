@@ -131,6 +131,50 @@ export default function Home() {
         </div>
       </section>
 
+      {/* Mission Statement Section */}
+      <section className="py-20 bg-gradient-to-b from-accent/5 to-transparent">
+        <div className="container">
+          <div className="max-w-3xl mx-auto">
+            <p className="text-sm font-semibold text-accent uppercase tracking-wide mb-4 text-center">
+              Our Theological Foundation
+            </p>
+            <h2 className="text-4xl lg:text-5xl font-bold text-primary mb-12 text-center">
+              The Abrahamic Root: A Father of Many Nations
+            </h2>
+            
+            <div className="space-y-8">
+              {/* Genesis Section */}
+              <div className="bg-white rounded-lg p-8 shadow-sm border border-border">
+                <h3 className="text-2xl font-bold text-primary mb-4">The Promise: Genesis 12 & 17</h3>
+                <p className="text-foreground/80 mb-4 leading-relaxed">
+                  God entered into a covenant with Abraham—not an exclusive club meant to shut others out, but a "blessed to be a blessing" strategy. God promised Abraham that he would be the <span className="italic">"father of many nations"</span> (Genesis 17:5), and explicitly stated that <span className="italic">"all peoples on earth will be blessed through you"</span> (Genesis 12:3).
+                </p>
+                <p className="text-foreground/70 leading-relaxed">
+                  This establishes that the God of Israel was never intended to be a national deity confined by borders. He was the Creator reclaiming His entire creation through one family line.
+                </p>
+              </div>
+              
+              {/* Psalm Section */}
+              <div className="bg-white rounded-lg p-8 shadow-sm border border-border">
+                <h3 className="text-2xl font-bold text-primary mb-4">The Global Turning: Psalm 22</h3>
+                <p className="text-foreground/80 mb-6 leading-relaxed">
+                  Psalm 22 shifts from individual agony to a declaration of international triumph:
+                </p>
+                <blockquote className="border-l-4 border-accent pl-6 py-4 italic text-foreground/80 bg-accent/5 rounded">
+                  "All the ends of the earth will remember and turn to the Lord, and all the families of the nations will bow down before him, for dominion belongs to the Lord and he rules over the nations." (Psalm 22:27-28)
+                </blockquote>
+              </div>
+            </div>
+            
+            <div className="mt-12 p-8 bg-primary/5 rounded-lg border border-primary/20">
+              <p className="text-center text-lg text-foreground/80 leading-relaxed">
+                This mission statement guides our Swahili-speaking Center of Studies—equipping leaders to serve not just their local communities, but to participate in God's global redemptive work across nations.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* Divider */}
       <div className="flex justify-center py-12">
         <img
