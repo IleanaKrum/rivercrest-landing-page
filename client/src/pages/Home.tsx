@@ -46,12 +46,16 @@ export default function Home() {
       {/* Navigation */}
       <nav className="sticky top-0 z-50 bg-white/95 backdrop-blur-sm border-b border-border shadow-sm">
         <div className="container flex items-center justify-between py-4">
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-2 group relative">
             <img
               src="https://d2xsxph8kpxj0f.cloudfront.net/310519663416906571/kBmgeZHWTyHuceHoeAKRrp/RivercrestFreeMethodistChurch-Logo25_203a03dd.png"
               alt="Rivercrest Free Methodist Church Logo"
-              className="h-20 w-auto"
+              className="h-20 w-auto transition-transform duration-300 group-hover:scale-110 cursor-pointer"
             />
+            <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 px-3 py-2 bg-primary text-primary-foreground text-sm font-medium rounded-md whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none shadow-lg">
+              Rivercrest Free Methodist Church
+              <div className="absolute top-full left-1/2 transform -translate-x-1/2 border-4 border-transparent border-t-primary"></div>
+            </div>
           </div>
           <div className="flex items-center gap-6">
             <a
