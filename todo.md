@@ -110,3 +110,23 @@
   - [ ] Filter by course and payment status
   - [ ] Export registration list
   - [ ] Mark payments as received
+
+
+## Completed - Email Notifications for Course Registration
+- [x] Set up email service integration
+  - [x] Configure Resend email provider
+  - [x] Add RESEND_API_KEY environment variable
+  - [x] Create email helper functions in server/_core/email.ts
+- [x] Create email templates
+  - [x] Registration confirmation template with course details
+  - [x] Payment instructions for printed materials ($45 USA only)
+  - [x] Admin notification template with payment alerts
+- [x] Implement email sending
+  - [x] Send confirmation on successful registration
+  - [x] Include course details and student info in email
+  - [x] Add payment instructions for printed materials
+  - [x] Handle email errors gracefully with logging
+- [x] Test email functionality
+  - [x] Verify emails send on successful registration (8 tests passing)
+  - [x] Test with/without printed materials
+  - [x] Test error handling and Resend API validation

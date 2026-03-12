@@ -4,6 +4,8 @@ import { systemRouter } from "./_core/systemRouter";
 import { publicProcedure, protectedProcedure, router } from "./_core/trpc";
 import { z } from "zod";
 import * as db from "./db";
+import { sendCourseRegistrationEmail, sendAdminRegistrationNotification } from "./_core/email";
+import { ENV } from "./_core/env";
 
 export const appRouter = router({
     // if you need to use socket.io, read and register route in server/_core/index.ts, all api should start with '/api/' so that the gateway can route correctly
@@ -184,7 +186,7 @@ export const appRouter = router({
         const isUSA = input.country.toLowerCase() === 'usa' || input.country.toLowerCase() === 'united states';
         const wantsMaterials = input.wantsPrintedMaterials && isUSA;
         
-        return db.createCourseRegistration({
+        const registration = await db.createCourseRegistration({
           courseId: input.courseId,
           studentName: input.studentName,
           studentEmail: input.studentEmail,
@@ -195,6 +197,31 @@ export const appRouter = router({
           printedMaterialsCost: wantsMaterials ? 4500 : 0,
           paymentStatus: wantsMaterials ? 'pending' : 'not_required',
         });
+
+        // Send confirmation email to student
+        await sendCourseRegistrationEmail({
+          studentName: input.studentName,
+          studentEmail: input.studentEmail,
+          courseId: input.courseId,
+          wantsPrintedMaterials: wantsMaterials,
+          printedMaterialsCost: wantsMaterials ? 4500 : 0,
+          country: input.country,
+        });
+
+        // Send admin notification
+        await sendAdminRegistrationNotification(
+          {
+            studentName: input.studentName,
+            studentEmail: input.studentEmail,
+            courseId: input.courseId,
+            wantsPrintedMaterials: wantsMaterials,
+            printedMaterialsCost: wantsMaterials ? 4500 : 0,
+            country: input.country,
+          },
+          "rev.ileanakrum@rivercrestfmc.org"
+        );
+
+        return registration;
       }),
 
     getCourseRegistrationsByCourse: publicProcedure
