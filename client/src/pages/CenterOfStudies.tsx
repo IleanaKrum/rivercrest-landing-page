@@ -111,6 +111,12 @@ export default function CenterOfStudies() {
             >
               Resources
             </a>
+            <a
+              href="/email-notifications"
+              className="text-sm text-foreground hover:text-primary transition-colors"
+            >
+              Features
+            </a>
             {isAuthenticated ? (
               <Button variant="default" size="sm" onClick={() => setLocation("/student-dashboard")}>
                 Dashboard
