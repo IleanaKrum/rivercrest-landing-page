@@ -6,6 +6,7 @@ import { z } from "zod";
 import * as db from "./db";
 import { sendCourseRegistrationEmail, sendAdminRegistrationNotification } from "./_core/email";
 import { ENV } from "./_core/env";
+import { TRPCError } from "@trpc/server";
 
 export const appRouter = router({
     // if you need to use socket.io, read and register route in server/_core/index.ts, all api should start with '/api/' so that the gateway can route correctly
@@ -169,6 +170,17 @@ export const appRouter = router({
         if (ctx.user.role !== 'admin') throw new Error('Unauthorized');
         return db.updateCourseRegistrationPaymentStatus(input.registrationId, input.status, new Date());
       }),
+
+    getAllResources: publicProcedure
+      .query(() => db.getAllResources()),
+
+    getResourcesByCategory: publicProcedure
+      .input(z.object({ category: z.string() }))
+      .query(({ input }) => db.getResourcesByCategory(input.category)),
+
+    getResourceById: publicProcedure
+      .input(z.object({ resourceId: z.number() }))
+      .query(({ input }) => db.getResourceById(input.resourceId)),
   }),
 
   courseRegistration: router({
@@ -227,6 +239,70 @@ export const appRouter = router({
     getCourseRegistrationsByCourse: publicProcedure
       .input(z.object({ courseId: z.number() }))
       .query(({ input }) => db.getCourseRegistrationsByCourse(input.courseId)),
+
+    getAllResources: publicProcedure
+      .query(() => db.getAllResources()),
+
+    getResourcesByCategory: publicProcedure
+      .input(z.object({ category: z.string() }))
+      .query(({ input }) => db.getResourcesByCategory(input.category)),
+
+    getResourceById: publicProcedure
+      .input(z.object({ resourceId: z.number() }))
+      .query(({ input }) => db.getResourceById(input.resourceId)),
+
+    createResource: protectedProcedure
+      .input(z.object({
+        title: z.string(),
+        description: z.string().optional(),
+        category: z.enum(["book", "syllabus", "guideline", "article", "other"]),
+        language: z.string().default("English"),
+        fileUrl: z.string().url(),
+        fileName: z.string(),
+        fileSize: z.number().optional(),
+        author: z.string().optional(),
+        publishDate: z.date().optional(),
+      }))
+      .mutation(async ({ input, ctx }) => {
+        if (ctx.user?.role !== "admin") {
+          throw new TRPCError({ code: "FORBIDDEN", message: "Only admins can create resources" });
+        }
+        return db.createResource({
+          ...input,
+          isPublished: 1,
+        });
+      }),
+
+    updateResource: protectedProcedure
+      .input(z.object({
+        resourceId: z.number(),
+        title: z.string().optional(),
+        description: z.string().optional(),
+        category: z.enum(["book", "syllabus", "guideline", "article", "other"]).optional(),
+        language: z.string().optional(),
+        fileUrl: z.string().url().optional(),
+        fileName: z.string().optional(),
+        fileSize: z.number().optional(),
+        author: z.string().optional(),
+        publishDate: z.date().optional(),
+        isPublished: z.number().optional(),
+      }))
+      .mutation(async ({ input, ctx }) => {
+        if (ctx.user?.role !== "admin") {
+          throw new TRPCError({ code: "FORBIDDEN", message: "Only admins can update resources" });
+        }
+        const { resourceId, ...updates } = input;
+        return db.updateResource(resourceId, updates);
+      }),
+
+    deleteResource: protectedProcedure
+      .input(z.object({ resourceId: z.number() }))
+      .mutation(async ({ input, ctx }) => {
+        if (ctx.user?.role !== "admin") {
+          throw new TRPCError({ code: "FORBIDDEN", message: "Only admins can delete resources" });
+        }
+        return db.deleteResource(input.resourceId);
+      }),
   }),
 });
 

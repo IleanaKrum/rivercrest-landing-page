@@ -1,6 +1,6 @@
 import { eq, and } from "drizzle-orm";
 import { drizzle } from "drizzle-orm/mysql2";
-import { InsertUser, users, trainingTracks, courses, courseSessions, applications, enrollments, studentProgress, assignments, submissions, courseRegistrations, InsertApplication, InsertEnrollment, InsertStudentProgress, InsertCourse, InsertCourseSession, InsertAssignment, InsertSubmission, InsertCourseRegistration } from "../drizzle/schema";
+import { InsertUser, users, trainingTracks, courses, courseSessions, applications, enrollments, studentProgress, assignments, submissions, courseRegistrations, resources, InsertApplication, InsertEnrollment, InsertStudentProgress, InsertCourse, InsertCourseSession, InsertAssignment, InsertSubmission, InsertCourseRegistration, InsertResource, Resource } from "../drizzle/schema";
 import { ENV } from './_core/env';
 
 let _db: ReturnType<typeof drizzle> | null = null;
@@ -333,4 +333,43 @@ export async function updateCourseRegistrationPaymentStatus(registrationId: numb
   const updateData: any = { paymentStatus: status, updatedAt: new Date() };
   if (paymentDate) updateData.paymentDate = paymentDate;
   return db.update(courseRegistrations).set(updateData).where(eq(courseRegistrations.id, registrationId));
+}
+
+
+// Resources queries
+export async function createResource(resource: InsertResource) {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+  return db.insert(resources).values(resource);
+}
+
+export async function getAllResources() {
+  const db = await getDb();
+  if (!db) return [];
+  return db.select().from(resources).where(eq(resources.isPublished, 1));
+}
+
+export async function getResourcesByCategory(category: string) {
+  const db = await getDb();
+  if (!db) return [];
+  return db.select().from(resources).where(and(eq(resources.category, category as any), eq(resources.isPublished, 1)));
+}
+
+export async function getResourceById(resourceId: number) {
+  const db = await getDb();
+  if (!db) return undefined;
+  const result = await db.select().from(resources).where(eq(resources.id, resourceId)).limit(1);
+  return result.length > 0 ? result[0] : undefined;
+}
+
+export async function updateResource(resourceId: number, updates: Partial<InsertResource>) {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+  return db.update(resources).set({ ...updates, updatedAt: new Date() }).where(eq(resources.id, resourceId));
+}
+
+export async function deleteResource(resourceId: number) {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+  return db.delete(resources).where(eq(resources.id, resourceId));
 }

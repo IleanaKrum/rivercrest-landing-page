@@ -12,6 +12,7 @@ import AdminDashboard from "./pages/AdminDashboard";
 import StudentSubmissions from "./pages/StudentSubmissions";
 import AdminSubmissions from "./pages/AdminSubmissions";
 import CourseRegistration from "./pages/CourseRegistration";
+import Resources from "./pages/Resources";
 
 function Router() {
   // make sure to consider if you need authentication for certain routes
@@ -21,6 +22,7 @@ function Router() {
       <Route path={"/giving"} component={Giving} />
       <Route path={"/center-of-studies"} component={CenterOfStudies} />
       <Route path={"/course-registration/:courseId?"} component={CourseRegistration} />
+      <Route path={"/resources"} component={Resources} />
       <Route path={"/student-dashboard"} component={StudentDashboard} />
       <Route path={"/admin"} component={AdminDashboard} />
       <Route path={"/student-submissions"} component={StudentSubmissions} />

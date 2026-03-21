@@ -219,3 +219,25 @@ export const courseRegistrations = mysqlTable("course_registrations", {
 
 export type CourseRegistration = typeof courseRegistrations.$inferSelect;
 export type InsertCourseRegistration = typeof courseRegistrations.$inferInsert;
+
+
+// Center of Studies Resources (Books, Syllabuses, Guidelines, etc.)
+export const resources = mysqlTable("resources", {
+  id: int("id").autoincrement().primaryKey(),
+  title: varchar("title", { length: 255 }).notNull(),
+  description: text("description"),
+  category: mysqlEnum("category", ["book", "syllabus", "guideline", "article", "other"]).notNull(),
+  language: varchar("language", { length: 50 }).default("English"), // English, Swahili, etc.
+  fileUrl: varchar("fileUrl", { length: 512 }).notNull(), // CDN URL to the PDF or file
+  fileName: varchar("fileName", { length: 255 }).notNull(),
+  fileSize: int("fileSize"), // in bytes
+  author: varchar("author", { length: 255 }), // Author or organization
+  publishDate: timestamp("publishDate"),
+  isPublished: int("isPublished").default(1), // 0 or 1
+  displayOrder: int("displayOrder").default(0), // For sorting resources
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+  updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
+});
+
+export type Resource = typeof resources.$inferSelect;
+export type InsertResource = typeof resources.$inferInsert;

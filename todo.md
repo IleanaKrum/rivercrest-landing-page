@@ -130,3 +130,32 @@
   - [x] Verify emails send on successful registration (8 tests passing)
   - [x] Test with/without printed materials
   - [x] Test error handling and Resend API validation
+
+
+
+## Completed - Center of Studies Resources Page
+- [x] Upload PDF resources to S3
+  - [x] Upload Swahili Book of Discipline PDF (2.1 MB)
+  - [x] Get CDN URLs for resources
+- [x] Create database schema for resources
+  - [x] Add resources table with title, description, file URL, category
+  - [x] Add resource categories (Books, Syllabuses, Guidelines, Articles, Other)
+  - [x] Add language field for multi-language support
+- [x] Build Resources Page
+  - [x] Create Resources component with resource listings
+  - [x] Add category filtering with button toggles
+  - [x] Display resource descriptions and download links
+  - [x] Responsive grid layout (mobile, tablet, desktop)
+  - [x] File size formatting and metadata display
+- [x] Integrate with navigation
+  - [x] Add Resources link to Center of Studies navigation
+  - [x] Add /resources route to App.tsx
+- [x] Backend API
+  - [x] Create tRPC procedures for resource queries
+  - [x] getAllResources, getResourcesByCategory, getResourceById
+  - [x] Admin procedures for creating/updating/deleting resources
+- [x] Testing
+  - [x] 13 comprehensive vitest tests (all passing)
+  - [x] Tests cover creation, retrieval, filtering, and metadata
+  - [x] Verified Swahili Book of Discipline is in database
+  - [ ] Test on mobile devices

@@ -1,0 +1,9 @@
+{
+  "query": "INSERT INTO resources (title, description, category, language, fileUrl, fileName, fileSize, author, publishDate, isPublished, displayOrder, createdAt, updatedAt) VALUES ('Kitabu cha Maongozi - Book of Discipline (Swahili)', 'The Free Methodist Church Book of Discipline in Swahili. Essential reference for church governance, doctrine, and pastoral leadership in Swahili-speaking communities.', 'book', 'Swahili', 'https://d2xsxph8kpxj0f.cloudfront.net/310519663416906571/kBmgeZHWTyHuceHoeAKRrp/2023-Kitabu-cha-Maongozi-FMCUSA-Book-of-Discipline-Swahili-537fqh_e6a8dd3f.pdf', '2023-Kitabu-cha-Maongozi-FMCUSA-Book-of-Discipline-Swahili.pdf', 2078715, 'Free Methodist Church USA', '2023-01-01', 1, 1, NOW(), NOW());",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway04.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 27SALpbbdFwiPRE.root --database kBmgeZHWTyHuceHoeAKRrp --execute INSERT INTO resources (title, description, category, language, fileUrl, fileName, fileSize, author, publishDate, isPublished, displayOrder, createdAt, updatedAt) VALUES ('Kitabu cha Maongozi - Book of Discipline (Swahili)', 'The Free Methodist Church Book of Discipline in Swahili. Essential reference for church governance, doctrine, and pastoral leadership in Swahili-speaking communities.', 'book', 'Swahili', 'https://d2xsxph8kpxj0f.cloudfront.net/310519663416906571/kBmgeZHWTyHuceHoeAKRrp/2023-Kitabu-cha-Maongozi-FMCUSA-Book-of-Discipline-Swahili-537fqh_e6a8dd3f.pdf', '2023-Kitabu-cha-Maongozi-FMCUSA-Book-of-Discipline-Swahili.pdf', 2078715, 'Free Methodist Church USA', '2023-01-01', 1, 1, NOW(), NOW());",
+  "rows": [],
+  "messages": [],
+  "stdout": "",
+  "stderr": "",
+  "execution_time_ms": 979
+}

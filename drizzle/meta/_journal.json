@@ -36,6 +36,13 @@
       "when": 1773355461268,
       "tag": "0004_complete_stone_men",
       "breakpoints": true
+    },
+    {
+      "idx": 5,
+      "version": "5",
+      "when": 1774115509084,
+      "tag": "0005_curvy_scarecrow",
+      "breakpoints": true
     }
   ]
 }
