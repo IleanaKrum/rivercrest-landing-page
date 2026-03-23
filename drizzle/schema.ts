@@ -437,3 +437,19 @@ export const moduleVideos = mysqlTable("module_videos", {
 
 export type ModuleVideo = typeof moduleVideos.$inferSelect;
 export type InsertModuleVideo = typeof moduleVideos.$inferInsert;
+
+
+// Video Subtitles
+export const videoSubtitles = mysqlTable("video_subtitles", {
+  id: int("id").autoincrement().primaryKey(),
+  videoId: int("videoId").notNull(), // Foreign key to module_videos
+  language: varchar("language", { length: 10 }).notNull(), // Language code (e.g., 'sw', 'en')
+  languageName: varchar("languageName", { length: 50 }).notNull(), // Display name (e.g., 'Swahili', 'English')
+  subtitleUrl: text("subtitleUrl").notNull(), // CDN URL to SRT file
+  isDefault: int("isDefault").default(0), // 0 or 1 - default subtitle language
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+  updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull()
+});
+
+export type VideoSubtitle = typeof videoSubtitles.$inferSelect;
+export type InsertVideoSubtitle = typeof videoSubtitles.$inferInsert;
