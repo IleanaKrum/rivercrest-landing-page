@@ -1,0 +1,13 @@
+{
+  "query": "SELECT id FROM independent_study_modules WHERE title = 'Introduction to Christian Doctrine' LIMIT 1;",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway04.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 27SALpbbdFwiPRE.root --database kBmgeZHWTyHuceHoeAKRrp --execute SELECT id FROM independent_study_modules WHERE title = 'Introduction to Christian Doctrine' LIMIT 1;",
+  "rows": [
+    {
+      "id": "60001"
+    }
+  ],
+  "messages": [],
+  "stdout": "id\n60001\n",
+  "stderr": "",
+  "execution_time_ms": 387
+}

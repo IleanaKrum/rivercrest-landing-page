@@ -1,0 +1,8 @@
+{
+  "query": "INSERT INTO independent_study_modules (title, description, category, duration_hours, difficulty_level, language, created_at, updated_at) VALUES ('Introduction to Christian Doctrine', 'A comprehensive introduction to core Christian doctrines in simple, practical language designed for missionaries, church planters, and lay leaders. Covers God''s nature, Jesus Christ, the Holy Spirit, salvation, the Church, and eternity. Bilingual (English/Swahili) with videos and interactive quizzes. Ideal for limited English speakers and those working in missions contexts.', 'theology', 6, 'beginner', 'bilingual', NOW(), NOW());",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway04.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 27SALpbbdFwiPRE.root --database kBmgeZHWTyHuceHoeAKRrp --execute INSERT INTO independent_study_modules (title, description, category, duration_hours, difficulty_level, language, created_at, updated_at) VALUES ('Introduction to Christian Doctrine', 'A comprehensive introduction to core Christian doctrines in simple, practical language designed for missionaries, church planters, and lay leaders. Covers God''s nature, Jesus Christ, the Holy Spirit, salvation, the Church, and eternity. Bilingual (English/Swahili) with videos and interactive quizzes. Ideal for limited English speakers and those working in missions contexts.', 'theology', 6, 'beginner', 'bilingual', NOW(), NOW());",
+  "returncode": 1,
+  "logs": [
+    "ERROR 1054 (42S22) at line 1: Unknown column 'duration_hours' in 'field list'"
+  ]
+}
