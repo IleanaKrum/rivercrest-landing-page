@@ -8,6 +8,7 @@ import { useState, useEffect } from "react";
 import { Streamdown } from "streamdown";
 import { useAuth } from "@/_core/hooks/useAuth";
 import { Download } from "lucide-react";
+import { VideoPlayer } from "@/components/VideoPlayer";
 
 export default function ModuleDetail() {
   const { user, isAuthenticated } = useAuth();
@@ -30,6 +31,12 @@ export default function ModuleDetail() {
   const { data: progress } = trpc.centerOfStudies.getModuleProgress.useQuery(
     { moduleId },
     { enabled: isAuthenticated && moduleId > 0 }
+  );
+
+  // Fetch related videos
+  const { data: videos } = trpc.centerOfStudies.getVideosByModule.useQuery(
+    { moduleId },
+    { enabled: moduleId > 0 }
   );
 
   // Update progress mutation
@@ -193,6 +200,32 @@ export default function ModuleDetail() {
                 </div>
               </div>
             </Card>
+
+            {/* Video Section */}
+            {videos && videos.length > 0 && (
+              <Card>
+                <div className="p-6 border-b border-border">
+                  <h3 className="text-xl font-bold flex items-center gap-2">
+                    <Globe className="w-5 h-5" />
+                    Video Demonstrations
+                  </h3>
+                  <p className="text-sm text-muted-foreground mt-1">
+                    Watch video explanations with Swahili subtitles
+                  </p>
+                </div>
+                <div className="p-6 space-y-6">
+                  {videos.map((video) => (
+                    <VideoPlayer
+                      key={video.id}
+                      videoUrl={video.videoUrl}
+                      subtitleUrl={video.subtitleUrl}
+                      title={video.title}
+                      description={video.description}
+                    />
+                  ))}
+                </div>
+              </Card>
+            )}
 
             {/* Reflection Notes Section */}
             {isAuthenticated && (

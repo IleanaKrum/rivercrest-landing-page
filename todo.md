@@ -364,3 +364,76 @@
   - [x] Create track_module_links for all 5 tracks
   - [x] Mark modules as required for all tracks
   - [x] Set bilingual language support
+
+
+## In Progress - FMC Video Demonstrations with Swahili Subtitles
+- [ ] Plan and script video demonstrations
+  - [ ] Video 1: FMC Origins - John Wesley and Methodist Movement
+  - [ ] Video 2: Core Beliefs - Authority of Scripture
+  - [ ] Video 3: Holiness and Holy Living - Practical Examples
+  - [ ] Video 4: Church Organization - How Decisions Are Made
+  - [ ] Video 5: Leadership Roles - Pastor, Deacon, Lay Leader
+  - [ ] Video 6: Social Justice - Caring for the Poor and Marginalized
+- [ ] Generate video demonstrations
+  - [ ] Create animated explainer videos for each topic
+  - [ ] Add visual demonstrations of FMC practices
+  - [ ] Include real-world church scenarios
+- [ ] Create Swahili subtitles
+  - [ ] Write Swahili subtitle scripts for each video
+  - [ ] Generate subtitle files (SRT format)
+  - [ ] Verify subtitle timing and accuracy
+- [ ] Upload and integrate videos
+  - [ ] Upload videos to S3 CDN
+  - [ ] Create video entries in database
+  - [ ] Link videos to corresponding modules
+  - [ ] Add video players to module pages
+- [ ] Test and validate
+  - [ ] Test video playback on all devices
+  - [ ] Verify subtitle synchronization
+  - [ ] Test with Swahili-speaking users
+  - [ ] Ensure accessibility (captions, descriptions)
+
+## Completed - Free Methodist Way Independent Study Integration
+- [x] Create independent study module database schema
+  - [x] Add independent_study_modules table with English/Swahili content
+  - [x] Add module_progress tracking table for student progress
+  - [x] Add track_module_links table for course associations
+- [x] Add Free Methodist Way doctrinal content
+  - [x] Create 11 core doctrinal modules (Trinity, Scripture, Humanity, etc.)
+  - [x] Add Swahili language support for all modules
+  - [x] Create study guides and reflection questions for each module
+- [x] Create tRPC backend procedures
+  - [x] getAllModules, getModuleById, getModulesByCategory queries
+  - [x] getModulesForTrack, getRequiredModulesForTrack queries
+  - [x] startModule, completeModule, updateModuleProgress mutations
+  - [x] getUserModuleProgress, getUserCompletedModules queries
+  - [x] issueCertificate mutation for completion certificates
+- [x] Build independent study UI
+  - [x] Create IndependentStudyModules.tsx listing page
+  - [x] Add category filtering and search
+  - [x] Display progress tracking for authenticated users
+  - [x] Show completion status and certificates
+- [ ] Integrate modules into training tracks (future)
+  - [ ] Link modules to Deacon Formation track
+  - [ ] Link modules to Evangelist Training track
+  - [ ] Link modules to Pastor Formation track
+  - [ ] Link modules to Leadership Development track
+  - [ ] Link modules to Lay Ministry track
+- [ ] Create module detail page (future)
+  - [ ] Build ModuleDetail.tsx component
+  - [ ] Add content display with bilingual support
+  - [ ] Create progress tracking UI
+  - [ ] Add reflection question responses
+- [ ] Test and deploy
+  - [ ] Write integration tests for module queries
+  - [ ] Test progress tracking functionality
+  - [ ] Verify certificate issuance
+
+## Completed - FMC Video Demonstrations with Swahili Subtitles
+- [x] Plan and script video demonstrations (6 videos)
+- [x] Generate video demonstrations (18.4 MB total, professional narration)
+- [x] Create Swahili subtitles (SRT format for all 6 videos)
+- [x] Upload videos to S3 CDN (all successful)
+- [x] Create VideoPlayer component with subtitle toggle
+- [x] Integrate videos into module detail pages
+- [x] Test video playback and subtitle functionality
