@@ -223,7 +223,7 @@ export default function ModuleDetail() {
                     <VideoPlayer
                       key={video.id}
                       videoUrl={video.videoUrl}
-                      subtitleUrl={video.subtitleUrl}
+                      subtitles={video.subtitles || []}
                       title={video.title}
                       description={video.description}
                     />
