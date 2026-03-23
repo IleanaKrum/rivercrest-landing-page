@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Mail, MapPin, Phone, Send } from "lucide-react";
 import { useState } from "react";
+import { MissionalCommitment } from "@/components/MissionalCommitment";
 
 /**
  * Design: Modern Spiritual Minimalism
@@ -501,6 +502,9 @@ export default function Home() {
           </div>
         </div>
       </section>
+
+      {/* Missional Commitment Section */}
+      <MissionalCommitment />
 
       {/* Footer */}
       <footer className="bg-primary text-primary-foreground py-12">
