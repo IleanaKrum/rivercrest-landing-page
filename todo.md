@@ -472,3 +472,37 @@
   - [ ] Verify bilingual content display
   - [ ] Test passing/failing logic
   - [ ] Validate score calculations
+
+
+## In Progress - Quiz Integration with Module Progress
+- [ ] Insert quiz data into database
+  - [ ] Create 6 quizzes linked to videos
+  - [ ] Insert 30 quiz questions with bilingual content
+  - [ ] Insert answer options with correct/incorrect flags
+  - [ ] Set passing scores (70% for all quizzes)
+- [ ] Create tRPC procedures for quizzes
+  - [ ] getQuizByVideoId - Retrieve quiz for a video
+  - [ ] submitQuizAnswers - Submit answers and calculate score
+  - [ ] getQuizResults - Get student's quiz results
+  - [ ] getModuleQuizStatus - Check if quiz is passed
+- [ ] Update module progress tracking
+  - [ ] Add quizPassed flag to module_progress table
+  - [ ] Add quizScore field to track scores
+  - [ ] Add quizCompletedAt timestamp
+  - [ ] Modify certificate eligibility to require quiz pass
+- [ ] Build quiz UI component
+  - [ ] Create QuizComponent.tsx with question display
+  - [ ] Add language toggle (English/Swahili)
+  - [ ] Implement answer selection and submission
+  - [ ] Show instant feedback on answers
+  - [ ] Display final score and pass/fail status
+- [ ] Integrate quizzes into module pages
+  - [ ] Add quiz section to ModuleDetail.tsx
+  - [ ] Show quiz only after module content viewed
+  - [ ] Block certificate download until quiz passed
+  - [ ] Display score on completion
+- [ ] Test quiz-to-certificate flow
+  - [ ] Verify quiz submission works
+  - [ ] Test passing and failing scores
+  - [ ] Verify certificate requires quiz pass
+  - [ ] Test bilingual content display
