@@ -1,0 +1,9 @@
+{
+  "query": "INSERT INTO quizzes (title, titleSwahili, description, descriptionSwahili, moduleId, passingScore, timeLimit, isPublished) VALUES ('Introduction to Christian Doctrine Assessment', 'Tathmini ya Utangulizi wa Doktrini ya Kikristo', 'Comprehensive assessment covering all 6 lessons on Christian doctrine. Students must score 70% or higher to receive a certificate of completion.', 'Tathmini kamili inayofunika somo la 6 kuhusu doktrini ya Kikristo. Wanafunzi lazima wakamatia alama 70% au zaidi kupokea cheti cha kumaliza.', 60001, 70, 60, 1);",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway04.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 27SALpbbdFwiPRE.root --database kBmgeZHWTyHuceHoeAKRrp --execute INSERT INTO quizzes (title, titleSwahili, description, descriptionSwahili, moduleId, passingScore, timeLimit, isPublished) VALUES ('Introduction to Christian Doctrine Assessment', 'Tathmini ya Utangulizi wa Doktrini ya Kikristo', 'Comprehensive assessment covering all 6 lessons on Christian doctrine. Students must score 70% or higher to receive a certificate of completion.', 'Tathmini kamili inayofunika somo la 6 kuhusu doktrini ya Kikristo. Wanafunzi lazima wakamatia alama 70% au zaidi kupokea cheti cha kumaliza.', 60001, 70, 60, 1);",
+  "rows": [],
+  "messages": [],
+  "stdout": "",
+  "stderr": "",
+  "execution_time_ms": 426
+}

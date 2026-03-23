@@ -1,0 +1,8 @@
+{
+  "query": "INSERT INTO quizzes (title, description, moduleId, passing_score, time_limit_minutes) VALUES ('Introduction to Christian Doctrine Assessment', 'Comprehensive assessment covering all 6 lessons on Christian doctrine. Students must score 70% or higher to receive a certificate of completion.', 60001, 70, 60);",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway04.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 27SALpbbdFwiPRE.root --database kBmgeZHWTyHuceHoeAKRrp --execute INSERT INTO quizzes (title, description, moduleId, passing_score, time_limit_minutes) VALUES ('Introduction to Christian Doctrine Assessment', 'Comprehensive assessment covering all 6 lessons on Christian doctrine. Students must score 70% or higher to receive a certificate of completion.', 60001, 70, 60);",
+  "returncode": 1,
+  "logs": [
+    "ERROR 1054 (42S22) at line 1: Unknown column 'passing_score' in 'field list'"
+  ]
+}
