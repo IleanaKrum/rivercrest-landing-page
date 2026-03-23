@@ -1,0 +1,1 @@
+ALTER TABLE `independent_study_modules` MODIFY COLUMN `category` enum('trinity','scripture','humanity','law_and_love','good_works','christ_sacrifice','new_life','sanctification','restoration','church','worship','sacraments','theology') NOT NULL;

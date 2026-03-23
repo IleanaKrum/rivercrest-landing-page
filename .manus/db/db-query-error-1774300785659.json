@@ -1,0 +1,8 @@
+{
+  "query": "INSERT INTO quizzes (title, titleSwahili, description, descriptionSwahili, moduleId, passingScore, timeLimit, createdAt, updatedAt) VALUES ('Wesleyan Theology Assessment', 'Tathmini ya Teolojia ya Wesleyan', 'Test your understanding of Wesleyan theology principles', 'Jaribu uelewa wako wa kanuni za teolojia ya Wesleyan', 16, 70, 30, NOW(), NOW())",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway04.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 27SALpbbdFwiPRE.root --database kBmgeZHWTyHuceHoeAKRrp --execute INSERT INTO quizzes (title, titleSwahili, description, descriptionSwahili, moduleId, passingScore, timeLimit, createdAt, updatedAt) VALUES ('Wesleyan Theology Assessment', 'Tathmini ya Teolojia ya Wesleyan', 'Test your understanding of Wesleyan theology principles', 'Jaribu uelewa wako wa kanuni za teolojia ya Wesleyan', 16, 70, 30, NOW(), NOW())",
+  "returncode": 1,
+  "logs": [
+    "ERROR 1054 (42S22) at line 1: Unknown column 'moduleId' in 'field list'"
+  ]
+}

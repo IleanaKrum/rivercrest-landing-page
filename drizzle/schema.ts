@@ -288,6 +288,7 @@ export const independentStudyModules = mysqlTable("independent_study_modules", {
     "church",
     "worship",
     "sacraments",
+    "theology",
   ]).notNull(),
   language: varchar("language", { length: 50 }).default("English"), // Primary language
   order: int("order").default(0), // Display order
@@ -337,7 +338,8 @@ export type InsertModuleProgress = typeof moduleProgress.$inferInsert;
 // Post-Video Assessment Quizzes
 export const quizzes = mysqlTable("quizzes", {
   id: int("id").autoincrement().primaryKey(),
-  videoId: int("videoId").notNull(), // Foreign key to videos table
+  videoId: int("videoId"), // Foreign key to videos table (optional)
+  moduleId: int("moduleId"), // Foreign key to independent_study_modules (optional)
   title: varchar("title", { length: 255 }).notNull(),
   titleSwahili: varchar("titleSwahili", { length: 255 }),
   description: text("description"),
