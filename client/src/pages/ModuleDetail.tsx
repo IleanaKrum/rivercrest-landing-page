@@ -1,13 +1,11 @@
-import { useAuth } from "@/_core/hooks/useAuth";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { trpc } from "@/lib/trpc";
 import { useLocation } from "wouter";
-import { ArrowLeft, BookOpen, Clock, CheckCircle2, Globe } from "lucide-react";
+import { ArrowLeft, BookOpen, Clock, CheckCircle2, Globe, Download } from "lucide-react";
 import { useState, useEffect } from "react";
 import { Streamdown } from "streamdown";
 import { useAuth } from "@/_core/hooks/useAuth";
-import { Download } from "lucide-react";
 import { VideoPlayer } from "@/components/VideoPlayer";
 
 export default function ModuleDetail() {

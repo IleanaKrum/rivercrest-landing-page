@@ -14,7 +14,7 @@ export async function generateCertificatePDF(
   completionDate: Date | string
 ): Promise<Buffer> {
   return new Promise((resolve, reject) => {
-    const doc = new PDFDocument({
+    const doc = new (PDFDocument as any)({
       size: "A4",
       margin: 50,
       bufferPages: true,
@@ -68,9 +68,8 @@ export async function generateCertificatePDF(
       .stroke("#1a3a3a");
 
     // Certificate title
-    doc.font("Helvetica-Bold", 48).fill("#1a3a3a").text("Certificate of Completion", {
+    doc.font("Helvetica-Bold", 48).fill("#1a3a3a").moveTo(0, 100).text("Certificate of Completion", {
       align: "center",
-      y: 100,
     });
 
     // Decorative line under title
@@ -81,54 +80,54 @@ export async function generateCertificatePDF(
     doc
       .font("Helvetica", 14)
       .fill("#666666")
+      .moveTo(0, 180)
       .text("Free Methodist Way Independent Study", {
         align: "center",
-        y: 180,
       });
 
     // Main text
     doc
       .font("Helvetica", 12)
       .fill("#333333")
+      .moveTo(0, 240)
       .text("This is to certify that", {
         align: "center",
-        y: 240,
       });
 
-    // Student name - highlighted
+     // Student name - centered
     doc
-      .font("Helvetica-Bold", 28)
+      .font("Helvetica-Bold", 24)
       .fill("#1a3a3a")
+      .moveTo(0, 270)
       .text(studentName, {
         align: "center",
-        y: 270,
       });
 
     // Completion statement
     doc
       .font("Helvetica", 12)
       .fill("#333333")
+      .moveTo(0, 320)
       .text("has successfully completed the study module", {
         align: "center",
-        y: 320,
       });
 
     // Module name - highlighted
     doc
       .font("Helvetica-Bold", 16)
       .fill("#8b4513")
+      .moveTo(0, 350)
       .text(moduleName, {
         align: "center",
-        y: 350,
       });
 
     // Completion date
     doc
       .font("Helvetica", 11)
       .fill("#666666")
+      .moveTo(0, 420)
       .text(`Completed on ${formattedDate}`, {
         align: "center",
-        y: 420,
       });
 
     // Signature line
@@ -137,26 +136,26 @@ export async function generateCertificatePDF(
     doc
       .font("Helvetica", 10)
       .fill("#666666")
+      .moveTo(0, signatureY + 10)
       .text("Director", {
         align: "center",
-        y: signatureY + 10,
       });
 
     // Church name and branding
     doc
       .font("Helvetica-Bold", 14)
       .fill("#1a3a3a")
+      .moveTo(0, 580)
       .text("Rivercrest Free Methodist Church", {
         align: "center",
-        y: 580,
       });
 
     doc
       .font("Helvetica", 10)
       .fill("#666666")
+      .moveTo(0, 600)
       .text("Center of Studies", {
         align: "center",
-        y: 600,
       });
 
     // Certificate ID (for tracking)
@@ -164,13 +163,13 @@ export async function generateCertificatePDF(
     doc
       .font("Helvetica", 8)
       .fill("#999999")
+      .moveTo(0, pageHeight - 40)
       .text(`Certificate ID: ${certificateId}`, {
         align: "center",
-        y: pageHeight - 40,
       });
 
     // Finalize PDF
-    doc.end();
+    (doc as any).end();
   });
 }
 

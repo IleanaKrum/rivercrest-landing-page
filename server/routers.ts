@@ -418,7 +418,7 @@ export const appRouter = router({
         description: z.string().optional(),
         content: z.string(),
         contentSwahili: z.string().optional(),
-        category: z.string(),
+        category: z.enum(["trinity", "scripture", "humanity", "law_and_love", "good_works", "christ_sacrifice", "new_life", "sanctification", "restoration", "church", "worship", "sacraments"]),
         language: z.string().default("English"),
         order: z.number().default(0),
         estimatedHours: z.number().default(1),
@@ -431,6 +431,37 @@ export const appRouter = router({
           ...input,
           isPublished: 1,
         });
+      }),
+    
+    getVideosByModule: publicProcedure
+      .input(z.object({ moduleId: z.number() }))
+      .query(async ({ input }) => {
+        return [];
+      }),
+    
+    getQuizByModuleId: publicProcedure
+      .input(z.object({ moduleId: z.number() }))
+      .query(async ({ input }) => {
+        return null;
+      }),
+    
+    submitQuiz: protectedProcedure
+      .input(z.object({
+        quizId: z.number(),
+        moduleId: z.number(),
+        score: z.number(),
+        passed: z.number(),
+        totalPoints: z.number(),
+        earnedPoints: z.number(),
+        timeSpent: z.number(),
+        answers: z.array(z.object({
+          questionId: z.number(),
+          selectedAnswerId: z.number(),
+        })),
+      }))
+      .mutation(async ({ input, ctx }) => {
+        if (!ctx.user) throw new TRPCError({ code: "UNAUTHORIZED" });
+        return { success: true };
       }),
     
     downloadCertificate: protectedProcedure
