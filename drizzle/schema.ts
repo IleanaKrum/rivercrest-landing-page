@@ -416,3 +416,24 @@ export const studentQuizAnswers = mysqlTable("student_quiz_answers", {
 
 export type StudentQuizAnswer = typeof studentQuizAnswers.$inferSelect;
 export type InsertStudentQuizAnswer = typeof studentQuizAnswers.$inferInsert;
+
+
+// Module Videos (Lesson Videos)
+export const moduleVideos = mysqlTable("module_videos", {
+  id: int("id").autoincrement().primaryKey(),
+  moduleId: int("moduleId").notNull(), // Foreign key to independent_study_modules
+  title: varchar("title", { length: 255 }).notNull(),
+  titleSwahili: varchar("titleSwahili", { length: 255 }),
+  description: text("description"),
+  descriptionSwahili: text("descriptionSwahili"),
+  videoUrl: text("videoUrl").notNull(), // CDN URL to video
+  duration: int("duration"), // Duration in seconds
+  lessonNumber: int("lessonNumber").notNull(), // Which lesson (1-6)
+  order: int("order").default(0),
+  isPublished: int("isPublished").default(1), // 0 or 1
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+  updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull()
+});
+
+export type ModuleVideo = typeof moduleVideos.$inferSelect;
+export type InsertModuleVideo = typeof moduleVideos.$inferInsert;
