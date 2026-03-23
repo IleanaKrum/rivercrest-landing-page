@@ -287,3 +287,31 @@
   - [x] Project builds successfully
   - [x] All 34 tests passing
   - [x] TypeScript compilation successful
+
+
+
+## Completed - PDF Certificate Generation
+- [x] Design certificate template
+  - [x] Create professional certificate design with church branding
+  - [x] Add placeholder for student name, module title, completion date
+  - [x] Professional layout with decorative borders and signature line
+- [x] Create PDF generation service
+  - [x] Set up PDFKit library for PDF generation
+  - [x] Create generateCertificatePDF function in server/_core/certificate.ts
+  - [x] Add dynamic text rendering for student/module data
+  - [x] Generate unique certificate IDs for tracking
+- [x] Add certificate download tRPC procedure
+  - [x] Create downloadCertificate mutation in centerOfStudies router
+  - [x] Return PDF file as base64 encoded string
+  - [x] Verify module completion before allowing download
+  - [x] Include proper error handling and authorization
+- [x] Build certificate UI
+  - [x] Add "Download Certificate" button to ModuleDetail page
+  - [x] Show button only when module is completed
+  - [x] Handle loading state with "Generating..." text
+  - [x] Implement PDF download with proper filename
+- [x] Test and deploy
+  - [x] Project builds successfully with no errors
+  - [x] All 34 tests passing
+  - [x] Certificate generation tested with PDFKit
+  - [x] Download functionality integrated with ModuleDetail page

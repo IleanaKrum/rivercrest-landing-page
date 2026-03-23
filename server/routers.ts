@@ -6,6 +6,7 @@ import { z } from "zod";
 import * as db from "./db";
 import { sendCourseRegistrationEmail, sendAdminRegistrationNotification } from "./_core/email";
 import { ENV } from "./_core/env";
+import { generateCertificatePDF, generateCertificateFilename } from "./_core/certificate";
 import { TRPCError } from "@trpc/server";
 
 export const appRouter = router({
@@ -398,6 +399,44 @@ export const appRouter = router({
           ...input,
           isPublished: 1,
         });
+      }),
+    
+    downloadCertificate: protectedProcedure
+      .input(z.object({ moduleId: z.number() }))
+      .mutation(async ({ input, ctx }) => {
+        if (!ctx.user) throw new TRPCError({ code: "UNAUTHORIZED" });
+        
+        // Get module details
+        const module = await db.getIndependentStudyModuleById(input.moduleId);
+        if (!module) {
+          throw new TRPCError({ code: "NOT_FOUND", message: "Module not found" });
+        }
+        
+        // Check if user has completed the module
+        const progress = await db.getModuleProgress(ctx.user.id, input.moduleId);
+        if (!progress || progress.isCompleted !== 1) {
+          throw new TRPCError({ 
+            code: "FORBIDDEN", 
+            message: "You must complete the module before downloading the certificate" 
+          });
+        }
+        
+        // Generate PDF certificate
+        const pdfBuffer = await generateCertificatePDF(
+          ctx.user.name || "Student",
+          module.title,
+          progress.completedAt || new Date()
+        );
+        
+        // Generate filename
+        const filename = generateCertificateFilename(ctx.user.name || "Student", module.title);
+        
+        // Return PDF as base64 for download
+        return {
+          pdf: pdfBuffer.toString("base64"),
+          filename,
+          success: true,
+        };
       }),
   }),
 });

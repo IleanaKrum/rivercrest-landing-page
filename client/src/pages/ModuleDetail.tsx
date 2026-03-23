@@ -6,6 +6,8 @@ import { useLocation } from "wouter";
 import { ArrowLeft, BookOpen, Clock, CheckCircle2, Globe } from "lucide-react";
 import { useState, useEffect } from "react";
 import { Streamdown } from "streamdown";
+import { useAuth } from "@/_core/hooks/useAuth";
+import { Download } from "lucide-react";
 
 export default function ModuleDetail() {
   const { user, isAuthenticated } = useAuth();
@@ -34,6 +36,7 @@ export default function ModuleDetail() {
   const updateProgressMutation = trpc.centerOfStudies.updateModuleProgress.useMutation();
   const completeModuleMutation = trpc.centerOfStudies.completeModule.useMutation();
 
+  const downloadCertificateMutation = trpc.centerOfStudies.downloadCertificate.useMutation();
   // Initialize progress data
   useEffect(() => {
     if (progress) {
@@ -67,6 +70,33 @@ export default function ModuleDetail() {
       setProgressPercentage(100);
     } catch (error) {
       console.error("Failed to complete module:", error);
+    }
+  };
+
+  const handleDownloadCertificate = async () => {
+    if (!isAuthenticated || !user) return;
+
+    try {
+      const result = await downloadCertificateMutation.mutateAsync({ moduleId });
+      if (result.success && result.pdf) {
+        const binaryString = atob(result.pdf);
+        const bytes = new Uint8Array(binaryString.length);
+        for (let i = 0; i < binaryString.length; i++) {
+          bytes[i] = binaryString.charCodeAt(i);
+        }
+        const blob = new Blob([bytes], { type: "application/pdf" });
+        
+        const url = window.URL.createObjectURL(blob);
+        const link = document.createElement("a");
+        link.href = url;
+        link.download = result.filename;
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+        window.URL.revokeObjectURL(url);
+      }
+    } catch (error) {
+      console.error("Failed to download certificate:", error);
     }
   };
 
@@ -279,6 +309,14 @@ export default function ModuleDetail() {
                         <div className="flex items-center justify-center gap-2 py-2 text-green-600">
                           <CheckCircle2 className="w-5 h-5" />
                           <span className="font-medium">Module Completed!</span>
+                          <Button
+                            onClick={handleDownloadCertificate}
+                            disabled={downloadCertificateMutation.isPending}
+                            className="w-full bg-green-600 hover:bg-green-700 text-white"
+                          >
+                            <Download className="w-4 h-4 mr-2" />
+                            {downloadCertificateMutation.isPending ? "Generating..." : "Download Certificate"}
+                          </Button>
                         </div>
                       )}
                     </div>
