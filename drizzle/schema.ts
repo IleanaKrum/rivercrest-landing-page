@@ -453,3 +453,21 @@ export const videoSubtitles = mysqlTable("video_subtitles", {
 
 export type VideoSubtitle = typeof videoSubtitles.$inferSelect;
 export type InsertVideoSubtitle = typeof videoSubtitles.$inferInsert;
+
+
+// Video Completion Tracking
+export const videoCompletions = mysqlTable("video_completions", {
+  id: int("id").autoincrement().primaryKey(),
+  userId: int("userId").notNull(),
+  videoId: int("videoId").notNull(),
+  moduleId: int("moduleId").notNull(),
+  watchedDuration: int("watchedDuration").default(0).notNull(), // Seconds watched
+  totalDuration: int("totalDuration").default(0).notNull(), // Total video duration in seconds
+  isCompleted: int("isCompleted").default(0).notNull(), // 0 or 1 - completed when watched >= 95% of video
+  completedAt: timestamp("completedAt"), // When the video was marked as completed
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+  updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull()
+});
+
+export type VideoCompletion = typeof videoCompletions.$inferSelect;
+export type InsertVideoCompletion = typeof videoCompletions.$inferInsert;

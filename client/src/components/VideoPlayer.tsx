@@ -1,6 +1,8 @@
 import React, { useRef, useState, useEffect } from 'react';
 import { Play, Pause, Volume2, VolumeX, Maximize, Settings, Subtitles } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import { trpc } from '@/lib/trpc';
+import { useAuth } from '@/_core/hooks/useAuth';
 
 interface Subtitle {
   id: number;
@@ -17,6 +19,9 @@ interface VideoPlayerProps {
   subtitles?: Subtitle[];
   duration?: number;
   poster?: string;
+  videoId?: number;
+  moduleId?: number;
+  onCompletionChange?: (isCompleted: boolean) => void;
 }
 
 export const VideoPlayer: React.FC<VideoPlayerProps> = ({
@@ -26,6 +31,9 @@ export const VideoPlayer: React.FC<VideoPlayerProps> = ({
   subtitles = [],
   duration,
   poster,
+  videoId,
+  moduleId,
+  onCompletionChange,
 }) => {
   const videoRef = useRef<HTMLVideoElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
@@ -42,7 +50,12 @@ export const VideoPlayer: React.FC<VideoPlayerProps> = ({
     subtitles.find(s => s.isDefault) || subtitles[0] || null
   );
   const [playbackSpeed, setPlaybackSpeed] = useState(1);
+  const [isCompleted, setIsCompleted] = useState(false);
   const controlsTimeoutRef = useRef<ReturnType<typeof setTimeout> | undefined>(undefined);
+  const trackingIntervalRef = useRef<ReturnType<typeof setInterval> | undefined>(undefined);
+  const { user } = useAuth();
+  // @ts-expect-error tRPC types not fully synced
+  const trackVideoProgressMutation = trpc.centerOfStudies.trackVideoProgress.useMutation();
 
   // Handle play/pause
   const togglePlayPause = () => {
@@ -160,11 +173,48 @@ export const VideoPlayer: React.FC<VideoPlayerProps> = ({
     return `${minutes}:${secs.toString().padStart(2, '0')}`;
   };
 
+  // Track video progress
+  useEffect(() => {
+    if (!user || !videoId || !moduleId || !videoDuration) return;
+
+    // Set up interval to track progress every 5 seconds
+    trackingIntervalRef.current = setInterval(() => {
+      if (videoRef.current) {
+        const watched = videoRef.current.currentTime;
+        const completionThreshold = videoDuration * 0.95;
+        const completed = watched >= completionThreshold;
+
+        // Track progress
+        trackVideoProgressMutation.mutate({
+          videoId,
+          moduleId,
+          watchedDuration: Math.floor(watched),
+          totalDuration: Math.floor(videoDuration),
+        });
+
+        // Update completion state
+        if (completed && !isCompleted) {
+          setIsCompleted(true);
+          onCompletionChange?.(true);
+        }
+      }
+    }, 5000);
+
+    return () => {
+      if (trackingIntervalRef.current) {
+        clearInterval(trackingIntervalRef.current);
+      }
+    };
+  }, [user, videoId, moduleId, videoDuration, isCompleted, onCompletionChange, trackVideoProgressMutation]);
+
   // Cleanup timeout on unmount
   useEffect(() => {
     return () => {
       if (controlsTimeoutRef.current) {
         clearTimeout(controlsTimeoutRef.current);
+      }
+      if (trackingIntervalRef.current) {
+        clearInterval(trackingIntervalRef.current);
       }
     };
   }, []);

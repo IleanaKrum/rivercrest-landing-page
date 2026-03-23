@@ -16,6 +16,7 @@ export default function ModuleDetail() {
   const [progressPercentage, setProgressPercentage] = useState(0);
   const [notes, setNotes] = useState("");
   const [isSaving, setIsSaving] = useState(false);
+  const [videosCompleted, setVideosCompleted] = useState(false);
 
   // Extract module ID from URL
   const moduleId = parseInt(window.location.pathname.split("/").pop() || "0");
@@ -49,6 +50,11 @@ export default function ModuleDetail() {
 
   // @ts-expect-error - tRPC types not regenerated yet
   const downloadCertificateMutation = trpc.centerOfStudies.downloadCertificate.useMutation();
+  // @ts-expect-error - tRPC types not regenerated yet
+  const { data: videosCompletionStatus } = trpc.centerOfStudies.isModuleVideosCompleted.useQuery(
+    { moduleId },
+    { enabled: isAuthenticated && moduleId > 0 }
+  );
   // Initialize progress data
   useEffect(() => {
     if (progress) {
@@ -267,11 +273,18 @@ export default function ModuleDetail() {
                 <div className="p-6 border-b border-border">
                   <h3 className="text-xl font-bold">Assessment Quiz</h3>
                   <p className="text-sm text-muted-foreground mt-1">
-                    Test your understanding with this bilingual quiz (English/Swahili)
+                    {videosCompletionStatus ? "Test your understanding with this bilingual quiz (English/Swahili)" : "Watch all videos first to unlock the quiz"}
                   </p>
                 </div>
                 <div className="p-6">
-                  <QuizComponent quizId={moduleId} moduleId={moduleId} />
+                  {videosCompletionStatus ? (
+                    <QuizComponent quizId={moduleId} moduleId={moduleId} />
+                  ) : (
+                    <div className="text-center py-8 bg-muted/50 rounded-lg">
+                      <p className="text-muted-foreground mb-2">📹 Complete all video lessons to unlock the quiz</p>
+                      <p className="text-sm text-muted-foreground">Progress: Watch the videos above to continue</p>
+                    </div>
+                  )}
                 </div>
               </Card>
             )}

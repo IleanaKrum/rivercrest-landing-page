@@ -501,6 +501,46 @@ export const appRouter = router({
           success: true,
         };
       }),
+
+    // Video Completion Tracking
+    trackVideoProgress: protectedProcedure
+      .input(z.object({
+        videoId: z.number(),
+        moduleId: z.number(),
+        watchedDuration: z.number(),
+        totalDuration: z.number(),
+      }))
+      .mutation(async ({ input, ctx }) => {
+        if (!ctx.user) throw new TRPCError({ code: 'UNAUTHORIZED' });
+        return db.trackVideoProgress(
+          ctx.user.id,
+          input.videoId,
+          input.moduleId,
+          input.watchedDuration,
+          input.totalDuration
+        );
+      }),
+
+    getVideoCompletion: protectedProcedure
+      .input(z.object({ videoId: z.number() }))
+      .query(async ({ input, ctx }) => {
+        if (!ctx.user) throw new TRPCError({ code: 'UNAUTHORIZED' });
+        return db.getVideoCompletion(ctx.user.id, input.videoId);
+      }),
+
+    getModuleVideoCompletions: protectedProcedure
+      .input(z.object({ moduleId: z.number() }))
+      .query(async ({ input, ctx }) => {
+        if (!ctx.user) throw new TRPCError({ code: 'UNAUTHORIZED' });
+        return db.getModuleVideoCompletions(ctx.user.id, input.moduleId);
+      }),
+
+    isModuleVideosCompleted: protectedProcedure
+      .input(z.object({ moduleId: z.number() }))
+      .query(async ({ input, ctx }) => {
+        if (!ctx.user) throw new TRPCError({ code: 'UNAUTHORIZED' });
+        return db.isModuleVideosCompleted(ctx.user.id, input.moduleId);
+      }),
   }),
 });
 

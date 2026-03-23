@@ -1,6 +1,6 @@
 import { eq, and } from "drizzle-orm";
 import { drizzle } from "drizzle-orm/mysql2";
-import { InsertUser, users, trainingTracks, courses, courseSessions, applications, enrollments, studentProgress, assignments, submissions, courseRegistrations, resources, independentStudyModules, trackModuleLinks, moduleProgress, InsertApplication, InsertEnrollment, InsertStudentProgress, InsertCourse, InsertCourseSession, InsertAssignment, InsertSubmission, InsertCourseRegistration, InsertResource, Resource, InsertIndependentStudyModule, InsertTrackModuleLink, InsertModuleProgress } from "../drizzle/schema";
+import { InsertUser, users, trainingTracks, courses, courseSessions, applications, enrollments, studentProgress, assignments, submissions, courseRegistrations, resources, independentStudyModules, trackModuleLinks, moduleProgress, videoCompletions, moduleVideos, InsertApplication, InsertEnrollment, InsertStudentProgress, InsertCourse, InsertCourseSession, InsertAssignment, InsertSubmission, InsertCourseRegistration, InsertResource, Resource, InsertIndependentStudyModule, InsertTrackModuleLink, InsertModuleProgress, InsertVideoCompletion } from "../drizzle/schema";
 import { ENV } from './_core/env';
 
 let _db: ReturnType<typeof drizzle> | null = null;
@@ -486,4 +486,99 @@ export async function getUserCompletedModules(userId: number, trackId: number) {
   const db = await getDb();
   if (!db) return [];
   return db.select().from(moduleProgress).where(and(eq(moduleProgress.userId, userId), eq(moduleProgress.trackId, trackId), eq(moduleProgress.isCompleted, 1)));
+}
+
+
+// Video Completion Tracking
+export async function trackVideoProgress(userId: number, videoId: number, moduleId: number, watchedDuration: number, totalDuration: number) {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+  
+  // Check if record exists
+  const existing = await db.select().from(videoCompletions).where(
+    and(
+      eq(videoCompletions.userId, userId),
+      eq(videoCompletions.videoId, videoId)
+    )
+  );
+
+  const isCompleted = watchedDuration >= (totalDuration * 0.95); // 95% threshold
+
+  if (existing.length > 0) {
+    // Update existing record
+    return db.update(videoCompletions).set({
+      watchedDuration,
+      totalDuration,
+      isCompleted: isCompleted ? 1 : 0,
+      completedAt: isCompleted ? new Date() : null,
+      updatedAt: new Date()
+    }).where(
+      and(
+        eq(videoCompletions.userId, userId),
+        eq(videoCompletions.videoId, videoId)
+      )
+    );
+  } else {
+    // Create new record
+    return db.insert(videoCompletions).values({
+      userId,
+      videoId,
+      moduleId,
+      watchedDuration,
+      totalDuration,
+      isCompleted: isCompleted ? 1 : 0,
+      completedAt: isCompleted ? new Date() : null,
+      createdAt: new Date(),
+      updatedAt: new Date()
+    });
+  }
+}
+
+export async function getVideoCompletion(userId: number, videoId: number) {
+  const db = await getDb();
+  if (!db) return null;
+  
+  const result = await db.select().from(videoCompletions).where(
+    and(
+      eq(videoCompletions.userId, userId),
+      eq(videoCompletions.videoId, videoId)
+    )
+  );
+  
+  return result[0] || null;
+}
+
+export async function getModuleVideoCompletions(userId: number, moduleId: number) {
+  const db = await getDb();
+  if (!db) return [];
+  
+  return db.select().from(videoCompletions).where(
+    and(
+      eq(videoCompletions.userId, userId),
+      eq(videoCompletions.moduleId, moduleId)
+    )
+  );
+}
+
+export async function isModuleVideosCompleted(userId: number, moduleId: number) {
+  const db = await getDb();
+  if (!db) return false;
+  
+  // Get all videos for the module
+  const allModuleVideos = await db.select().from(moduleVideos).where(
+    eq(moduleVideos.moduleId, moduleId)
+  );
+  
+  if (allModuleVideos.length === 0) return true; // No videos to complete
+  
+  // Check if all videos are completed
+  const completions = await db.select().from(videoCompletions).where(
+    and(
+      eq(videoCompletions.userId, userId),
+      eq(videoCompletions.moduleId, moduleId),
+      eq(videoCompletions.isCompleted, 1)
+    )
+  );
+  
+  return completions.length === allModuleVideos.length;
 }
