@@ -4,7 +4,7 @@ import { systemRouter } from "./_core/systemRouter";
 import { publicProcedure, protectedProcedure, router } from "./_core/trpc";
 import { z } from "zod";
 import * as db from "./db";
-import { sendCourseRegistrationEmail, sendAdminRegistrationNotification } from "./_core/email";
+import { sendCourseRegistrationEmail, sendAdminRegistrationNotification, sendCertificateEmail } from "./_core/email";
 import { ENV } from "./_core/env";
 import { generateCertificatePDF, generateCertificateFilename } from "./_core/certificate";
 import { TRPCError } from "@trpc/server";
@@ -349,7 +349,39 @@ export const appRouter = router({
       .input(z.object({ moduleId: z.number() }))
       .mutation(async ({ input, ctx }) => {
         if (!ctx.user) throw new TRPCError({ code: "UNAUTHORIZED" });
-        return db.completeModule(ctx.user.id, input.moduleId);
+        
+        // Complete the module
+        const result = await db.completeModule(ctx.user.id, input.moduleId);
+        
+        // Get module details for certificate
+        const module = await db.getIndependentStudyModuleById(input.moduleId);
+        if (module && ctx.user.email) {
+          try {
+            // Generate certificate PDF
+            const pdfBuffer = await generateCertificatePDF(
+              ctx.user.name || "Student",
+              module.title,
+              new Date()
+            );
+            
+            // Generate certificate ID
+            const certificateId = `CERT-${ctx.user.id}-${input.moduleId}-${Date.now()}`;
+            
+            // Send certificate email
+            await sendCertificateEmail(
+              ctx.user.name || "Student",
+              ctx.user.email,
+              module.title,
+              pdfBuffer,
+              certificateId
+            );
+          } catch (error) {
+            console.error("[Certificate] Error sending certificate email:", error);
+            // Don't fail the mutation if email fails
+          }
+        }
+        
+        return result;
       }),
     
     updateModuleProgress: protectedProcedure

@@ -373,3 +373,204 @@ export async function sendAdminRegistrationNotification(
     return false;
   }
 }
+
+
+/**
+ * Send certificate completion email with PDF attachment
+ */
+export async function sendCertificateEmail(
+  studentName: string,
+  studentEmail: string,
+  moduleName: string,
+  pdfBuffer: Buffer,
+  certificateId: string
+): Promise<boolean> {
+  const client = getResendClient();
+  if (!client) {
+    console.warn("[Email] Resend client not available, skipping certificate email");
+    return false;
+  }
+
+  try {
+    const completionDate = new Date().toLocaleDateString("en-US", {
+      year: "numeric",
+      month: "long",
+      day: "numeric",
+    });
+
+    const htmlContent = `
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <style>
+      body {
+        font-family: 'Crimson Text', 'Georgia', serif;
+        line-height: 1.6;
+        color: #1a3a3f;
+      }
+      .container {
+        max-width: 600px;
+        margin: 0 auto;
+        background-color: #f5f1ed;
+        padding: 40px 20px;
+      }
+      .card {
+        background-color: #ffffff;
+        padding: 40px;
+        border-radius: 8px;
+        border: 2px solid #1a4d5c;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      }
+      .header {
+        text-align: center;
+        margin-bottom: 30px;
+        border-bottom: 3px solid #8b6f47;
+        padding-bottom: 20px;
+      }
+      .header h1 {
+        color: #1a4d5c;
+        margin: 0;
+        font-size: 28px;
+        font-weight: 600;
+      }
+      .header p {
+        color: #8b6f47;
+        margin: 10px 0 0 0;
+        font-size: 14px;
+      }
+      .content {
+        text-align: center;
+        margin: 30px 0;
+      }
+      .content p {
+        margin: 15px 0;
+        font-size: 16px;
+        line-height: 1.8;
+      }
+      .module-name {
+        color: #1a4d5c;
+        font-weight: 600;
+        font-size: 18px;
+      }
+      .certificate-id {
+        background-color: #f0f4f5;
+        padding: 15px;
+        border-radius: 6px;
+        margin: 20px 0;
+        font-family: 'Courier New', monospace;
+        font-size: 14px;
+        color: #666;
+      }
+      .certificate-id label {
+        display: block;
+        font-size: 12px;
+        color: #999;
+        margin-bottom: 5px;
+      }
+      .cta-button {
+        display: inline-block;
+        background-color: #1a4d5c;
+        color: #ffffff;
+        padding: 12px 24px;
+        text-decoration: none;
+        border-radius: 6px;
+        font-weight: 600;
+        margin-top: 20px;
+        font-family: 'Inter', sans-serif;
+      }
+      .cta-button:hover {
+        background-color: #0f3a47;
+      }
+      .footer {
+        border-top: 1px solid #e5e7eb;
+        padding-top: 20px;
+        margin-top: 30px;
+        font-size: 12px;
+        color: #6b7280;
+        text-align: center;
+      }
+      .footer p {
+        margin: 5px 0;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="card">
+        <div class="header">
+          <h1>🎓 Congratulations!</h1>
+          <p>Module Completion Certificate</p>
+        </div>
+
+        <div class="content">
+          <p>Dear <strong>${studentName}</strong>,</p>
+
+          <p>We are delighted to inform you that you have successfully completed the independent study module:</p>
+
+          <p class="module-name">${moduleName}</p>
+
+          <p>Your certificate of completion is attached to this email. This certificate recognizes your commitment to deepening your understanding of Free Methodist doctrine and leadership principles through our Center of Studies program.</p>
+
+          <div class="certificate-id">
+            <label>Certificate ID:</label>
+            <strong>${certificateId}</strong>
+          </div>
+
+          <p><strong>Completion Date:</strong> ${completionDate}</p>
+
+          <p>You can download and print your certificate, or save it digitally for your records. Your certificate is also available in your student dashboard under "My Certificates."</p>
+
+          <p>We encourage you to continue your studies with our other modules. Each completed module strengthens your foundation in Free Methodist theology and leadership development.</p>
+
+          <p>
+            <a href="https://rivercrest.org/student-dashboard" class="cta-button">View Your Dashboard</a>
+          </p>
+
+          <p>If you have any questions about your certificate or would like to enroll in additional modules, please contact us at <strong>info@rivercrest.org</strong>.</p>
+
+          <p>
+            Blessings on your continued journey of faith and learning!<br />
+            <strong>Rivercrest Free Methodist Church</strong><br />
+            Center of Studies
+          </p>
+        </div>
+
+        <div class="footer">
+          <p>This is an automated email. Please do not reply to this message.</p>
+          <p>&copy; 2026 Rivercrest Free Methodist Church. All rights reserved.</p>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
+    `;
+
+    // Convert buffer to base64 for Resend API
+    const pdfBase64 = pdfBuffer.toString("base64");
+
+    const response = await client.emails.send({
+      from: "Rivercrest FMC <onboarding@resend.dev>",
+      to: studentEmail,
+      subject: `Certificate of Completion - ${moduleName}`,
+      html: htmlContent,
+      attachments: [
+        {
+          filename: `Certificate-${certificateId}.pdf`,
+          content: pdfBase64,
+        },
+      ],
+    });
+
+    if (response.error) {
+      console.error("[Email] Failed to send certificate email:", JSON.stringify(response.error, null, 2));
+      return false;
+    }
+
+    console.log("[Email] Certificate email sent to", studentEmail);
+    return true;
+  } catch (error) {
+    console.error("[Email] Error sending certificate email:", error);
+    return false;
+  }
+}

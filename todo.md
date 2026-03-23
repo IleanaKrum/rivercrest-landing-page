@@ -315,3 +315,28 @@
   - [x] All 34 tests passing
   - [x] Certificate generation tested with PDFKit
   - [x] Download functionality integrated with ModuleDetail page
+
+
+
+## Completed - Automatic Certificate Email Delivery
+- [x] Create certificate email service
+  - [x] Add sendCertificateEmail function to email.ts
+  - [x] Support PDF attachment in Resend API
+  - [x] Create professional email template with certificate details
+  - [x] Include certificate ID, completion date, and congratulatory message
+- [x] Integrate with module completion
+  - [x] Modify completeModule mutation to trigger email
+  - [x] Generate PDF and send as attachment
+  - [x] Handle email errors gracefully (non-blocking)
+  - [x] Automatic certificate ID generation
+- [x] Add email template
+  - [x] Congratulatory message for completion
+  - [x] Module details and completion date
+  - [x] Certificate ID for verification
+  - [x] Link to student dashboard
+  - [x] Professional design matching church branding
+- [x] Test email delivery
+  - [x] Project builds successfully with no errors
+  - [x] All 34 tests passing
+  - [x] Certificate email integration verified
+  - [x] Error handling tested for email failures
