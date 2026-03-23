@@ -1,6 +1,6 @@
-import { eq, and } from "drizzle-orm";
+import { eq, and, inArray } from "drizzle-orm";
 import { drizzle } from "drizzle-orm/mysql2";
-import { InsertUser, users, trainingTracks, courses, courseSessions, applications, enrollments, studentProgress, assignments, submissions, courseRegistrations, resources, independentStudyModules, trackModuleLinks, moduleProgress, videoCompletions, moduleVideos, InsertApplication, InsertEnrollment, InsertStudentProgress, InsertCourse, InsertCourseSession, InsertAssignment, InsertSubmission, InsertCourseRegistration, InsertResource, Resource, InsertIndependentStudyModule, InsertTrackModuleLink, InsertModuleProgress, InsertVideoCompletion } from "../drizzle/schema";
+import { InsertUser, users, trainingTracks, courses, courseSessions, applications, enrollments, studentProgress, assignments, submissions, courseRegistrations, resources, independentStudyModules, trackModuleLinks, moduleProgress, videoCompletions, moduleVideos, quizzes, quizResults, InsertApplication, InsertEnrollment, InsertStudentProgress, InsertCourse, InsertCourseSession, InsertAssignment, InsertSubmission, InsertCourseRegistration, InsertResource, Resource, InsertIndependentStudyModule, InsertTrackModuleLink, InsertModuleProgress, InsertVideoCompletion } from "../drizzle/schema";
 import { ENV } from './_core/env';
 
 let _db: ReturnType<typeof drizzle> | null = null;
@@ -581,4 +581,92 @@ export async function isModuleVideosCompleted(userId: number, moduleId: number) 
   );
   
   return completions.length === allModuleVideos.length;
+}
+
+
+// Analytics functions for admin dashboard
+export async function getStudentProgressAnalytics() {
+  const database = await getDb();
+  if (!database) return [];
+  const students = await database.select().from(users).where(eq(users.role, 'user'));
+  
+  return Promise.all(students.map(async (student) => {
+    const completions = await database.select().from(videoCompletions).where(eq(videoCompletions.userId, student.id));
+    const studentQuizResults = await database.select().from(quizResults).where(eq(quizResults.userId, student.id));
+    
+    return {
+      id: student.id,
+      name: student.name,
+      email: student.email,
+      videoCompletionRate: completions.length > 0 ? Math.round((completions.filter((c: any) => c.isCompleted).length / completions.length) * 100) : 0,
+      averageQuizScore: studentQuizResults.length > 0 ? Math.round(studentQuizResults.reduce((sum: number, r: any) => sum + r.score, 0) / studentQuizResults.length) : 0,
+      certificatesEarned: studentQuizResults.filter((r: any) => r.passed).length,
+      lastActivity: student.updatedAt || new Date(),
+    };
+  }));
+}
+
+export async function getQuizPerformanceAnalytics() {
+  const database = await getDb();
+  if (!database) return [];
+  const allQuizzes = await database.select().from(quizzes);
+  
+  return Promise.all(allQuizzes.map(async (quiz) => {
+    const results = await database.select().from(quizResults).where(eq(quizResults.quizId, quiz.id));
+    
+    return {
+      quizId: quiz.id,
+      quizName: quiz.title,
+      totalAttempts: results.length,
+      averageScore: results.length > 0 ? Math.round(results.reduce((sum: number, r: any) => sum + r.score, 0) / results.length) : 0,
+      passRate: results.length > 0 ? Math.round((results.filter((r: any) => r.passed).length / results.length) * 100) : 0,
+      failRate: results.length > 0 ? Math.round((results.filter((r: any) => !r.passed).length / results.length) * 100) : 0,
+      highestScore: results.length > 0 ? Math.max(...results.map((r: any) => r.score)) : 0,
+      lowestScore: results.length > 0 ? Math.min(...results.map((r: any) => r.score)) : 0,
+    };
+  }));
+}
+
+export async function getModuleCompletionAnalytics() {
+  const database = await getDb();
+  if (!database) return [];
+  const modules = await database.select().from(independentStudyModules);
+  
+  return Promise.all(modules.map(async (module) => {
+    const completions = await database.select().from(videoCompletions).where(eq(videoCompletions.moduleId, module.id));
+    const quizIds = (await database.select({ id: quizzes.id }).from(quizzes).where(eq(quizzes.moduleId, module.id))).map((q: any) => q.id);
+    const moduleQuizResults = quizIds.length > 0 ? await database.select().from(quizResults).where(inArray(quizResults.quizId, quizIds)) : [];
+    
+    const uniqueStudents = new Set(completions.map((c: any) => c.userId));
+    
+    return {
+      moduleId: module.id,
+      moduleName: module.title,
+      category: module.category,
+      totalEnrolled: uniqueStudents.size,
+      completed: moduleQuizResults.filter((r: any) => r.passed).length,
+      inProgress: completions.filter((c: any) => !c.isCompleted).length,
+      notStarted: 0,
+      averageCompletion: completions.length > 0 ? Math.round((completions.filter((c: any) => c.isCompleted).length / completions.length) * 100) : 0,
+      averageQuizScore: moduleQuizResults.length > 0 ? Math.round(moduleQuizResults.reduce((sum: number, r: any) => sum + r.score, 0) / moduleQuizResults.length) : 0,
+      certificatesIssued: moduleQuizResults.filter((r: any) => r.passed).length,
+    };
+  }));
+}
+
+export async function getDashboardSummary() {
+  const database = await getDb();
+  if (!database) return { totalStudents: 0, totalQuizAttempts: 0, averageQuizScore: 0, passRate: 0, certificatesIssued: 0, videoCompletionRate: 0 };
+  const students = await database.select().from(users).where(eq(users.role, 'user'));
+  const allQuizResults = await database.select().from(quizResults);
+  const completions = await database.select().from(videoCompletions);
+  
+  return {
+    totalStudents: students.length,
+    totalQuizAttempts: allQuizResults.length,
+    averageQuizScore: allQuizResults.length > 0 ? Math.round(allQuizResults.reduce((sum: number, r: any) => sum + r.score, 0) / allQuizResults.length) : 0,
+    passRate: allQuizResults.length > 0 ? Math.round((allQuizResults.filter((r: any) => r.passed).length / allQuizResults.length) * 100) : 0,
+    certificatesIssued: allQuizResults.filter((r: any) => r.passed).length,
+    videoCompletionRate: completions.length > 0 ? Math.round((completions.filter((c: any) => c.isCompleted).length / completions.length) * 100) : 0,
+  };
 }

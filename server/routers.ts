@@ -182,6 +182,27 @@ export const appRouter = router({
     getResourceById: publicProcedure
       .input(z.object({ resourceId: z.number() }))
       .query(({ input }) => db.getResourceById(input.resourceId)),
+
+    // Analytics procedures
+    getStudentProgressAnalytics: protectedProcedure.query(async ({ ctx }) => {
+      if (ctx.user.role !== 'admin') throw new Error('Unauthorized');
+      return db.getStudentProgressAnalytics();
+    }),
+
+    getQuizPerformanceAnalytics: protectedProcedure.query(async ({ ctx }) => {
+      if (ctx.user.role !== 'admin') throw new Error('Unauthorized');
+      return db.getQuizPerformanceAnalytics();
+    }),
+
+    getModuleCompletionAnalytics: protectedProcedure.query(async ({ ctx }) => {
+      if (ctx.user.role !== 'admin') throw new Error('Unauthorized');
+      return db.getModuleCompletionAnalytics();
+    }),
+
+    getDashboardSummary: protectedProcedure.query(async ({ ctx }) => {
+      if (ctx.user.role !== 'admin') throw new Error('Unauthorized');
+      return db.getDashboardSummary();
+    }),
   }),
 
   courseRegistration: router({
