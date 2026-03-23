@@ -6,8 +6,35 @@ import { ENV } from "./env";
  * Handles all Stripe API interactions and payment processing
  */
 
-// Initialize Stripe with secret key
-export const stripe = new Stripe(ENV.stripeSecretKey);
+// Lazy initialization of Stripe - only initialize when needed
+let stripeInstance: Stripe | null = null;
+
+function getStripe(): Stripe {
+  if (!stripeInstance) {
+    if (!ENV.stripeSecretKey) {
+      throw new Error("STRIPE_SECRET_KEY environment variable is not set");
+    }
+    stripeInstance = new Stripe(ENV.stripeSecretKey);
+  }
+  return stripeInstance;
+}
+
+// Export a getter instead of direct instance
+export const stripe = {
+  checkout: {
+    sessions: {
+      create: (params: any) => getStripe().checkout.sessions.create(params),
+      retrieve: (sessionId: string) => getStripe().checkout.sessions.retrieve(sessionId),
+    },
+  },
+  paymentIntents: {
+    retrieve: (paymentIntentId: string) => getStripe().paymentIntents.retrieve(paymentIntentId),
+  },
+  webhooks: {
+    constructEvent: (body: string, signature: string, secret: string) => 
+      getStripe().webhooks.constructEvent(body, signature, secret),
+  },
+};
 
 /**
  * Product definitions for printed course materials
@@ -43,7 +70,7 @@ export async function createPrintedMaterialsCheckoutSession(
   cancelUrl: string
 ) {
   try {
-    const session = await stripe.checkout.sessions.create({
+    const session = await getStripe().checkout.sessions.create({
       payment_method_types: ["card"],
       mode: "payment",
       customer_email: userEmail,
@@ -87,7 +114,7 @@ export async function createPrintedMaterialsCheckoutSession(
  */
 export function verifyWebhookSignature(body: string, signature: string) {
   try {
-    const event = stripe.webhooks.constructEvent(
+    const event = getStripe().webhooks.constructEvent(
       body,
       signature,
       ENV.stripeWebhookSecret
@@ -106,7 +133,7 @@ export function verifyWebhookSignature(body: string, signature: string) {
  */
 export async function getPaymentIntent(paymentIntentId: string) {
   try {
-    const paymentIntent = await stripe.paymentIntents.retrieve(paymentIntentId);
+    const paymentIntent = await getStripe().paymentIntents.retrieve(paymentIntentId);
     return paymentIntent;
   } catch (error) {
     console.error("[Stripe] Error retrieving payment intent:", error);
@@ -121,7 +148,7 @@ export async function getPaymentIntent(paymentIntentId: string) {
  */
 export async function getCheckoutSession(sessionId: string) {
   try {
-    const session = await stripe.checkout.sessions.retrieve(sessionId);
+    const session = await getStripe().checkout.sessions.retrieve(sessionId);
     return session;
   } catch (error) {
     console.error("[Stripe] Error retrieving checkout session:", error);
