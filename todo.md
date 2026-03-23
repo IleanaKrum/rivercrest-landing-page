@@ -437,3 +437,38 @@
 - [x] Create VideoPlayer component with subtitle toggle
 - [x] Integrate videos into module detail pages
 - [x] Test video playback and subtitle functionality
+
+
+## In Progress - Post-Video Assessment Quizzes with Swahili
+- [ ] Create quiz database schema
+  - [ ] Quizzes table (title, description, videoId, passing_score)
+  - [ ] Quiz questions table (question_text, question_text_sw, quiz_id, order)
+  - [ ] Quiz answers table (answer_text, answer_text_sw, is_correct, question_id)
+  - [ ] Student quiz results table (user_id, quiz_id, score, passed, completed_at)
+- [ ] Add bilingual quiz questions
+  - [ ] Quiz 1: FMC Origins (5 questions)
+  - [ ] Quiz 2: Core Beliefs (5 questions)
+  - [ ] Quiz 3: Holy Living (5 questions)
+  - [ ] Quiz 4: Church Organization (5 questions)
+  - [ ] Quiz 5: Leadership Roles (5 questions)
+  - [ ] Quiz 6: Social Justice (5 questions)
+- [ ] Build tRPC procedures
+  - [ ] getQuizByVideo procedure
+  - [ ] submitQuizAnswers mutation with scoring
+  - [ ] getStudentQuizResults query
+  - [ ] getQuizStats query for admin dashboard
+- [ ] Create quiz UI component
+  - [ ] Quiz question display with language toggle
+  - [ ] Multiple choice answer selection
+  - [ ] Progress indicator
+  - [ ] Submit and results display
+- [ ] Integrate quizzes into modules
+  - [ ] Add quiz section to module detail pages
+  - [ ] Link quizzes to videos
+  - [ ] Display quiz results and scores
+  - [ ] Track quiz completion for certificates
+- [ ] Test and validate
+  - [ ] Test quiz submission and scoring
+  - [ ] Verify bilingual content display
+  - [ ] Test passing/failing logic
+  - [ ] Validate score calculations

@@ -332,3 +332,85 @@ export const moduleProgress = mysqlTable("module_progress", {
 
 export type ModuleProgress = typeof moduleProgress.$inferSelect;
 export type InsertModuleProgress = typeof moduleProgress.$inferInsert;
+
+
+// Post-Video Assessment Quizzes
+export const quizzes = mysqlTable("quizzes", {
+  id: int("id").autoincrement().primaryKey(),
+  videoId: int("videoId").notNull(), // Foreign key to videos table
+  title: varchar("title", { length: 255 }).notNull(),
+  titleSwahili: varchar("titleSwahili", { length: 255 }),
+  description: text("description"),
+  descriptionSwahili: text("descriptionSwahili"),
+  passingScore: int("passingScore").default(70), // Percentage required to pass (0-100)
+  timeLimit: int("timeLimit"), // Optional time limit in minutes
+  isPublished: int("isPublished").default(1), // 0 or 1
+  order: int("order").default(0),
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+  updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
+});
+
+export type Quiz = typeof quizzes.$inferSelect;
+export type InsertQuiz = typeof quizzes.$inferInsert;
+
+// Quiz Questions
+export const quizQuestions = mysqlTable("quiz_questions", {
+  id: int("id").autoincrement().primaryKey(),
+  quizId: int("quizId").notNull(), // Foreign key to quizzes
+  questionText: text("questionText").notNull(),
+  questionTextSwahili: text("questionTextSwahili"),
+  questionType: varchar("questionType", { length: 50 }).default("multiple_choice"), // multiple_choice, true_false, short_answer
+  order: int("order").default(0),
+  points: int("points").default(1), // Points for this question
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+});
+
+export type QuizQuestion = typeof quizQuestions.$inferSelect;
+export type InsertQuizQuestion = typeof quizQuestions.$inferInsert;
+
+// Quiz Answer Options
+export const quizAnswers = mysqlTable("quiz_answers", {
+  id: int("id").autoincrement().primaryKey(),
+  questionId: int("questionId").notNull(), // Foreign key to quiz_questions
+  answerText: text("answerText").notNull(),
+  answerTextSwahili: text("answerTextSwahili"),
+  isCorrect: int("isCorrect").default(0), // 0 or 1
+  order: int("order").default(0),
+  explanation: text("explanation"), // Explanation for why this is correct/incorrect
+  explanationSwahili: text("explanationSwahili"),
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+});
+
+export type QuizAnswer = typeof quizAnswers.$inferSelect;
+export type InsertQuizAnswer = typeof quizAnswers.$inferInsert;
+
+// Student Quiz Results
+export const quizResults = mysqlTable("quiz_results", {
+  id: int("id").autoincrement().primaryKey(),
+  userId: int("userId").notNull(), // Foreign key to users
+  quizId: int("quizId").notNull(), // Foreign key to quizzes
+  score: int("score").default(0), // Percentage score (0-100)
+  passed: int("passed").default(0), // 0 or 1 (based on passing_score)
+  totalPoints: int("totalPoints").default(0),
+  earnedPoints: int("earnedPoints").default(0),
+  timeSpent: int("timeSpent"), // Time spent in seconds
+  completedAt: timestamp("completedAt").defaultNow().notNull(),
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+});
+
+export type QuizResult = typeof quizResults.$inferSelect;
+export type InsertQuizResult = typeof quizResults.$inferInsert;
+
+// Student Quiz Answers (detailed tracking)
+export const studentQuizAnswers = mysqlTable("student_quiz_answers", {
+  id: int("id").autoincrement().primaryKey(),
+  quizResultId: int("quizResultId").notNull(), // Foreign key to quiz_results
+  questionId: int("questionId").notNull(), // Foreign key to quiz_questions
+  selectedAnswerId: int("selectedAnswerId"), // Foreign key to quiz_answers (NULL if no answer)
+  isCorrect: int("isCorrect").default(0), // 0 or 1
+  pointsEarned: int("pointsEarned").default(0),
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+});
+
+export type StudentQuizAnswer = typeof studentQuizAnswers.$inferSelect;
+export type InsertStudentQuizAnswer = typeof studentQuizAnswers.$inferInsert;
