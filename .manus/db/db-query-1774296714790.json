@@ -1,0 +1,9 @@
+{
+  "query": "INSERT INTO track_module_links (trackId, moduleId, isRequired, `order`) SELECT t.id, m.id, 1, ROW_NUMBER() OVER (PARTITION BY t.id ORDER BY m.`order`) FROM (SELECT 1 as id UNION SELECT 2 UNION SELECT 3 UNION SELECT 4 UNION SELECT 5) t CROSS JOIN (SELECT id, `order` FROM independent_study_modules WHERE title LIKE 'FMC%' OR title LIKE 'Core%' OR title LIKE 'Church%' OR title LIKE 'Leadership%' ORDER BY `order`) m;",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway04.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 27SALpbbdFwiPRE.root --database kBmgeZHWTyHuceHoeAKRrp --execute INSERT INTO track_module_links (trackId, moduleId, isRequired, `order`) SELECT t.id, m.id, 1, ROW_NUMBER() OVER (PARTITION BY t.id ORDER BY m.`order`) FROM (SELECT 1 as id UNION SELECT 2 UNION SELECT 3 UNION SELECT 4 UNION SELECT 5) t CROSS JOIN (SELECT id, `order` FROM independent_study_modules WHERE title LIKE 'FMC%' OR title LIKE 'Core%' OR title LIKE 'Church%' OR title LIKE 'Leadership%' ORDER BY `order`) m;",
+  "rows": [],
+  "messages": [],
+  "stdout": "",
+  "stderr": "",
+  "execution_time_ms": 507
+}
