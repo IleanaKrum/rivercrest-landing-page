@@ -14,6 +14,8 @@ import AdminSubmissions from "./pages/AdminSubmissions";
 import CourseRegistration from "./pages/CourseRegistration";
 import Resources from "./pages/Resources";
 import EmailNotificationShowcase from "./pages/EmailNotificationShowcase";
+import IndependentStudyModules from "./pages/IndependentStudyModules";
+import ModuleDetail from "./pages/ModuleDetail";
 
 function Router() {
   // make sure to consider if you need authentication for certain routes
@@ -25,6 +27,8 @@ function Router() {
       <Route path={"/course-registration/:courseId?"} component={CourseRegistration} />
       <Route path={"/resources"} component={Resources} />
       <Route path={"/email-notifications"} component={EmailNotificationShowcase} />
+      <Route path={"/modules"} component={IndependentStudyModules} />
+      <Route path={"/module/:moduleId"} component={ModuleDetail} />
       <Route path={"/student-dashboard"} component={StudentDashboard} />
       <Route path={"/admin"} component={AdminDashboard} />
       <Route path={"/student-submissions"} component={StudentSubmissions} />
