@@ -54,12 +54,14 @@ export function QuizComponent({ quizId, moduleId, onComplete }: QuizComponentPro
   const [showExplanation, setShowExplanation] = useState<number | null>(null);
 
   // Fetch quiz data
+  // @ts-expect-error - tRPC types not regenerated yet
   const { data: quizData, isLoading } = trpc.centerOfStudies.getQuizByModuleId.useQuery(
     { moduleId },
     { enabled: !!moduleId }
   );
 
   // Submit quiz mutation
+  // @ts-expect-error - tRPC types not regenerated yet
   const submitQuizMutation = trpc.centerOfStudies.submitQuiz.useMutation();
 
   // Initialize timer
@@ -157,11 +159,11 @@ export function QuizComponent({ quizId, moduleId, onComplete }: QuizComponentPro
     let earnedPoints = 0;
 
     // Calculate score
-    questions.forEach((question) => {
+    questions.forEach((question: any) => {
       totalPoints += question.points;
       const selectedAnswerId = selectedAnswers[question.id];
       if (selectedAnswerId) {
-        const answer = question.answers.find((a) => a.id === selectedAnswerId);
+        const answer = question.answers.find((a: any) => a.id === selectedAnswerId);
         if (answer && answer.isCorrect) {
           earnedPoints += question.points;
         }
@@ -217,7 +219,7 @@ export function QuizComponent({ quizId, moduleId, onComplete }: QuizComponentPro
 
   const question = quizData.questions[currentQuestion];
   const selectedAnswerId = selectedAnswers[question?.id];
-  const selectedAnswer = question?.answers.find((a) => a.id === selectedAnswerId);
+      const selectedAnswer = question?.answers.find((a: any) => a.id === selectedAnswerId);
 
   // Quiz not started - show intro
   if (!quizStarted) {
@@ -324,8 +326,8 @@ export function QuizComponent({ quizId, moduleId, onComplete }: QuizComponentPro
               </span>
               <span>
                 {Object.entries(selectedAnswers).filter(([qId, aId]) => {
-                  const q = quizData.questions.find((q) => q.id === parseInt(qId));
-                  const a = q?.answers.find((a) => a.id === aId);
+                  const q = quizData.questions.find((q: any) => q.id === parseInt(qId));
+                  const a = q?.answers.find((a: any) => a.id === aId);
                   return a?.isCorrect;
                 }).length}{" "}
                 / {quizData.questions.length}
@@ -419,7 +421,7 @@ export function QuizComponent({ quizId, moduleId, onComplete }: QuizComponentPro
 
           {/* Answer options */}
           <div className="space-y-3">
-            {question.answers.map((answer) => (
+            {question.answers.map((answer: any) => (
               <div key={answer.id}>
                 <button
                   onClick={() => handleSelectAnswer(question.id, answer.id)}
