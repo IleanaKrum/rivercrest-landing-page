@@ -303,6 +303,102 @@ export const appRouter = router({
         }
         return db.deleteResource(input.resourceId);
       }),
+    
+    // Independent Study Modules
+    getAllModules: publicProcedure.query(() => db.getAllIndependentStudyModules()),
+    
+    getModuleById: publicProcedure
+      .input(z.object({ moduleId: z.number() }))
+      .query(({ input }) => db.getIndependentStudyModuleById(input.moduleId)),
+    
+    getModulesByCategory: publicProcedure
+      .input(z.object({ category: z.string() }))
+      .query(({ input }) => db.getModulesByCategory(input.category)),
+    
+    getModulesForTrack: publicProcedure
+      .input(z.object({ trackId: z.number() }))
+      .query(({ input }) => db.getModulesForTrack(input.trackId)),
+    
+    getRequiredModulesForTrack: publicProcedure
+      .input(z.object({ trackId: z.number() }))
+      .query(({ input }) => db.getRequiredModulesForTrack(input.trackId)),
+    
+    startModule: protectedProcedure
+      .input(z.object({ moduleId: z.number(), trackId: z.number() }))
+      .mutation(async ({ input, ctx }) => {
+        if (!ctx.user) throw new TRPCError({ code: "UNAUTHORIZED" });
+        return db.startModuleProgress(ctx.user.id, input.moduleId, input.trackId);
+      }),
+    
+    getModuleProgress: protectedProcedure
+      .input(z.object({ moduleId: z.number() }))
+      .query(async ({ input, ctx }) => {
+        if (!ctx.user) throw new TRPCError({ code: "UNAUTHORIZED" });
+        return db.getModuleProgress(ctx.user.id, input.moduleId);
+      }),
+    
+    getUserModuleProgress: protectedProcedure
+      .input(z.object({ trackId: z.number() }))
+      .query(async ({ input, ctx }) => {
+        if (!ctx.user) throw new TRPCError({ code: "UNAUTHORIZED" });
+        return db.getUserModuleProgress(ctx.user.id, input.trackId);
+      }),
+    
+    completeModule: protectedProcedure
+      .input(z.object({ moduleId: z.number() }))
+      .mutation(async ({ input, ctx }) => {
+        if (!ctx.user) throw new TRPCError({ code: "UNAUTHORIZED" });
+        return db.completeModule(ctx.user.id, input.moduleId);
+      }),
+    
+    updateModuleProgress: protectedProcedure
+      .input(z.object({
+        moduleId: z.number(),
+        progressPercentage: z.number().min(0).max(100),
+        notes: z.string().optional(),
+      }))
+      .mutation(async ({ input, ctx }) => {
+        if (!ctx.user) throw new TRPCError({ code: "UNAUTHORIZED" });
+        return db.updateModuleProgress(ctx.user.id, input.moduleId, {
+          progressPercentage: input.progressPercentage,
+          notes: input.notes,
+        });
+      }),
+    
+    issueCertificate: protectedProcedure
+      .input(z.object({ moduleId: z.number() }))
+      .mutation(async ({ input, ctx }) => {
+        if (!ctx.user) throw new TRPCError({ code: "UNAUTHORIZED" });
+        return db.issueCertificate(ctx.user.id, input.moduleId);
+      }),
+    
+    getUserCompletedModules: protectedProcedure
+      .input(z.object({ trackId: z.number() }))
+      .query(async ({ input, ctx }) => {
+        if (!ctx.user) throw new TRPCError({ code: "UNAUTHORIZED" });
+        return db.getUserCompletedModules(ctx.user.id, input.trackId);
+      }),
+    
+    createModule: protectedProcedure
+      .input(z.object({
+        title: z.string(),
+        description: z.string().optional(),
+        content: z.string(),
+        contentSwahili: z.string().optional(),
+        category: z.string(),
+        language: z.string().default("English"),
+        order: z.number().default(0),
+        estimatedHours: z.number().default(1),
+      }))
+      .mutation(async ({ input, ctx }) => {
+        if (ctx.user?.role !== "admin") {
+          throw new TRPCError({ code: "FORBIDDEN", message: "Only admins can create modules" });
+        }
+        return db.createIndependentStudyModule({
+          ...input,
+          isPublished: 1,
+        });
+      }),
   }),
 });
 

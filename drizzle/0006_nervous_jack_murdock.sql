@@ -1,0 +1,22 @@
+CREATE TABLE `payments` (
+	`id` int AUTO_INCREMENT NOT NULL,
+	`registrationId` int NOT NULL,
+	`userId` int,
+	`courseId` int NOT NULL,
+	`stripeSessionId` varchar(255) NOT NULL,
+	`stripePaymentIntentId` varchar(255),
+	`stripeCustomerId` varchar(255),
+	`amount` int NOT NULL,
+	`currency` varchar(3) DEFAULT 'usd',
+	`status` enum('pending','completed','failed','cancelled') DEFAULT 'pending',
+	`paymentMethod` varchar(50),
+	`description` varchar(255),
+	`metadata` text,
+	`paidAt` timestamp,
+	`failureReason` text,
+	`receiptUrl` varchar(512),
+	`createdAt` timestamp NOT NULL DEFAULT (now()),
+	`updatedAt` timestamp NOT NULL DEFAULT (now()) ON UPDATE CURRENT_TIMESTAMP,
+	CONSTRAINT `payments_id` PRIMARY KEY(`id`),
+	CONSTRAINT `payments_stripeSessionId_unique` UNIQUE(`stripeSessionId`)
+);

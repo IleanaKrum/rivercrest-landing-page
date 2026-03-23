@@ -241,3 +241,94 @@ export const resources = mysqlTable("resources", {
 
 export type Resource = typeof resources.$inferSelect;
 export type InsertResource = typeof resources.$inferInsert;
+
+// Stripe payments for printed materials
+export const payments = mysqlTable("payments", {
+  id: int("id").autoincrement().primaryKey(),
+  registrationId: int("registrationId").notNull(),
+  userId: int("userId"),
+  courseId: int("courseId").notNull(),
+  stripeSessionId: varchar("stripeSessionId", { length: 255 }).notNull().unique(),
+  stripePaymentIntentId: varchar("stripePaymentIntentId", { length: 255 }),
+  stripeCustomerId: varchar("stripeCustomerId", { length: 255 }),
+  amount: int("amount").notNull(), // Amount in cents (e.g., 4500 for $45.00)
+  currency: varchar("currency", { length: 3 }).default("usd"),
+  status: mysqlEnum("status", ["pending", "completed", "failed", "cancelled"]).default("pending"),
+  paymentMethod: varchar("paymentMethod", { length: 50 }), // "card", "bank_transfer", etc.
+  description: varchar("description", { length: 255 }), // "Printed Materials - Course Name"
+  metadata: text("metadata"), // JSON string with additional data
+  paidAt: timestamp("paidAt"),
+  failureReason: text("failureReason"),
+  receiptUrl: varchar("receiptUrl", { length: 512 }), // Stripe receipt URL
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+  updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
+});
+
+export type Payment = typeof payments.$inferSelect;
+export type InsertPayment = typeof payments.$inferInsert;
+
+
+// Independent Study Modules - Free Methodist Way doctrinal content
+export const independentStudyModules = mysqlTable("independent_study_modules", {
+  id: int("id").autoincrement().primaryKey(),
+  title: varchar("title", { length: 255 }).notNull(), // "The Holy Trinity", "Scripture Authority", etc.
+  description: text("description"), // Brief description of the module
+  content: text("content"), // Full module content (HTML or markdown)
+  contentSwahili: text("contentSwahili"), // Swahili translation of content
+  category: mysqlEnum("category", [
+    "trinity",
+    "scripture",
+    "humanity",
+    "law_and_love",
+    "good_works",
+    "christ_sacrifice",
+    "new_life",
+    "sanctification",
+    "restoration",
+    "church",
+    "worship",
+    "sacraments",
+  ]).notNull(),
+  language: varchar("language", { length: 50 }).default("English"), // Primary language
+  order: int("order").default(0), // Display order
+  estimatedHours: int("estimatedHours").default(1), // Estimated study time in hours
+  isPublished: int("isPublished").default(1), // 0 or 1
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+  updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
+});
+
+export type IndependentStudyModule = typeof independentStudyModules.$inferSelect;
+export type InsertIndependentStudyModule = typeof independentStudyModules.$inferInsert;
+
+// Track-Module Relationships - Which modules are required/recommended for each track
+export const trackModuleLinks = mysqlTable("track_module_links", {
+  id: int("id").autoincrement().primaryKey(),
+  trackId: int("trackId").notNull(), // Foreign key to training_tracks
+  moduleId: int("moduleId").notNull(), // Foreign key to independent_study_modules
+  isRequired: int("isRequired").default(0), // 0 = optional, 1 = required
+  order: int("order").default(0), // Order within the track
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+});
+
+export type TrackModuleLink = typeof trackModuleLinks.$inferSelect;
+export type InsertTrackModuleLink = typeof trackModuleLinks.$inferInsert;
+
+// Student Progress Tracking - Track which modules students have completed
+export const moduleProgress = mysqlTable("module_progress", {
+  id: int("id").autoincrement().primaryKey(),
+  userId: int("userId").notNull(), // Foreign key to users
+  moduleId: int("moduleId").notNull(), // Foreign key to independent_study_modules
+  trackId: int("trackId").notNull(), // Which track this is part of
+  startedAt: timestamp("startedAt").defaultNow().notNull(),
+  completedAt: timestamp("completedAt"), // NULL if not completed
+  isCompleted: int("isCompleted").default(0), // 0 or 1
+  progressPercentage: int("progressPercentage").default(0), // 0-100
+  notes: text("notes"), // Student's reflection notes
+  certificateIssued: int("certificateIssued").default(0), // 0 or 1
+  certificateIssuedAt: timestamp("certificateIssuedAt"),
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+  updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
+});
+
+export type ModuleProgress = typeof moduleProgress.$inferSelect;
+export type InsertModuleProgress = typeof moduleProgress.$inferInsert;

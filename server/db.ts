@@ -1,6 +1,6 @@
 import { eq, and } from "drizzle-orm";
 import { drizzle } from "drizzle-orm/mysql2";
-import { InsertUser, users, trainingTracks, courses, courseSessions, applications, enrollments, studentProgress, assignments, submissions, courseRegistrations, resources, InsertApplication, InsertEnrollment, InsertStudentProgress, InsertCourse, InsertCourseSession, InsertAssignment, InsertSubmission, InsertCourseRegistration, InsertResource, Resource } from "../drizzle/schema";
+import { InsertUser, users, trainingTracks, courses, courseSessions, applications, enrollments, studentProgress, assignments, submissions, courseRegistrations, resources, independentStudyModules, trackModuleLinks, moduleProgress, InsertApplication, InsertEnrollment, InsertStudentProgress, InsertCourse, InsertCourseSession, InsertAssignment, InsertSubmission, InsertCourseRegistration, InsertResource, Resource, InsertIndependentStudyModule, InsertTrackModuleLink, InsertModuleProgress } from "../drizzle/schema";
 import { ENV } from './_core/env';
 
 let _db: ReturnType<typeof drizzle> | null = null;
@@ -372,4 +372,118 @@ export async function deleteResource(resourceId: number) {
   const db = await getDb();
   if (!db) throw new Error("Database not available");
   return db.delete(resources).where(eq(resources.id, resourceId));
+}
+
+
+// Independent Study Modules queries
+export async function createIndependentStudyModule(module: InsertIndependentStudyModule) {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+  return db.insert(independentStudyModules).values(module);
+}
+
+export async function getAllIndependentStudyModules() {
+  const db = await getDb();
+  if (!db) return [];
+  return db.select().from(independentStudyModules).where(eq(independentStudyModules.isPublished, 1));
+}
+
+export async function getIndependentStudyModuleById(moduleId: number) {
+  const db = await getDb();
+  if (!db) return undefined;
+  const result = await db.select().from(independentStudyModules).where(eq(independentStudyModules.id, moduleId)).limit(1);
+  return result.length > 0 ? result[0] : undefined;
+}
+
+export async function getModulesByCategory(category: string) {
+  const db = await getDb();
+  if (!db) return [];
+  return db.select().from(independentStudyModules).where(and(eq(independentStudyModules.category, category as any), eq(independentStudyModules.isPublished, 1)));
+}
+
+export async function updateIndependentStudyModule(moduleId: number, updates: Partial<InsertIndependentStudyModule>) {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+  return db.update(independentStudyModules).set({ ...updates, updatedAt: new Date() }).where(eq(independentStudyModules.id, moduleId));
+}
+
+export async function deleteIndependentStudyModule(moduleId: number) {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+  return db.delete(independentStudyModules).where(eq(independentStudyModules.id, moduleId));
+}
+
+// Track-Module Link queries
+export async function linkModuleToTrack(link: InsertTrackModuleLink) {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+  return db.insert(trackModuleLinks).values(link);
+}
+
+export async function getModulesForTrack(trackId: number) {
+  const db = await getDb();
+  if (!db) return [];
+  const links = await db.select().from(trackModuleLinks).where(eq(trackModuleLinks.trackId, trackId));
+  const moduleIds = links.map(link => link.moduleId);
+  if (moduleIds.length === 0) return [];
+  return db.select().from(independentStudyModules).where(eq(independentStudyModules.isPublished, 1));
+}
+
+export async function getRequiredModulesForTrack(trackId: number) {
+  const db = await getDb();
+  if (!db) return [];
+  const links = await db.select().from(trackModuleLinks).where(and(eq(trackModuleLinks.trackId, trackId), eq(trackModuleLinks.isRequired, 1)));
+  const moduleIds = links.map(link => link.moduleId);
+  if (moduleIds.length === 0) return [];
+  return db.select().from(independentStudyModules).where(eq(independentStudyModules.isPublished, 1));
+}
+
+export async function unlinkModuleFromTrack(trackId: number, moduleId: number) {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+  return db.delete(trackModuleLinks).where(and(eq(trackModuleLinks.trackId, trackId), eq(trackModuleLinks.moduleId, moduleId)));
+}
+
+// Module Progress queries
+export async function startModuleProgress(userId: number, moduleId: number, trackId: number) {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+  return db.insert(moduleProgress).values({ userId, moduleId, trackId, isCompleted: 0, progressPercentage: 0 });
+}
+
+export async function getModuleProgress(userId: number, moduleId: number) {
+  const db = await getDb();
+  if (!db) return undefined;
+  const result = await db.select().from(moduleProgress).where(and(eq(moduleProgress.userId, userId), eq(moduleProgress.moduleId, moduleId))).limit(1);
+  return result.length > 0 ? result[0] : undefined;
+}
+
+export async function getUserModuleProgress(userId: number, trackId: number) {
+  const db = await getDb();
+  if (!db) return [];
+  return db.select().from(moduleProgress).where(and(eq(moduleProgress.userId, userId), eq(moduleProgress.trackId, trackId)));
+}
+
+export async function updateModuleProgress(userId: number, moduleId: number, updates: Partial<InsertModuleProgress>) {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+  return db.update(moduleProgress).set({ ...updates, updatedAt: new Date() }).where(and(eq(moduleProgress.userId, userId), eq(moduleProgress.moduleId, moduleId)));
+}
+
+export async function completeModule(userId: number, moduleId: number) {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+  return db.update(moduleProgress).set({ isCompleted: 1, progressPercentage: 100, completedAt: new Date(), updatedAt: new Date() }).where(and(eq(moduleProgress.userId, userId), eq(moduleProgress.moduleId, moduleId)));
+}
+
+export async function issueCertificate(userId: number, moduleId: number) {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+  return db.update(moduleProgress).set({ certificateIssued: 1, certificateIssuedAt: new Date(), updatedAt: new Date() }).where(and(eq(moduleProgress.userId, userId), eq(moduleProgress.moduleId, moduleId)));
+}
+
+export async function getUserCompletedModules(userId: number, trackId: number) {
+  const db = await getDb();
+  if (!db) return [];
+  return db.select().from(moduleProgress).where(and(eq(moduleProgress.userId, userId), eq(moduleProgress.trackId, trackId), eq(moduleProgress.isCompleted, 1)));
 }

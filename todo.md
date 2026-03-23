@@ -177,3 +177,90 @@
   - [x] Add to App.tsx routing
   - [x] Test all interactive elements
   - [x] All 34 tests passing
+
+
+## In Progress - Stripe Payment Gateway Integration
+- [ ] Set up Stripe integration
+  - [ ] Add Stripe to webdev features
+  - [ ] Configure Stripe API keys (test mode)
+  - [ ] Set up webhook endpoint
+- [ ] Database schema for payments
+  - [ ] Create payments table with transaction details
+  - [ ] Link payments to course registrations
+  - [ ] Track payment status and dates
+- [ ] Payment checkout flow
+  - [ ] Create checkout page component
+  - [ ] Implement Stripe Checkout Session creation
+  - [ ] Add payment confirmation page
+  - [ ] Update registration with payment status
+- [ ] Webhook handling
+  - [ ] Implement /api/stripe/webhook endpoint
+  - [ ] Handle payment_intent.succeeded events
+  - [ ] Update registration payment status
+  - [ ] Send confirmation emails
+- [ ] Testing
+  - [ ] Test checkout flow with test card
+  - [ ] Verify webhook processing
+  - [ ] Test payment status updates
+
+
+## In Progress - Free Methodist Way Independent Study Integration
+- [ ] Create independent study module database schema
+  - [ ] Add independent_study_modules table
+  - [ ] Add module_progress tracking table
+  - [ ] Link modules to training tracks and courses
+- [ ] Add Free Methodist Way doctrinal content
+  - [ ] Create 12 core doctrinal modules (Trinity, Scripture, Humanity, etc.)
+  - [ ] Add Swahili language support for all modules
+  - [ ] Create study guides and reflection questions
+- [ ] Integrate modules into training tracks
+  - [ ] Link to Deacon Formation track
+  - [ ] Link to Evangelist Training track
+  - [ ] Link to Pastor Formation track
+  - [ ] Link to Leadership Development track
+  - [ ] Link to Lay Ministry track
+- [ ] Build independent study UI
+  - [ ] Create module listing page
+  - [ ] Add progress tracking dashboard
+  - [ ] Create module detail and study page
+  - [ ] Add completion certificates
+- [ ] Test and deploy
+  - [ ] Write integration tests
+  - [ ] Verify all tracks have access to modules
+  - [ ] Test progress tracking functionality
+
+## Completed - Free Methodist Way Independent Study Integration
+- [x] Create independent study module database schema
+  - [x] Add independent_study_modules table with English/Swahili content
+  - [x] Add module_progress tracking table for student progress
+  - [x] Add track_module_links table for course associations
+- [x] Add Free Methodist Way doctrinal content
+  - [x] Create 11 core doctrinal modules (Trinity, Scripture, Humanity, etc.)
+  - [x] Add Swahili language support for all modules
+  - [x] Create study guides and reflection questions for each module
+- [x] Create tRPC backend procedures
+  - [x] getAllModules, getModuleById, getModulesByCategory queries
+  - [x] getModulesForTrack, getRequiredModulesForTrack queries
+  - [x] startModule, completeModule, updateModuleProgress mutations
+  - [x] getUserModuleProgress, getUserCompletedModules queries
+  - [x] issueCertificate mutation for completion certificates
+- [x] Build independent study UI
+  - [x] Create IndependentStudyModules.tsx listing page
+  - [x] Add category filtering and search
+  - [x] Display progress tracking for authenticated users
+  - [x] Show completion status and certificates
+- [ ] Integrate modules into training tracks (future)
+  - [ ] Link modules to Deacon Formation track
+  - [ ] Link modules to Evangelist Training track
+  - [ ] Link modules to Pastor Formation track
+  - [ ] Link modules to Leadership Development track
+  - [ ] Link modules to Lay Ministry track
+- [ ] Create module detail page (future)
+  - [ ] Build ModuleDetail.tsx component
+  - [ ] Add content display with bilingual support
+  - [ ] Create progress tracking UI
+  - [ ] Add reflection question responses
+- [ ] Test and deploy
+  - [ ] Write integration tests for module queries
+  - [ ] Test progress tracking functionality
+  - [ ] Verify certificate issuance
