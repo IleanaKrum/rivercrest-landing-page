@@ -4,6 +4,7 @@ import { Card } from "@/components/ui/card";
 import { Mail, MapPin, Phone, Send } from "lucide-react";
 import { useState } from "react";
 import { MissionalCommitment } from "@/components/MissionalCommitment";
+import { useLocation } from "wouter";
 
 /**
  * Design: Modern & Vibrant
@@ -17,6 +18,7 @@ export default function Home() {
   // The userAuth hooks provides authentication state
   // To implement login/logout functionality, simply call logout() or redirect to getLoginUrl()
   let { user, loading, error, isAuthenticated, logout } = useAuth();
+  const [, setLocation] = useLocation();
 
   const [formData, setFormData] = useState({
     name: "",
@@ -24,6 +26,10 @@ export default function Home() {
     message: "",
   });
   const [submitted, setSubmitted] = useState(false);
+
+  const handleApplyCenterOfStudies = () => {
+    setLocation("/center-of-studies");
+  };
 
   const handleInputChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -281,6 +287,40 @@ export default function Home() {
           className="w-64 h-auto opacity-60"
         />
       </div>
+
+      {/* Center of Studies CTA Section */}
+      <section className="py-20 bg-gradient-to-r from-primary/10 to-accent/10 border-y border-primary/20">
+        <div className="container">
+          <div className="max-w-3xl mx-auto text-center">
+            <p className="text-sm font-semibold text-accent uppercase tracking-wide mb-4">
+              Swahili Initiative
+            </p>
+            <h2 className="text-4xl lg:text-5xl font-bold text-primary mb-6">
+              Center of Studies
+            </h2>
+            <p className="text-lg text-foreground/80 mb-8 leading-relaxed">
+              Equipping Swahili-speaking leaders to serve their communities and participate in God's global redemptive work. Join our comprehensive training programs in pastoral formation, deacon training, and leadership development.
+            </p>
+            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+              <Button 
+                size="lg" 
+                className="bg-accent hover:bg-accent/90"
+                onClick={handleApplyCenterOfStudies}
+              >
+                Apply to Swahili Initiative Center of Studies
+              </Button>
+              <Button
+                variant="outline"
+                size="lg"
+                className="border-primary text-primary hover:bg-primary/5"
+                onClick={handleApplyCenterOfStudies}
+              >
+                Learn More
+              </Button>
+            </div>
+          </div>
+        </div>
+      </section>
 
       {/* Community Gallery Section */}
       <section className="py-20 bg-background">
