@@ -1,7 +1,7 @@
 import { useAuth } from "@/_core/hooks/useAuth";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
-import { Heart, Users, BookOpen, Zap } from "lucide-react";
+import { Heart, Users, BookOpen, Zap, ExternalLink } from "lucide-react";
 import { useState } from "react";
 import { trpc } from "@/lib/trpc";
 import { useLocation } from "wouter";
@@ -326,6 +326,46 @@ export default function CenterOfStudies() {
           </Card>
         </div>
       )}
+
+      {/* Resources Section */}
+      <section className="py-20 bg-background border-t border-border">
+        <div className="container max-w-4xl">
+          <div className="mb-12">
+            <p className="text-sm font-semibold text-accent uppercase tracking-wide mb-4">
+              Additional Learning Resources
+            </p>
+            <h2 className="text-4xl font-bold text-primary mb-6">Expand Your Knowledge</h2>
+            <p className="text-lg text-foreground/80 mb-8">
+              Access additional educational resources and materials to support your pastoral and leadership formation journey.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-1 gap-8">
+            <Card className="p-8 border-2 border-primary/20 hover:border-primary/50 transition-colors">
+              <div className="flex items-start gap-4">
+                <BookOpen className="w-8 h-8 text-primary flex-shrink-0 mt-1" />
+                <div className="flex-1">
+                  <h3 className="text-2xl font-bold text-primary mb-3">
+                    Free Methodist Church USA Pathwright's Library
+                  </h3>
+                  <p className="text-foreground/80 mb-6">
+                    Access the Center for Pastoral Formation's comprehensive library of educational materials, courses, and resources designed to support your ongoing spiritual and professional development.
+                  </p>
+                  <a
+                    href="https://fmcpastoralformation.pathwright.com/library/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-2 px-6 py-3 bg-primary text-primary-foreground rounded-lg hover:bg-primary/90 transition-colors font-semibold"
+                  >
+                    Visit Pathwright's Library
+                    <span>→</span>
+                  </a>
+                </div>
+              </div>
+            </Card>
+          </div>
+        </div>
+      </section>
 
       {/* Footer */}
       <footer className="bg-primary text-primary-foreground py-12">
