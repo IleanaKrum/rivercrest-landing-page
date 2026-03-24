@@ -1,0 +1,9 @@
+{
+  "query": "\n-- First, get the user ID for the student account\nSELECT id, email FROM users WHERE email LIKE '%student%' OR email LIKE '%test%' LIMIT 10;\n",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway04.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 27SALpbbdFwiPRE.root --database kBmgeZHWTyHuceHoeAKRrp --execute \n-- First, get the user ID for the student account\nSELECT id, email FROM users WHERE email LIKE '%student%' OR email LIKE '%test%' LIMIT 10;\n",
+  "rows": [],
+  "messages": [],
+  "stdout": "",
+  "stderr": "",
+  "execution_time_ms": 771
+}

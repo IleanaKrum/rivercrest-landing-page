@@ -135,6 +135,51 @@ export const appRouter = router({
           });
         }
       }),
+    
+    canAccessCourse: protectedProcedure
+      .input(z.object({ courseId: z.number() }))
+      .query(async ({ input, ctx }) => {
+        const hasAccess = await db.canUserAccessCourse(ctx.user.id, input.courseId);
+        return { hasAccess };
+      }),
+    
+    canAccessModule: protectedProcedure
+      .input(z.object({ moduleId: z.number(), trackId: z.number() }))
+      .query(async ({ input, ctx }) => {
+        const hasAccess = await db.canUserAccessModule(ctx.user.id, input.moduleId, input.trackId);
+        return { hasAccess };
+      }),
+    
+    canAccessVideo: protectedProcedure
+      .input(z.object({ videoId: z.number(), moduleId: z.number(), trackId: z.number() }))
+      .query(async ({ input, ctx }) => {
+        const hasAccess = await db.canUserAccessVideo(ctx.user.id, input.videoId, input.moduleId, input.trackId);
+        return { hasAccess };
+      }),
+    
+    canTakeQuiz: protectedProcedure
+      .input(z.object({ quizId: z.number(), moduleId: z.number(), trackId: z.number() }))
+      .query(async ({ input, ctx }) => {
+        const canTake = await db.canUserTakeQuiz(ctx.user.id, input.quizId, input.moduleId, input.trackId);
+        return { canTake };
+      }),
+    
+    canDownloadCertificate: protectedProcedure
+      .input(z.object({ moduleId: z.number(), trackId: z.number() }))
+      .query(async ({ input, ctx }) => {
+        const canDownload = await db.canUserDownloadCertificate(ctx.user.id, input.moduleId, input.trackId);
+        return { canDownload };
+      }),
+    
+    getAccessibleTracks: protectedProcedure
+      .query(async ({ ctx }) => {
+        return db.getUserApprovedTracks(ctx.user.id);
+      }),
+    
+    getAccessibleCourses: protectedProcedure
+      .query(async ({ ctx }) => {
+        return db.getUserAccessibleCourses(ctx.user.id);
+      }),
   }),
 
   admin: router({

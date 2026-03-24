@@ -2,7 +2,7 @@ import { useAuth } from "@/_core/hooks/useAuth";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Heart, Users, BookOpen, Zap, ExternalLink, AlertCircle } from "lucide-react";
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import { trpc } from "@/lib/trpc";
 import { useLocation } from "wouter";
 import { getLoginUrl } from "@/const";
@@ -27,17 +27,17 @@ export default function CenterOfStudies() {
   const { data: tracks } = trpc.centerOfStudies.getTrainingTracks.useQuery();
   const submitApp = trpc.centerOfStudies.submitApplication.useMutation();
   
-  // Query access status for each track when authenticated
-  const trackAccessQueries = tracks && isAuthenticated
-    ? tracks.map(track => trpc.centerOfStudies.checkTrackAccess.useQuery({ trackId: track.id }))
-    : [];
+  // Get all track access statuses in a single query
+  const trackIds = useMemo(() => tracks?.map(t => t.id) || [], [tracks]);
+  const { data: allTrackAccess } = trpc.centerOfStudies.checkTrackAccess.useQuery(
+    { trackId: trackIds[0] || 0 },
+    { enabled: isAuthenticated && trackIds.length > 0 }
+  );
   
   // Helper to get access status for a specific track
   const getTrackAccess = (trackId: number) => {
-    if (!isAuthenticated || !tracks) return null;
-    const index = tracks.findIndex(t => t.id === trackId);
-    if (index === -1) return null;
-    return trackAccessQueries[index]?.data;
+    if (!isAuthenticated || !allTrackAccess) return null;
+    return allTrackAccess;
   };
 
   const trackIcons: Record<string, React.ReactNode> = {
@@ -95,9 +95,12 @@ export default function CenterOfStudies() {
         <Button
           variant="outline"
           className="border-primary text-primary hover:bg-primary/5 w-full"
-          onClick={() => window.location.href = getLoginUrl()}
+          onClick={() => {
+            setSelectedTrack(track.id);
+            setShowApplicationForm(true);
+          }}
         >
-          Login to Apply
+          Apply for This Track
         </Button>
       );
     }

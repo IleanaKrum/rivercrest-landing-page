@@ -751,3 +751,165 @@ export async function createStudentEnrollment(userId: number, courseId: number, 
     status: "enrolled",
   });
 }
+
+
+// Course Material Access Control Functions
+export async function canUserAccessCourse(userId: number, courseId: number) {
+  const db = await getDb();
+  if (!db) return false;
+  
+  // Check if user is admin
+  const user = await db.select().from(users).where(eq(users.id, userId)).limit(1);
+  if (user.length > 0 && user[0].role === 'admin') return true;
+  
+  // Check if user has approved enrollment for this course
+  const course = await db.select().from(courses).where(eq(courses.id, courseId)).limit(1);
+  if (course.length === 0) return false;
+  
+  const trackId = course[0].trackId;
+  
+  // Check if user has approved application for this track
+  const approvedApp = await db.select().from(applications)
+    .where(and(
+      eq(applications.userId, userId),
+      eq(applications.trackId, trackId),
+      eq(applications.status, 'approved')
+    ))
+    .limit(1);
+  
+  return approvedApp.length > 0;
+}
+
+export async function canUserAccessModule(userId: number, moduleId: number, trackId: number) {
+  const db = await getDb();
+  if (!db) return false;
+  
+  // Check if user is admin
+  const user = await db.select().from(users).where(eq(users.id, userId)).limit(1);
+  if (user.length > 0 && user[0].role === 'admin') return true;
+  
+  // Check if user has approved application for this track
+  const approvedApp = await db.select().from(applications)
+    .where(and(
+      eq(applications.userId, userId),
+      eq(applications.trackId, trackId),
+      eq(applications.status, 'approved')
+    ))
+    .limit(1);
+  
+  return approvedApp.length > 0;
+}
+
+export async function canUserAccessVideo(userId: number, videoId: number, moduleId: number, trackId: number) {
+  const db = await getDb();
+  if (!db) return false;
+  
+  // Check if user is admin
+  const user = await db.select().from(users).where(eq(users.id, userId)).limit(1);
+  if (user.length > 0 && user[0].role === 'admin') return true;
+  
+  // Check if user has approved application for this track
+  const approvedApp = await db.select().from(applications)
+    .where(and(
+      eq(applications.userId, userId),
+      eq(applications.trackId, trackId),
+      eq(applications.status, 'approved')
+    ))
+    .limit(1);
+  
+  return approvedApp.length > 0;
+}
+
+export async function canUserTakeQuiz(userId: number, quizId: number, moduleId: number, trackId: number) {
+  const db = await getDb();
+  if (!db) return false;
+  
+  // Check if user is admin
+  const user = await db.select().from(users).where(eq(users.id, userId)).limit(1);
+  if (user.length > 0 && user[0].role === 'admin') return true;
+  
+  // Check if user has approved application for this track
+  const approvedApp = await db.select().from(applications)
+    .where(and(
+      eq(applications.userId, userId),
+      eq(applications.trackId, trackId),
+      eq(applications.status, 'approved')
+    ))
+    .limit(1);
+  
+  if (approvedApp.length === 0) return false;
+  
+  // Check if user has completed all required videos for the module
+  const modulesVideosCompleted = await isModuleVideosCompleted(userId, moduleId);
+  return modulesVideosCompleted;
+}
+
+export async function canUserDownloadCertificate(userId: number, moduleId: number, trackId: number) {
+  const db = await getDb();
+  if (!db) return false;
+  
+  // Check if user is admin
+  const user = await db.select().from(users).where(eq(users.id, userId)).limit(1);
+  if (user.length > 0 && user[0].role === 'admin') return true;
+  
+  // Check if user has approved application for this track
+  const approvedApp = await db.select().from(applications)
+    .where(and(
+      eq(applications.userId, userId),
+      eq(applications.trackId, trackId),
+      eq(applications.status, 'approved')
+    ))
+    .limit(1);
+  
+  if (approvedApp.length === 0) return false;
+  
+  // Check if module is completed
+  const progress = await getModuleProgress(userId, moduleId);
+  if (!progress || progress.isCompleted !== 1) return false;
+  
+  // Check if certificate has been issued
+  return progress.certificateIssued === 1;
+}
+
+export async function getUserApprovedTracks(userId: number) {
+  const db = await getDb();
+  if (!db) return [];
+  
+  // Check if user is admin
+  const user = await db.select().from(users).where(eq(users.id, userId)).limit(1);
+  if (user.length > 0 && user[0].role === 'admin') {
+    // Admins can see all tracks
+    return db.select().from(trainingTracks);
+  }
+  
+  // Get approved applications for this user
+  const approvedApps = await db.select().from(applications)
+    .where(and(
+      eq(applications.userId, userId),
+      eq(applications.status, 'approved')
+    ));
+  
+  if (approvedApps.length === 0) return [];
+  
+  const trackIds = approvedApps.map(app => app.trackId);
+  
+  // Get all tracks for these track IDs
+  return db.select().from(trainingTracks).where(
+    inArray(trainingTracks.id, trackIds)
+  );
+}
+
+export async function getUserAccessibleCourses(userId: number) {
+  const db = await getDb();
+  if (!db) return [];
+  
+  const approvedTracks = await getUserApprovedTracks(userId);
+  if (approvedTracks.length === 0) return [];
+  
+  const trackIds = approvedTracks.map(t => t.id);
+  
+  // Get all courses for these tracks
+  return db.select().from(courses).where(
+    inArray(courses.trackId, trackIds)
+  );
+}

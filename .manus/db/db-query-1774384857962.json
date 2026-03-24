@@ -1,0 +1,15 @@
+{
+  "query": "\nSELECT id, email, name FROM users LIMIT 20;\n",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway04.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 27SALpbbdFwiPRE.root --database kBmgeZHWTyHuceHoeAKRrp --execute \nSELECT id, email, name FROM users LIMIT 20;\n",
+  "rows": [
+    {
+      "id": "1",
+      "email": "ileanakrum@gmail.com",
+      "name": "ILeana Krum"
+    }
+  ],
+  "messages": [],
+  "stdout": "id\temail\tname\n1\tileanakrum@gmail.com\tILeana Krum\n",
+  "stderr": "",
+  "execution_time_ms": 345
+}

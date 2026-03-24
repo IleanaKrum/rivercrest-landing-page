@@ -631,3 +631,45 @@
   - [x] Approved students can view courses
   - [x] Pending applications show "Under Review" message
   - [x] Rejected applications show "Reapply" option
+
+
+## In Progress - Course Material Access Restrictions
+- [x] Add access control database functions
+  - [x] Create function to check if user can access course
+  - [x] Create function to check if user can access module
+  - [x] Create function to check if user can access video
+  - [x] Create function to check if user can take quiz
+  - [x] Create function to check if user can download certificate
+- [x] Create protected tRPC procedures
+  - [x] Add canAccessCourse procedure
+  - [x] Add canAccessModule procedure
+  - [x] Add canAccessVideo procedure
+  - [x] Add canTakeQuiz procedure
+  - [x] Add canDownloadCertificate procedure
+  - [x] Add getAccessibleTracks procedure
+  - [x] Add getAccessibleCourses procedure
+- [ ] Update course pages with access control
+  - [ ] Protect IndependentStudyModules page
+  - [ ] Protect ModuleDetail page
+  - [ ] Protect video player access
+  - [ ] Show access denied messages for non-approved students
+- [ ] Restrict quiz functionality
+  - [ ] Protect quiz submission endpoint
+  - [ ] Verify approval before quiz access
+  - [ ] Block quiz attempts for non-approved students
+- [ ] Protect certificate downloads
+  - [ ] Verify approval before certificate generation
+  - [ ] Verify module completion
+  - [ ] Verify quiz passing
+- [x] Write comprehensive tests
+  - [x] Create courseAccess.test.ts with 16 test cases
+  - [x] Test course access restrictions
+  - [x] Test module access restrictions
+  - [x] Test video access restrictions
+  - [x] Test quiz access restrictions
+  - [x] Test certificate access restrictions
+- [ ] Verify all restrictions working
+  - [ ] Test as approved student
+  - [ ] Test as pending student
+  - [ ] Test as non-authenticated user
+  - [ ] Test as rejected student
