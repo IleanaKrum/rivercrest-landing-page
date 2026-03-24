@@ -5,6 +5,7 @@ import { Mail, MapPin, Phone, Send } from "lucide-react";
 import { useState } from "react";
 import { MissionalCommitment } from "@/components/MissionalCommitment";
 import { useLocation } from "wouter";
+import { FMCValuesSlideshow } from "@/components/FMCValuesSlideshow";
 
 /**
  * Design: Modern & Vibrant
@@ -207,27 +208,7 @@ export default function Home() {
               </p>
             </div>
             
-            <div className="relative w-full bg-black rounded-lg overflow-hidden shadow-2xl">
-              <video
-                width="100%"
-                height="auto"
-                controls
-                className="w-full h-auto"
-              >
-                <source
-                  src="https://d2xsxph8kpxj0f.cloudfront.net/310519663416906571/kBmgeZHWTyHuceHoeAKRrp/fmc-way-video-50sec_09177c1b.mp4"
-                  type="video/mp4"
-                />
-                <track
-                  kind="subtitles"
-                  src="https://d2xsxph8kpxj0f.cloudfront.net/310519663416906571/kBmgeZHWTyHuceHoeAKRrp/fmc-way-subtitles_747b0e74.vtt"
-                  srcLang="sw"
-                  label="Swahili"
-                  default
-                />
-                Your browser does not support the video tag.
-              </video>
-            </div>
+            <FMCValuesSlideshow />
           </div>
         </div>
       </section>
