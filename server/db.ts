@@ -1,6 +1,6 @@
 import { eq, and, inArray } from "drizzle-orm";
 import { drizzle } from "drizzle-orm/mysql2";
-import { InsertUser, users, trainingTracks, courses, courseSessions, applications, enrollments, studentProgress, assignments, submissions, courseRegistrations, resources, independentStudyModules, trackModuleLinks, moduleProgress, videoCompletions, moduleVideos, quizzes, quizResults, certificates, InsertCertificate, InsertApplication, InsertEnrollment, InsertStudentProgress, InsertCourse, InsertCourseSession, InsertAssignment, InsertSubmission, InsertCourseRegistration, InsertResource, Resource, InsertIndependentStudyModule, InsertTrackModuleLink, InsertModuleProgress, InsertVideoCompletion } from "../drizzle/schema";
+import { InsertUser, users, trainingTracks, courses, courseSessions, applications, enrollments, studentProgress, assignments, submissions, courseRegistrations, resources, independentStudyModules, trackModuleLinks, moduleProgress, videoCompletions, moduleVideos, quizzes, quizResults, certificates, InsertCertificate, InsertApplication, InsertEnrollment, InsertStudentProgress, InsertCourse, InsertCourseSession, InsertAssignment, InsertSubmission, InsertCourseRegistration, InsertResource, Resource, InsertIndependentStudyModule, InsertTrackModuleLink, InsertModuleProgress, InsertVideoCompletion, InsertQuizResult } from "../drizzle/schema";
 import { ENV } from './_core/env';
 
 let _db: ReturnType<typeof drizzle> | null = null;
@@ -739,4 +739,53 @@ export async function generateCertificateNumber() {
 export async function generateVerificationCode() {
   // Generate unique verification code: 8 random alphanumeric characters
   return Math.random().toString(36).substring(2, 10).toUpperCase();
+}
+
+export async function createQuizResult(data: InsertQuizResult) {
+  const database = await getDb();
+  if (!database) {
+    console.warn("[Database] Cannot create quiz result: database not available");
+    return null;
+  }
+
+  try {
+    const result = await database.insert(quizResults).values(data);
+    return result;
+  } catch (error) {
+    console.error("[Database] Error creating quiz result:", error);
+    return null;
+  }
+}
+
+export async function getQuizResultsByUserId(userId: number) {
+  const database = await getDb();
+  if (!database) return [];
+
+  try {
+    const results = await database.select().from(quizResults).where(eq(quizResults.userId, userId));
+    return results;
+  } catch (error) {
+    console.error("[Database] Error fetching quiz results:", error);
+    return [];
+  }
+}
+
+export async function getQuizResultsByModuleId(moduleId: number) {
+  const database = await getDb();
+  if (!database) return [];
+
+  try {
+    // Get all quizzes for the module
+    const moduleQuizzes = await database.select({ id: quizzes.id }).from(quizzes).where(eq(quizzes.moduleId, moduleId));
+    const quizIds = moduleQuizzes.map(q => q.id);
+    
+    if (quizIds.length === 0) return [];
+    
+    // Get all results for those quizzes
+    const results = await database.select().from(quizResults).where(inArray(quizResults.quizId, quizIds));
+    return results;
+  } catch (error) {
+    console.error("[Database] Error fetching quiz results for module:", error);
+    return [];
+  }
 }

@@ -482,7 +482,93 @@ export const appRouter = router({
       }))
       .mutation(async ({ input, ctx }) => {
         if (!ctx.user) throw new TRPCError({ code: "UNAUTHORIZED" });
-        return { success: true };
+        
+        try {
+          // Store quiz results in database
+          const quizResult = await db.createQuizResult({
+            userId: ctx.user.id,
+            quizId: input.quizId,
+            score: input.score,
+            passed: input.passed,
+            totalPoints: input.totalPoints,
+            earnedPoints: input.earnedPoints,
+            timeSpent: input.timeSpent,
+            completedAt: new Date(),
+          });
+          
+          // If student passed (score >= 70%), generate and send certificate
+          if (input.passed === 1 && input.score >= 70) {
+            try {
+              // Get module details for certificate
+              const module = await db.getIndependentStudyModuleById(input.moduleId);
+              if (!module) {
+                throw new Error("Module not found");
+              }
+              
+              // Generate certificate number and verification code
+              const certificateNumber = await db.generateCertificateNumber();
+              const verificationCode = await db.generateVerificationCode();
+              
+              // Generate PDF certificate
+              const pdfBuffer = await generateCertificatePDF(
+                ctx.user.name || "Student",
+                module.title,
+                new Date()
+              );
+              
+              // Create certificate record in database
+              const certificate = await db.createCertificate({
+                userId: ctx.user.id,
+                moduleId: input.moduleId,
+                quizId: input.quizId,
+                certificateNumber,
+                title: module.title,
+                issueDate: new Date(),
+                verificationCode,
+                pdfUrl: "", // Will be updated if stored to S3
+              });
+              
+              // Send certificate via email
+              if (ctx.user.email) {
+                await sendCertificateEmail(
+                  ctx.user.name || "Student",
+                  ctx.user.email,
+                  module.title,
+                  pdfBuffer,
+                  certificateNumber
+                );
+              }
+              
+              return {
+                success: true,
+                certificateGenerated: true,
+                certificateNumber,
+                verificationCode,
+              };
+            } catch (certificateError) {
+              console.error("[Certificate] Error generating certificate:", certificateError);
+              // Don't fail the quiz submission if certificate generation fails
+              // Just log the error and return success for the quiz
+              return {
+                success: true,
+                certificateGenerated: false,
+                message: "Quiz submitted successfully, but certificate generation failed. Please contact support.",
+              };
+            }
+          }
+          
+          return {
+            success: true,
+            certificateGenerated: false,
+            message: input.score < 70 ? "Quiz submitted. You need 70% to pass and earn a certificate." : "Quiz submitted successfully!",
+          };
+        } catch (error) {
+          console.error("[Quiz] Error submitting quiz:", error);
+          throw new TRPCError({
+            code: "INTERNAL_SERVER_ERROR",
+            message: "Failed to submit quiz",
+          });
+        }
       }),
     
     downloadCertificate: protectedProcedure
@@ -561,6 +647,18 @@ export const appRouter = router({
       .query(async ({ input, ctx }) => {
         if (!ctx.user) throw new TRPCError({ code: 'UNAUTHORIZED' });
         return db.isModuleVideosCompleted(ctx.user.id, input.moduleId);
+      }),
+
+    // Student Certificates
+    getStudentCertificates: protectedProcedure.query(async ({ ctx }) => {
+      if (!ctx.user) throw new TRPCError({ code: 'UNAUTHORIZED' });
+      return db.getCertificatesByUserId(ctx.user.id);
+    }),
+
+    getCertificateByVerificationCode: publicProcedure
+      .input(z.object({ code: z.string() }))
+      .query(async ({ input }) => {
+        return db.getCertificateByVerificationCode(input.code);
       }),
   }),
 });
