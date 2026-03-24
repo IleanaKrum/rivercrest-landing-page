@@ -191,6 +191,47 @@ export default function Home() {
         />
       </div>
 
+      {/* The Free Methodist Way Video Section */}
+      <section className="py-20 bg-gradient-to-b from-primary/5 to-transparent">
+        <div className="container">
+          <div className="max-w-4xl mx-auto">
+            <div className="text-center mb-12">
+              <p className="text-sm font-semibold text-accent uppercase tracking-wide mb-4">
+                Our Identity
+              </p>
+              <h2 className="text-4xl lg:text-5xl font-bold text-primary mb-6">
+                The Free Methodist Way
+              </h2>
+              <p className="text-lg text-foreground/70">
+                Five values that shape our identity and guide our mission
+              </p>
+            </div>
+            
+            <div className="relative w-full bg-black rounded-lg overflow-hidden shadow-2xl">
+              <video
+                width="100%"
+                height="auto"
+                controls
+                className="w-full h-auto"
+              >
+                <source
+                  src="https://d2xsxph8kpxj0f.cloudfront.net/310519663416906571/kBmgeZHWTyHuceHoeAKRrp/fmc-way-video_3820a89f.mp4"
+                  type="video/mp4"
+                />
+                <track
+                  kind="subtitles"
+                  src="https://d2xsxph8kpxj0f.cloudfront.net/310519663416906571/kBmgeZHWTyHuceHoeAKRrp/fmc-way-subtitles_9f2b2ad7.vtt"
+                  srcLang="sw"
+                  label="Swahili"
+                  default
+                />
+                Your browser does not support the video tag.
+              </video>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* Services Section */}
       <section id="services" className="py-20 bg-white">
         <div className="container">
