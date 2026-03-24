@@ -563,3 +563,34 @@
 - [ ] Add tRPC procedures for analytics data retrieval
 - [ ] Integrate admin panel into application with role-based access
 - [ ] Test admin functionality
+
+
+## In Progress - Center of Studies Enrollment System
+- [ ] Update database schema for applications and enrollment
+  - [ ] Create applications table with status tracking
+  - [ ] Create enrollments table for approved students
+  - [ ] Add admin approval workflow fields
+- [ ] Create application form component
+  - [ ] Build public application form (name, email, phone, bio)
+  - [ ] Add form validation and submission
+  - [ ] Create success confirmation message
+- [ ] Build admin dashboard for approvals
+  - [ ] Create admin applications review page
+  - [ ] Add approve/reject functionality
+  - [ ] Display application status and history
+- [ ] Implement email notifications
+  - [ ] Send confirmation email to applicants
+  - [ ] Send approval email with login credentials to accepted students
+  - [ ] Notify admins (Rev. Pastor Ileana Krum & Pastor Ilean Marie Krum) of new applications
+- [ ] Update Center of Studies page
+  - [ ] Make course access require authentication
+  - [ ] Show "Apply to Center of Studies" button for non-authenticated users
+  - [ ] Display enrolled courses for authenticated students
+- [ ] Add "Apply" button to homepage
+  - [ ] Add "Apply to Swahili Initiative Center of Studies" button to hero section
+  - [ ] Link to application form modal or page
+- [ ] Write and test enrollment system
+  - [ ] Write vitest tests for application submission
+  - [ ] Test admin approval workflow
+  - [ ] Test email notifications
+  - [ ] Verify authentication requirements

@@ -34,6 +34,8 @@ export const appRouter = router({
       .input(z.object({
         trackId: z.number(),
         candidateName: z.string(),
+        candidateEmail: z.string().email(),
+        candidatePhone: z.string().optional(),
         candidateAddress: z.string(),
         churchName: z.string(),
         leadPastorName: z.string(),
@@ -44,6 +46,8 @@ export const appRouter = router({
         return db.createApplication({
           trackId: input.trackId,
           candidateName: input.candidateName,
+          candidateEmail: input.candidateEmail,
+          candidatePhone: input.candidatePhone,
           candidateAddress: input.candidateAddress,
           churchName: input.churchName,
           leadPastorName: input.leadPastorName,

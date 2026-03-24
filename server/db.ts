@@ -181,11 +181,19 @@ export async function getApplicationById(appId: number) {
   return result.length > 0 ? result[0] : undefined;
 }
 
-export async function updateApplicationStatus(appId: number, status: "pending" | "approved" | "rejected") {
+export async function updateApplicationStatus(appId: number, status: "pending" | "approved" | "rejected", approvedBy?: number, rejectionReason?: string) {
   const db = await getDb();
   if (!db) throw new Error("Database not available");
+  const updateData: any = { status, updatedAt: new Date() };
+  if (status === "approved" && approvedBy) {
+    updateData.approvedBy = approvedBy;
+    updateData.approvedAt = new Date();
+  }
+  if (status === "rejected" && rejectionReason) {
+    updateData.rejectionReason = rejectionReason;
+  }
   return db.update(applications)
-    .set({ status, updatedAt: new Date() })
+    .set(updateData)
     .where(eq(applications.id, appId));
 }
 

@@ -113,6 +113,13 @@
       "when": 1774314358751,
       "tag": "0015_last_betty_brant",
       "breakpoints": true
+    },
+    {
+      "idx": 16,
+      "version": "5",
+      "when": 1774382845926,
+      "tag": "0016_ordinary_arachne",
+      "breakpoints": true
     }
   ]
 }

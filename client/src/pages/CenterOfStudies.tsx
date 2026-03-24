@@ -14,6 +14,8 @@ export default function CenterOfStudies() {
   const [selectedTrack, setSelectedTrack] = useState<number | null>(null);
   const [formData, setFormData] = useState({
     candidateName: "",
+    candidateEmail: "",
+    candidatePhone: "",
     candidateAddress: "",
     churchName: "",
     leadPastorName: "",
@@ -46,6 +48,8 @@ export default function CenterOfStudies() {
       await submitApp.mutateAsync({
         trackId: selectedTrack,
         candidateName: formData.candidateName,
+        candidateEmail: formData.candidateEmail,
+        candidatePhone: formData.candidatePhone,
         candidateAddress: formData.candidateAddress,
         churchName: formData.churchName,
         leadPastorName: formData.leadPastorName,
@@ -56,6 +60,8 @@ export default function CenterOfStudies() {
         setShowApplicationForm(false);
         setFormData({
           candidateName: "",
+          candidateEmail: "",
+          candidatePhone: "",
           candidateAddress: "",
           churchName: "",
           leadPastorName: "",
@@ -231,6 +237,37 @@ export default function CenterOfStudies() {
                     required
                     className="w-full px-4 py-3 rounded-lg border border-border bg-background text-foreground placeholder-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-transparent transition-all"
                     placeholder="Your full name"
+                  />
+                </div>
+
+                <div>
+                  <label htmlFor="candidateEmail" className="block text-sm font-semibold text-foreground mb-2">
+                    Email Address *
+                  </label>
+                  <input
+                    type="email"
+                    id="candidateEmail"
+                    name="candidateEmail"
+                    value={formData.candidateEmail}
+                    onChange={handleInputChange}
+                    required
+                    className="w-full px-4 py-3 rounded-lg border border-border bg-background text-foreground placeholder-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-transparent transition-all"
+                    placeholder="your.email@example.com"
+                  />
+                </div>
+
+                <div>
+                  <label htmlFor="candidatePhone" className="block text-sm font-semibold text-foreground mb-2">
+                    Phone Number
+                  </label>
+                  <input
+                    type="tel"
+                    id="candidatePhone"
+                    name="candidatePhone"
+                    value={formData.candidatePhone}
+                    onChange={handleInputChange}
+                    className="w-full px-4 py-3 rounded-lg border border-border bg-background text-foreground placeholder-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-transparent transition-all"
+                    placeholder="Your phone number"
                   />
                 </div>
 

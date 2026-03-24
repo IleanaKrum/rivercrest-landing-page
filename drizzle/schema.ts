@@ -72,18 +72,37 @@ export const applications = mysqlTable("applications", {
   userId: int("userId"),
   trackId: int("trackId").notNull(),
   candidateName: varchar("candidateName", { length: 255 }).notNull(),
+  candidateEmail: varchar("candidateEmail", { length: 320 }).notNull(),
+  candidatePhone: varchar("candidatePhone", { length: 20 }),
   candidateAddress: text("candidateAddress"),
   churchName: varchar("churchName", { length: 255 }).notNull(),
   leadPastorName: varchar("leadPastorName", { length: 255 }).notNull(),
   recommendationLetterUrl: varchar("recommendationLetterUrl", { length: 512 }),
   essay: text("essay"),
   status: mysqlEnum("status", ["pending", "approved", "rejected"]).default("pending"),
+  approvedBy: int("approvedBy"), // Foreign key to users (admin who approved)
+  approvedAt: timestamp("approvedAt"), // When the application was approved
+  rejectionReason: text("rejectionReason"), // Reason for rejection if rejected
   createdAt: timestamp("createdAt").defaultNow().notNull(),
   updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
 });
 
 export type Application = typeof applications.$inferSelect;
 export type InsertApplication = typeof applications.$inferInsert;
+
+// Admin approvers for Center of Studies applications
+export const adminApprovers = mysqlTable("admin_approvers", {
+  id: int("id").autoincrement().primaryKey(),
+  userId: int("userId").notNull(), // Foreign key to users
+  name: varchar("name", { length: 255 }).notNull(), // e.g., "Rev. Pastor Ileana Krum"
+  email: varchar("email", { length: 320 }).notNull(),
+  isActive: int("isActive").default(1), // 0 or 1
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+  updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
+});
+
+export type AdminApprover = typeof adminApprovers.$inferSelect;
+export type InsertAdminApprover = typeof adminApprovers.$inferInsert;
 
 // Student enrollments in courses
 export const enrollments = mysqlTable("enrollments", {
