@@ -547,6 +547,17 @@ export default function Home() {
 
           <div className="border-t border-primary-foreground/20 pt-8 text-center text-primary-foreground/70 text-sm">
             <p>&copy; 2026 Rivercrest Free Methodist Church. All rights reserved.</p>
+            <p className="mt-4">
+              In Partnership with{" "}
+              <a
+                href="https://crcfmc.org/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-primary-foreground hover:underline transition-colors"
+              >
+                Free Methodist Church Central Region Conference
+              </a>
+            </p>
           </div>
         </div>
       </footer>
