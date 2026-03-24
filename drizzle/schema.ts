@@ -471,24 +471,3 @@ export const videoCompletions = mysqlTable("video_completions", {
 
 export type VideoCompletion = typeof videoCompletions.$inferSelect;
 export type InsertVideoCompletion = typeof videoCompletions.$inferInsert;
-
-
-// Certificates - Awarded when students pass quizzes (70%+)
-export const certificates = mysqlTable("certificates", {
-  id: int("id").autoincrement().primaryKey(),
-  userId: int("userId").notNull(),
-  moduleId: int("moduleId").notNull(),
-  quizId: int("quizId").notNull(),
-  certificateNumber: varchar("certificateNumber", { length: 64 }).notNull().unique(), // Unique certificate ID
-  title: varchar("title", { length: 255 }).notNull(), // e.g., "Introduction to Christian Doctrine"
-  issueDate: timestamp("issueDate").defaultNow().notNull(),
-  expiryDate: timestamp("expiryDate"), // Optional expiry date
-  pdfUrl: text("pdfUrl"), // URL to the PDF certificate
-  verificationCode: varchar("verificationCode", { length: 64 }).notNull().unique(), // For public verification
-  issuedBy: varchar("issuedBy", { length: 255 }).default("Rivercrest Free Methodist Church").notNull(),
-  createdAt: timestamp("createdAt").defaultNow().notNull(),
-  updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull()
-});
-
-export type Certificate = typeof certificates.$inferSelect;
-export type InsertCertificate = typeof certificates.$inferInsert;
