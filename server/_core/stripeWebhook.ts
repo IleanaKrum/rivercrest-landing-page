@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { stripe, verifyWebhookSignature, parseEventMetadata, logStripeEvent } from "./stripe";
+import { verifyWebhookSignature, parseEventMetadata, logStripeEvent } from "./stripe";
 import { getDb } from "../db";
 import { payments, courseRegistrations } from "../../drizzle/schema";
 import { eq, and } from "drizzle-orm";

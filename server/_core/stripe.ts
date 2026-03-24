@@ -6,8 +6,18 @@ import { ENV } from "./env";
  * Handles all Stripe API interactions and payment processing
  */
 
-// Initialize Stripe with secret key
-export const stripe = new Stripe(ENV.stripeSecretKey);
+// Lazy initialize Stripe to avoid errors when API key is not configured
+let _stripe: Stripe | null = null;
+
+export function getStripe(): Stripe {
+  if (!_stripe) {
+    if (!ENV.stripeSecretKey) {
+      throw new Error("Stripe API key is not configured. Please set STRIPE_SECRET_KEY environment variable.");
+    }
+    _stripe = new Stripe(ENV.stripeSecretKey);
+  }
+  return _stripe;
+}
 
 /**
  * Product definitions for printed course materials
@@ -43,6 +53,7 @@ export async function createPrintedMaterialsCheckoutSession(
   cancelUrl: string
 ) {
   try {
+    const stripe = getStripe();
     const session = await stripe.checkout.sessions.create({
       payment_method_types: ["card"],
       mode: "payment",
@@ -87,6 +98,7 @@ export async function createPrintedMaterialsCheckoutSession(
  */
 export function verifyWebhookSignature(body: string, signature: string) {
   try {
+    const stripe = getStripe();
     const event = stripe.webhooks.constructEvent(
       body,
       signature,
@@ -106,6 +118,7 @@ export function verifyWebhookSignature(body: string, signature: string) {
  */
 export async function getPaymentIntent(paymentIntentId: string) {
   try {
+    const stripe = getStripe();
     const paymentIntent = await stripe.paymentIntents.retrieve(paymentIntentId);
     return paymentIntent;
   } catch (error) {
@@ -121,6 +134,7 @@ export async function getPaymentIntent(paymentIntentId: string) {
  */
 export async function getCheckoutSession(sessionId: string) {
   try {
+    const stripe = getStripe();
     const session = await stripe.checkout.sessions.retrieve(sessionId);
     return session;
   } catch (error) {
