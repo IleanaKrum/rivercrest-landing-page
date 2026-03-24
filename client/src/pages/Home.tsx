@@ -215,12 +215,12 @@ export default function Home() {
                 className="w-full h-auto"
               >
                 <source
-                  src="https://d2xsxph8kpxj0f.cloudfront.net/310519663416906571/kBmgeZHWTyHuceHoeAKRrp/fmc-way-video_3820a89f.mp4"
+                  src="https://d2xsxph8kpxj0f.cloudfront.net/310519663416906571/kBmgeZHWTyHuceHoeAKRrp/fmc-way-video-50sec_09177c1b.mp4"
                   type="video/mp4"
                 />
                 <track
                   kind="subtitles"
-                  src="https://d2xsxph8kpxj0f.cloudfront.net/310519663416906571/kBmgeZHWTyHuceHoeAKRrp/fmc-way-subtitles_9f2b2ad7.vtt"
+                  src="https://d2xsxph8kpxj0f.cloudfront.net/310519663416906571/kBmgeZHWTyHuceHoeAKRrp/fmc-way-subtitles_747b0e74.vtt"
                   srcLang="sw"
                   label="Swahili"
                   default
