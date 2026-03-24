@@ -96,11 +96,11 @@ export default function Home() {
           {/* Left: Image */}
           <div className="relative order-2 lg:order-1">
             <img
-              src="https://d2xsxph8kpxj0f.cloudfront.net/310519663416906571/kBmgeZHWTyHuceHoeAKRrp/hero-spiritual-light-3FxtJ5Zdt8QcPoZ6nQvAFx.webp"
-              alt="Spiritual light and sacred geometry"
+              src="https://d2xsxph8kpxj0f.cloudfront.net/310519663416906571/kBmgeZHWTyHuceHoeAKRrp/Welcomemulti-lingualbanner_bf2ec9c9.png"
+              alt="Multilingual welcome banner with diverse community"
               className="w-full h-full object-cover"
             />
-            <div className="absolute inset-0 bg-gradient-to-r from-primary/20 to-transparent"></div>
+            <div className="absolute inset-0 bg-gradient-to-r from-primary/10 to-transparent"></div>
           </div>
 
           {/* Right: Content */}
@@ -298,61 +298,61 @@ export default function Home() {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {/* Gallery Image 1 */}
+            {/* Gallery Image 1 - Pastor Ileana Quote */}
             <div className="group relative overflow-hidden rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300 h-64">
               <img
-                src="https://d2xsxph8kpxj0f.cloudfront.net/310519663416906571/kBmgeZHWTyHuceHoeAKRrp/rivercrest_community_01-LWnNdxnwCTrCr7XaVw9geF.webp"
-                alt="Community worship and prayer"
+                src="https://d2xsxph8kpxj0f.cloudfront.net/310519663416906571/kBmgeZHWTyHuceHoeAKRrp/pastorileana.quote_d8a3325c.webp"
+                alt="Pastor Ileana's inspirational quote on humility and service"
                 className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-primary/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
             </div>
 
-            {/* Gallery Image 2 */}
+            {/* Gallery Image 2 - Community Fellowship */}
             <div className="group relative overflow-hidden rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300 h-64">
               <img
-                src="https://d2xsxph8kpxj0f.cloudfront.net/310519663416906571/kBmgeZHWTyHuceHoeAKRrp/rivercrest_community_02-Dzc8FXefC6MLaFtxoXg6KM.webp"
-                alt="Community fellowship and connection"
+                src="https://d2xsxph8kpxj0f.cloudfront.net/310519663416906571/kBmgeZHWTyHuceHoeAKRrp/da9157eb-6b3b-4682-a277-fdb57a0e57d7~1_6e9f5e8b.webp"
+                alt="Community members gathering at Rivercrest"
                 className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-primary/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
             </div>
 
-            {/* Gallery Image 3 */}
+            {/* Gallery Image 3 - Children's Ministry */}
             <div className="group relative overflow-hidden rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300 h-64">
               <img
-                src="https://d2xsxph8kpxj0f.cloudfront.net/310519663416906571/kBmgeZHWTyHuceHoeAKRrp/rivercrest_community_03-9utNfJ7foJPYoMBALiq4rb.webp"
-                alt="Community outreach and service"
+                src="https://d2xsxph8kpxj0f.cloudfront.net/310519663416906571/kBmgeZHWTyHuceHoeAKRrp/20241124_135858~2_3632a111.webp"
+                alt="Children's ministry and family fellowship"
                 className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-primary/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
             </div>
 
-            {/* Gallery Image 4 */}
+            {/* Gallery Image 4 - Leadership Team */}
             <div className="group relative overflow-hidden rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300 h-64">
               <img
-                src="https://d2xsxph8kpxj0f.cloudfront.net/310519663416906571/kBmgeZHWTyHuceHoeAKRrp/rivercrest_community_04-kU5meeyJcxiGgDNQszoCqx.webp"
-                alt="Community celebration and joy"
+                src="https://d2xsxph8kpxj0f.cloudfront.net/310519663416906571/kBmgeZHWTyHuceHoeAKRrp/8e86fddd-27ff-4379-9346-eed2da98abbb~1_0a30936d.webp"
+                alt="Leadership team and pastoral staff"
                 className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-primary/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
             </div>
 
-            {/* Gallery Image 5 */}
+            {/* Gallery Image 5 - Worship and Prayer */}
             <div className="group relative overflow-hidden rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300 h-64">
               <img
-                src="https://d2xsxph8kpxj0f.cloudfront.net/310519663416906571/kBmgeZHWTyHuceHoeAKRrp/rivercrest_community_05-LWnNdxnwCTrCr7XaVw9geF.webp"
-                alt="Community ministry and leadership"
+                src="https://d2xsxph8kpxj0f.cloudfront.net/310519663416906571/kBmgeZHWTyHuceHoeAKRrp/20250628_104636_a089c479.webp"
+                alt="Worship service and pastoral leadership"
                 className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-primary/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
             </div>
 
-            {/* Gallery Image 6 */}
+            {/* Gallery Image 6 - Missional Commitment */}
             <div className="group relative overflow-hidden rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300 h-64">
               <img
-                src="https://d2xsxph8kpxj0f.cloudfront.net/310519663416906571/kBmgeZHWTyHuceHoeAKRrp/rivercrest_community_06-9utNfJ7foJPYoMBALiq4rb.webp"
-                alt="Community growth and discipleship"
+                src="https://d2xsxph8kpxj0f.cloudfront.net/310519663416906571/kBmgeZHWTyHuceHoeAKRrp/Welcomemulti-lingualbanner_bf2ec9c9.png"
+                alt="Rivercrest's commitment to multilingual and multicultural ministry"
                 className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-primary/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
