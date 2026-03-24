@@ -678,3 +678,76 @@ export async function getDashboardSummary() {
     videoCompletionRate: completions.length > 0 ? Math.round((completions.filter((c: any) => c.isCompleted).length / completions.length) * 100) : 0,
   };
 }
+
+
+// Check if user has an approved application for a training track
+export async function getUserApprovedApplication(userId: number, trackId?: number) {
+  const db = await getDb();
+  if (!db) return undefined;
+  
+  const conditions = [eq(applications.userId, userId), eq(applications.status, "approved")];
+  if (trackId) {
+    conditions.push(eq(applications.trackId, trackId));
+  }
+  
+  const result = await db.select().from(applications)
+    .where(and(...conditions))
+    .limit(1);
+  
+  return result.length > 0 ? result[0] : undefined;
+}
+
+// Check if user is enrolled in a specific course
+export async function getUserCourseEnrollment(userId: number, courseId: number) {
+  const db = await getDb();
+  if (!db) return undefined;
+  
+  const result = await db.select().from(enrollments)
+    .where(and(eq(enrollments.userId, userId), eq(enrollments.courseId, courseId)))
+    .limit(1);
+  
+  return result.length > 0 ? result[0] : undefined;
+}
+
+// Check if user has access to a training track (has approved application)
+export async function getUserTrackAccess(userId: number, trackId: number) {
+  const db = await getDb();
+  if (!db) return false;
+  
+  const application = await getUserApprovedApplication(userId, trackId);
+  return !!application;
+}
+
+// Get user's application status for a track
+export async function getUserApplicationStatus(userId: number, trackId: number) {
+  const db = await getDb();
+  if (!db) return null;
+  
+  const result = await db.select().from(applications)
+    .where(and(eq(applications.userId, userId), eq(applications.trackId, trackId)))
+    .limit(1);
+  
+  return result.length > 0 ? result[0] : null;
+}
+
+// Get all approved applications for a user
+export async function getUserApprovedApplications(userId: number) {
+  const db = await getDb();
+  if (!db) return [];
+  
+  return db.select().from(applications)
+    .where(and(eq(applications.userId, userId), eq(applications.status, "approved")));
+}
+
+// Create enrollment for approved student
+export async function createStudentEnrollment(userId: number, courseId: number, applicationId?: number) {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+  
+  return db.insert(enrollments).values({
+    userId,
+    courseId,
+    applicationId,
+    status: "enrolled",
+  });
+}

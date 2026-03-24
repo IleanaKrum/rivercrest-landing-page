@@ -594,3 +594,40 @@
   - [ ] Test admin approval workflow
   - [ ] Test email notifications
   - [ ] Verify authentication requirements
+
+## Completed - Authentication Gate for Course Access (Current Session)
+- [x] Add database functions for enrollment verification
+  - [x] Create getUserApprovedApplication function
+  - [x] Create getUserTrackAccess function
+  - [x] Create getUserApplicationStatus function
+  - [x] Create getUserApprovedApplications function
+  - [x] Create getUserCourseEnrollment function
+  - [x] Create createStudentEnrollment function
+- [x] Create tRPC procedures for access control
+  - [x] Add checkTrackAccess protected procedure
+  - [x] Add getApplicationStatus protected procedure
+  - [x] Return access status and application status to frontend
+- [x] Update Center of Studies page with access control
+  - [x] Add useAuth hook integration
+  - [x] Query access status for each track when authenticated
+  - [x] Display approval status badges (Approved/Pending/Rejected)
+  - [x] Implement conditional button rendering based on access
+  - [x] Show "Login to Apply" for non-authenticated users
+  - [x] Show "View Courses" for approved students
+  - [x] Show "Application Under Review" for pending applications
+  - [x] Show "Reapply" for rejected applications
+- [x] Write comprehensive vitest tests
+  - [x] Create enrollment.test.ts with 12 enrollment tests
+  - [x] Test getUserApprovedApplication function
+  - [x] Test getUserTrackAccess function
+  - [x] Test getUserApplicationStatus function
+  - [x] Test getUserApprovedApplications function
+  - [x] Test getUserCourseEnrollment function
+  - [x] Test createStudentEnrollment function
+  - [x] All 46 tests passing (including 12 new enrollment tests)
+- [x] Verify authentication gate functionality
+  - [x] Non-authenticated users see "Login to Apply" button
+  - [x] Authenticated users see their application status
+  - [x] Approved students can view courses
+  - [x] Pending applications show "Under Review" message
+  - [x] Rejected applications show "Reapply" option

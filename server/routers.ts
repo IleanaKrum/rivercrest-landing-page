@@ -66,6 +66,24 @@ export const appRouter = router({
       db.getEnrollmentsByUserId(ctx.user.id)
     ),
     
+    checkTrackAccess: protectedProcedure
+      .input(z.object({ trackId: z.number() }))
+      .query(async ({ input, ctx }) => {
+        const hasAccess = await db.getUserTrackAccess(ctx.user.id, input.trackId);
+        const applicationStatus = await db.getUserApplicationStatus(ctx.user.id, input.trackId);
+        return {
+          hasAccess,
+          applicationStatus: applicationStatus?.status || null,
+          message: hasAccess ? "Access granted" : applicationStatus?.status === "pending" ? "Application pending review" : "No application found",
+        };
+      }),
+    
+    getApplicationStatus: protectedProcedure
+      .input(z.object({ trackId: z.number() }))
+      .query(async ({ input, ctx }) => {
+        return db.getUserApplicationStatus(ctx.user.id, input.trackId);
+      }),
+    
     getCourseDetails: protectedProcedure
       .input(z.object({ courseId: z.number() }))
       .query(({ input }) => db.getCourseById(input.courseId)),
