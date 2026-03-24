@@ -83,6 +83,36 @@ export const appRouter = router({
       .mutation(({ input }) =>
         db.updateStudentProgress(input.enrollmentId, input.sessionId, input.completed)
       ),
+    
+    trackVideoProgress: protectedProcedure
+      .input(z.object({
+        enrollmentId: z.number(),
+        sessionId: z.number(),
+        videoId: z.string(),
+        currentTime: z.number(),
+        duration: z.number(),
+      }))
+      .mutation(async ({ input, ctx }) => {
+        // Track video viewing progress
+        // This helps us understand student engagement with video content
+        try {
+          // Log video progress for analytics
+          console.log(`[Video Progress] User ${ctx.user.id} - Session ${input.sessionId} - Video ${input.videoId} - ${input.currentTime}/${input.duration}s`);
+          
+          // Mark session as completed if video is fully watched (90%+)
+          if (input.currentTime >= input.duration * 0.9) {
+            await db.updateStudentProgress(input.enrollmentId, input.sessionId, true);
+          }
+          
+          return { success: true, message: 'Video progress tracked' };
+        } catch (error) {
+          console.error('[Video Progress Error]', error);
+          throw new TRPCError({
+            code: 'INTERNAL_SERVER_ERROR',
+            message: 'Failed to track video progress',
+          });
+        }
+      }),
   }),
 
   admin: router({

@@ -6,11 +6,11 @@ import { useState } from "react";
 import { MissionalCommitment } from "@/components/MissionalCommitment";
 
 /**
- * Design: Modern Spiritual Minimalism
- * - Deep navy/teal primary with warm cream backgrounds
- * - Asymmetrical layouts with generous whitespace
- * - Crimson Text serif for headings, Inter sans-serif for body
- * - Subtle spiritual symbolism and soft shadows
+ * Design: Modern & Vibrant
+ * - Vibrant primary colors (bright blues, purples, oranges)
+ * - Dynamic gradients and modern layouts
+ * - Contemporary typography with strong hierarchy
+ * - Bold accents and energetic visual elements
  */
 
 export default function Home() {

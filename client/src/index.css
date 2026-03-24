@@ -43,41 +43,41 @@
 }
 
 :root {
-  /* Rivercrest FMC - Modern Spiritual Minimalism */
-  /* Primary: Deep Navy/Teal (#1a4d5c), Accent: Green (#2d7a6e), Background: Warm Cream (#faf8f5) */
-  --primary: #1a4d5c;
-  --primary-foreground: #faf8f5;
-  --sidebar-primary: #1a4d5c;
-  --sidebar-primary-foreground: #faf8f5;
-  --chart-1: #2d7a6e;
-  --chart-2: #1a4d5c;
-  --chart-3: #4a5568;
-  --chart-4: #1a4d5c;
-  --chart-5: #0f3a47;
+  /* Rivercrest FMC - Modern & Vibrant */
+  /* Primary: Vibrant Blue (#0066ff), Secondary: Vibrant Purple (#7c3aed), Accent: Vibrant Orange (#ff6b35) */
+  --primary: #0066ff;
+  --primary-foreground: #ffffff;
+  --sidebar-primary: #0066ff;
+  --sidebar-primary-foreground: #ffffff;
+  --chart-1: #7c3aed;
+  --chart-2: #0066ff;
+  --chart-3: #ff6b35;
+  --chart-4: #0066ff;
+  --chart-5: #0052cc;
   --radius: 0.65rem;
-  --background: #faf8f5;
-  --foreground: #2d3748;
+  --background: #f8f9ff;
+  --foreground: #1a202c;
   --card: #ffffff;
-  --card-foreground: #2d3748;
+  --card-foreground: #1a202c;
   --popover: #ffffff;
-  --popover-foreground: #2d3748;
-  --secondary: #2d7a6e;
-  --secondary-foreground: #faf8f5;
-  --muted: #e2ddd8;
-  --muted-foreground: #718096;
-  --accent: #2d7a6e;
-  --accent-foreground: #faf8f5;
-  --destructive: #e53e3e;
-  --destructive-foreground: #faf8f5;
-  --border: #e2ddd8;
+  --popover-foreground: #1a202c;
+  --secondary: #7c3aed;
+  --secondary-foreground: #ffffff;
+  --muted: #e5e7eb;
+  --muted-foreground: #6b7280;
+  --accent: #ff6b35;
+  --accent-foreground: #ffffff;
+  --destructive: #ef4444;
+  --destructive-foreground: #ffffff;
+  --border: #e5e7eb;
   --input: #ffffff;
-  --ring: #1a4d5c;
+  --ring: #0066ff;
   --sidebar: #ffffff;
-  --sidebar-foreground: #2d3748;
-  --sidebar-accent: #2d7a6e;
-  --sidebar-accent-foreground: #faf8f5;
-  --sidebar-border: #e2ddd8;
-  --sidebar-ring: #1a4d5c;
+  --sidebar-foreground: #1a202c;
+  --sidebar-accent: #7c3aed;
+  --sidebar-accent-foreground: #ffffff;
+  --sidebar-border: #e5e7eb;
+  --sidebar-ring: #0066ff;
 }
 
 .dark {

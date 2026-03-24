@@ -54,7 +54,6 @@ export const VideoPlayer: React.FC<VideoPlayerProps> = ({
   const controlsTimeoutRef = useRef<ReturnType<typeof setTimeout> | undefined>(undefined);
   const trackingIntervalRef = useRef<ReturnType<typeof setInterval> | undefined>(undefined);
   const { user } = useAuth();
-  // @ts-expect-error tRPC types not fully synced
   const trackVideoProgressMutation = trpc.centerOfStudies.trackVideoProgress.useMutation();
 
   // Handle play/pause
@@ -184,13 +183,16 @@ export const VideoPlayer: React.FC<VideoPlayerProps> = ({
         const completionThreshold = videoDuration * 0.95;
         const completed = watched >= completionThreshold;
 
-        // Track progress
-        trackVideoProgressMutation.mutate({
-          videoId,
-          moduleId,
-          watchedDuration: Math.floor(watched),
-          totalDuration: Math.floor(videoDuration),
-        });
+        // Track progress - only if user is logged in and we have required IDs
+        if (user && videoId && moduleId) {
+          trackVideoProgressMutation.mutate({
+            enrollmentId: moduleId, // Using moduleId as enrollmentId for now
+            sessionId: videoId, // Using videoId as sessionId for now
+            videoId: String(videoId), // Convert to string as expected by backend
+            currentTime: Math.floor(watched),
+            duration: Math.floor(videoDuration),
+          });
+        }
 
         // Update completion state
         if (completed && !isCompleted) {
