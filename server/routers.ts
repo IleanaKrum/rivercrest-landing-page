@@ -300,6 +300,11 @@ export const appRouter = router({
       if (ctx.user.role !== 'admin') throw new Error('Unauthorized');
       return db.getDashboardSummary();
     }),
+
+    getAllCoursesWithDetails: protectedProcedure.query(async ({ ctx }) => {
+      if (ctx.user.role !== 'admin') throw new Error('Unauthorized');
+      return db.getAllCourses();
+    }),
   }),
 
   courseRegistration: router({
@@ -554,7 +559,7 @@ export const appRouter = router({
     getVideosByModule: publicProcedure
       .input(z.object({ moduleId: z.number() }))
       .query(async ({ input }) => {
-        return [];
+        return db.getVideosByModuleWithSubtitles(input.moduleId);
       }),
     
     getQuizByModuleId: publicProcedure

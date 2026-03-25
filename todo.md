@@ -673,3 +673,50 @@
   - [ ] Test as pending student
   - [ ] Test as non-authenticated user
   - [ ] Test as rejected student
+
+
+## Completed - Swahili Subtitles for All Course Videos (Current Session)
+- [x] Create Swahili subtitle files for Wesleyan Theology course (6 videos)
+  - [x] Lesson 1: God's Grace Comes First (wesleyan-lesson-1-grace-sw.vtt)
+  - [x] Lesson 2: Becoming More Like Jesus (wesleyan-lesson-2-sanctification-sw.vtt)
+  - [x] Lesson 3: Personal Faith and Community Responsibility (wesleyan-lesson-3-social-holiness-sw.vtt)
+  - [x] Lesson 4: Using Money Wisely (wesleyan-lesson-4-stewardship-sw.vtt)
+  - [x] Lesson 5: The Power of Small Groups (wesleyan-lesson-5-small-groups-sw.vtt)
+  - [x] Lesson 6: Living Out Your Faith Every Day (wesleyan-lesson-6-practical-holiness-sw.vtt)
+- [x] Create Swahili subtitle files for Christian Doctrine course (6 videos)
+  - [x] Lesson 1: Who Is God? (doctrine-lesson-1-god-sw.vtt)
+  - [x] Lesson 2: Jesus Christ (doctrine-lesson-2-jesus-sw.vtt)
+  - [x] Lesson 3: Holy Spirit (doctrine-lesson-3-holy-spirit-sw.vtt)
+  - [x] Lesson 4: Salvation (doctrine-lesson-4-salvation-sw.vtt)
+  - [x] Lesson 5: The Church (doctrine-lesson-5-church-sw.vtt)
+  - [x] Lesson 6: Eternity (doctrine-lesson-6-eternity-sw.vtt)
+- [x] Upload all 12 Swahili subtitle files to S3 CDN
+  - [x] All files successfully uploaded with public CDN URLs
+- [x] Create database records linking videos to Swahili subtitles
+  - [x] Added videoSubtitles table entries for all 12 videos
+  - [x] Linked Wesleyan Theology videos (IDs 1-6) to Swahili subtitles
+  - [x] Linked Christian Doctrine videos (IDs 30001-30006) to Swahili subtitles
+- [x] Update tRPC procedures to fetch video subtitles
+  - [x] Added getVideosByModuleWithSubtitles function to db.ts
+  - [x] Added getVideoSubtitles function to db.ts
+  - [x] Updated getVideosByModule tRPC procedure to return videos with subtitles
+- [x] Test subtitle display and synchronization
+  - [x] Created comprehensive vitest test suite (server/subtitles.test.ts)
+  - [x] Test fetching videos with Swahili subtitles for Wesleyan Theology (6 videos)
+  - [x] Test fetching videos with Swahili subtitles for Christian Doctrine (6 videos)
+  - [x] Test individual video subtitle retrieval
+  - [x] Test all 12 videos have Swahili subtitles
+  - [x] All 5 subtitle tests passing
+- [x] VideoPlayer component already supports subtitles
+  - [x] Component has subtitle selection UI with language menu
+  - [x] Supports multiple subtitle tracks per video
+  - [x] Displays subtitle language names in player controls
+  - [x] Allows users to toggle subtitles on/off
+
+## Status Summary
+✅ **All 12 course videos now have Swahili subtitles**
+- Wesleyan Theology: 6 videos with Swahili subtitles
+- Introduction to Christian Doctrine: 6 videos with Swahili subtitles
+- All subtitles uploaded to S3 CDN and linked in database
+- VideoPlayer component fully supports subtitle selection
+- Students can now watch course videos with Swahili language support

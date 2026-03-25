@@ -1,0 +1,40 @@
+{
+  "query": "SELECT id, title, description FROM independent_study_modules LIMIT 20;",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway04.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 27SALpbbdFwiPRE.root --database kBmgeZHWTyHuceHoeAKRrp --execute SELECT id, title, description FROM independent_study_modules LIMIT 20;",
+  "rows": [
+    {
+      "id": "1",
+      "title": "FMC Origins and Founder",
+      "description": "Learn about John Wesley and the Free Methodist Church founding principles"
+    },
+    {
+      "id": "2",
+      "title": "Core Beliefs and Values",
+      "description": "Understand the core theological beliefs of the Free Methodist Church and how they apply to leadership"
+    },
+    {
+      "id": "3",
+      "title": "Church Organization and Structure",
+      "description": "Learn how the Free Methodist Church is organized and how decisions are made"
+    },
+    {
+      "id": "4",
+      "title": "Leadership Roles and Responsibilities",
+      "description": "Understand different leadership roles in the Free Methodist Church"
+    },
+    {
+      "id": "30001",
+      "title": "Wesleyan Theology: A Practical Guide",
+      "description": "Learn the core principles of John Wesley and Methodist theology in simple, practical language. Understand grace, sanctification, social holiness, and how to live out your faith daily."
+    },
+    {
+      "id": "60001",
+      "title": "Introduction to Christian Doctrine",
+      "description": "A comprehensive introduction to core Christian doctrines in simple, practical language designed for missionaries, church planters, and lay leaders. Covers God's nature, Jesus Christ, the Holy Spirit, salvation, the Church, and eternity. Bilingual (English/Swahili) with videos and interactive quizzes. Ideal for limited English speakers and those working in missions contexts."
+    }
+  ],
+  "messages": [],
+  "stdout": "id\ttitle\tdescription\n1\tFMC Origins and Founder\tLearn about John Wesley and the Free Methodist Church founding principles\n2\tCore Beliefs and Values\tUnderstand the core theological beliefs of the Free Methodist Church and how they apply to leadership\n3\tChurch Organization and Structure\tLearn how the Free Methodist Church is organized and how decisions are made\n4\tLeadership Roles and Responsibilities\tUnderstand different leadership roles in the Free Methodist Church\n30001\tWesleyan Theology: A Practical Guide\tLearn the core principles of John Wesley and Methodist theology in simple, practical language. Understand grace, sanctification, social holiness, and how to live out your faith daily.\n60001\tIntroduction to Christian Doctrine\tA comprehensive introduction to core Christian doctrines in simple, practical language designed for missionaries, church planters, and lay leaders. Covers God's nature, Jesus Christ, the Holy Spirit, salvation, the Church, and eternity. Bilingual (English/Swahili) with videos and interactive quizzes. Ideal for limited English speakers and those working in missions contexts.\n",
+  "stderr": "",
+  "execution_time_ms": 352
+}

@@ -1,0 +1,82 @@
+{
+  "query": "SELECT id, title, moduleId, videoUrl FROM module_videos LIMIT 30;",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway04.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 27SALpbbdFwiPRE.root --database kBmgeZHWTyHuceHoeAKRrp --execute SELECT id, title, moduleId, videoUrl FROM module_videos LIMIT 30;",
+  "rows": [
+    {
+      "id": "1",
+      "title": "Lesson 1: God's Grace Comes First",
+      "moduleId": "16",
+      "videoUrl": "https://d2xsxph8kpxj0f.cloudfront.net/310519663416906571/kBmgeZHWTyHuceHoeAKRrp/wesleyan-lesson-1-grace_35b0a405.mp4"
+    },
+    {
+      "id": "2",
+      "title": "Lesson 2: Becoming More Like Jesus",
+      "moduleId": "16",
+      "videoUrl": "https://d2xsxph8kpxj0f.cloudfront.net/310519663416906571/kBmgeZHWTyHuceHoeAKRrp/wesleyan-lesson-2-sanctification_6b6e3529.mp4"
+    },
+    {
+      "id": "3",
+      "title": "Lesson 3: Personal Faith AND Community Responsibility",
+      "moduleId": "16",
+      "videoUrl": "https://d2xsxph8kpxj0f.cloudfront.net/310519663416906571/kBmgeZHWTyHuceHoeAKRrp/wesleyan-lesson-3-social-holiness_1f9ad57c.mp4"
+    },
+    {
+      "id": "4",
+      "title": "Lesson 4: Using Money Wisely",
+      "moduleId": "16",
+      "videoUrl": "https://d2xsxph8kpxj0f.cloudfront.net/310519663416906571/kBmgeZHWTyHuceHoeAKRrp/wesleyan-lesson-4-stewardship_de9b62c0.mp4"
+    },
+    {
+      "id": "5",
+      "title": "Lesson 5: The Power of Small Groups",
+      "moduleId": "16",
+      "videoUrl": "https://d2xsxph8kpxj0f.cloudfront.net/310519663416906571/kBmgeZHWTyHuceHoeAKRrp/wesleyan-lesson-5-small-groups_8ee522f4.mp4"
+    },
+    {
+      "id": "6",
+      "title": "Lesson 6: Living Out Your Faith Every Day",
+      "moduleId": "16",
+      "videoUrl": "https://d2xsxph8kpxj0f.cloudfront.net/310519663416906571/kBmgeZHWTyHuceHoeAKRrp/wesleyan-lesson-6-practical-holiness_810edbb7.mp4"
+    },
+    {
+      "id": "30001",
+      "title": "Lesson 1: Who Is God?",
+      "moduleId": "60001",
+      "videoUrl": "https://d2xsxph8kpxj0f.cloudfront.net/310519663416906571/kBmgeZHWTyHuceHoeAKRrp/doctrine-lesson-1-god_bad519ac.mp4"
+    },
+    {
+      "id": "30002",
+      "title": "Lesson 2: Jesus Christ",
+      "moduleId": "60001",
+      "videoUrl": "https://d2xsxph8kpxj0f.cloudfront.net/310519663416906571/kBmgeZHWTyHuceHoeAKRrp/doctrine-lesson-2-jesus_df888467.mp4"
+    },
+    {
+      "id": "30003",
+      "title": "Lesson 3: Holy Spirit",
+      "moduleId": "60001",
+      "videoUrl": "https://d2xsxph8kpxj0f.cloudfront.net/310519663416906571/kBmgeZHWTyHuceHoeAKRrp/doctrine-lesson-3-holy-spirit_19df152c.mp4"
+    },
+    {
+      "id": "30004",
+      "title": "Lesson 4: Salvation",
+      "moduleId": "60001",
+      "videoUrl": "https://d2xsxph8kpxj0f.cloudfront.net/310519663416906571/kBmgeZHWTyHuceHoeAKRrp/doctrine-lesson-4-salvation_2675eb8c.mp4"
+    },
+    {
+      "id": "30005",
+      "title": "Lesson 5: The Church",
+      "moduleId": "60001",
+      "videoUrl": "https://d2xsxph8kpxj0f.cloudfront.net/310519663416906571/kBmgeZHWTyHuceHoeAKRrp/doctrine-lesson-5-church_09e777ca.mp4"
+    },
+    {
+      "id": "30006",
+      "title": "Lesson 6: Eternity",
+      "moduleId": "60001",
+      "videoUrl": "https://d2xsxph8kpxj0f.cloudfront.net/310519663416906571/kBmgeZHWTyHuceHoeAKRrp/doctrine-lesson-6-eternity_01acae78.mp4"
+    }
+  ],
+  "messages": [],
+  "stdout": "id\ttitle\tmoduleId\tvideoUrl\n1\tLesson 1: God's Grace Comes First\t16\thttps://d2xsxph8kpxj0f.cloudfront.net/310519663416906571/kBmgeZHWTyHuceHoeAKRrp/wesleyan-lesson-1-grace_35b0a405.mp4\n2\tLesson 2: Becoming More Like Jesus\t16\thttps://d2xsxph8kpxj0f.cloudfront.net/310519663416906571/kBmgeZHWTyHuceHoeAKRrp/wesleyan-lesson-2-sanctification_6b6e3529.mp4\n3\tLesson 3: Personal Faith AND Community Responsibility\t16\thttps://d2xsxph8kpxj0f.cloudfront.net/310519663416906571/kBmgeZHWTyHuceHoeAKRrp/wesleyan-lesson-3-social-holiness_1f9ad57c.mp4\n4\tLesson 4: Using Money Wisely\t16\thttps://d2xsxph8kpxj0f.cloudfront.net/310519663416906571/kBmgeZHWTyHuceHoeAKRrp/wesleyan-lesson-4-stewardship_de9b62c0.mp4\n5\tLesson 5: The Power of Small Groups\t16\thttps://d2xsxph8kpxj0f.cloudfront.net/310519663416906571/kBmgeZHWTyHuceHoeAKRrp/wesleyan-lesson-5-small-groups_8ee522f4.mp4\n6\tLesson 6: Living Out Your Faith Every Day\t16\thttps://d2xsxph8kpxj0f.cloudfront.net/310519663416906571/kBmgeZHWTyHuceHoeAKRrp/wesleyan-lesson-6-practical-holiness_810edbb7.mp4\n30001\tLesson 1: Who Is God?\t60001\thttps://d2xsxph8kpxj0f.cloudfront.net/310519663416906571/kBmgeZHWTyHuceHoeAKRrp/doctrine-lesson-1-god_bad519ac.mp4\n30002\tLesson 2: Jesus Christ\t60001\thttps://d2xsxph8kpxj0f.cloudfront.net/310519663416906571/kBmgeZHWTyHuceHoeAKRrp/doctrine-lesson-2-jesus_df888467.mp4\n30003\tLesson 3: Holy Spirit\t60001\thttps://d2xsxph8kpxj0f.cloudfront.net/310519663416906571/kBmgeZHWTyHuceHoeAKRrp/doctrine-lesson-3-holy-spirit_19df152c.mp4\n30004\tLesson 4: Salvation\t60001\thttps://d2xsxph8kpxj0f.cloudfront.net/310519663416906571/kBmgeZHWTyHuceHoeAKRrp/doctrine-lesson-4-salvation_2675eb8c.mp4\n30005\tLesson 5: The Church\t60001\thttps://d2xsxph8kpxj0f.cloudfront.net/310519663416906571/kBmgeZHWTyHuceHoeAKRrp/doctrine-lesson-5-church_09e777ca.mp4\n30006\tLesson 6: Eternity\t60001\thttps://d2xsxph8kpxj0f.cloudfront.net/310519663416906571/kBmgeZHWTyHuceHoeAKRrp/doctrine-lesson-6-eternity_01acae78.mp4\n",
+  "stderr": "",
+  "execution_time_ms": 389
+}

@@ -1,0 +1,13 @@
+{
+  "query": "SELECT COUNT(*) as total_videos FROM module_videos;",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway04.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 27SALpbbdFwiPRE.root --database kBmgeZHWTyHuceHoeAKRrp --execute SELECT COUNT(*) as total_videos FROM module_videos;",
+  "rows": [
+    {
+      "total_videos": "12"
+    }
+  ],
+  "messages": [],
+  "stdout": "total_videos\n12\n",
+  "stderr": "",
+  "execution_time_ms": 424
+}

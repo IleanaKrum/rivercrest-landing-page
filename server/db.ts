@@ -1,6 +1,7 @@
 import { eq, and, inArray } from "drizzle-orm";
 import { drizzle } from "drizzle-orm/mysql2";
-import { InsertUser, users, trainingTracks, courses, courseSessions, applications, enrollments, studentProgress, assignments, submissions, courseRegistrations, resources, independentStudyModules, trackModuleLinks, moduleProgress, videoCompletions, moduleVideos, quizzes, quizResults, InsertApplication, InsertEnrollment, InsertStudentProgress, InsertCourse, InsertCourseSession, InsertAssignment, InsertSubmission, InsertCourseRegistration, InsertResource, Resource, InsertIndependentStudyModule, InsertTrackModuleLink, InsertModuleProgress, InsertVideoCompletion } from "../drizzle/schema";
+import { InsertUser, users, trainingTracks, courses, courseSessions, applications, enrollments, studentProgress, assignments, submissions, courseRegistrations, resources, independentStudyModules, trackModuleLinks, moduleProgress, videoCompletions, moduleVideos, videoSubtitles, quizzes, quizResults, InsertApplication, InsertEnrollment, InsertStudentProgress, InsertCourse, InsertCourseSession, InsertAssignment, InsertSubmission, InsertCourseRegistration, InsertResource, Resource, InsertIndependentStudyModule, InsertTrackModuleLink, InsertModuleProgress, InsertVideoCompletion } from "../drizzle/schema";
+import { eq as drizzleEq } from "drizzle-orm";
 import { ENV } from './_core/env';
 
 let _db: ReturnType<typeof drizzle> | null = null;
@@ -912,4 +913,67 @@ export async function getUserAccessibleCourses(userId: number) {
   return db.select().from(courses).where(
     inArray(courses.trackId, trackIds)
   );
+}
+
+
+// Video and Subtitle Functions
+export async function getVideosByModuleWithSubtitles(moduleId: number) {
+  const db = await getDb();
+  if (!db) return [];
+  
+  try {
+    // Get all videos for the module
+    const videos = await db.select().from(moduleVideos).where(
+      eq(moduleVideos.moduleId, moduleId)
+    );
+    
+    if (videos.length === 0) return [];
+    
+    // For each video, fetch its subtitles
+    const videosWithSubtitles = await Promise.all(
+      videos.map(async (video) => {
+        const subtitles = await db.select().from(videoSubtitles).where(
+          eq(videoSubtitles.videoId, video.id)
+        );
+        
+        return {
+          ...video,
+          subtitles: subtitles.map(s => ({
+            id: s.id,
+            language: s.language,
+            languageName: s.languageName,
+            subtitleUrl: s.subtitleUrl,
+            isDefault: s.isDefault,
+          })),
+        };
+      })
+    );
+    
+    return videosWithSubtitles;
+  } catch (error) {
+    console.error('Error fetching videos with subtitles:', error);
+    return [];
+  }
+}
+
+export async function getVideoSubtitles(videoId: number) {
+  const db = await getDb();
+  if (!db) return [];
+  
+  try {
+    const subtitles = await db.select().from(videoSubtitles).where(
+      eq(videoSubtitles.videoId, videoId)
+    );
+    
+    return subtitles.map(s => ({
+      id: s.id,
+      language: s.language,
+      languageName: s.languageName,
+      subtitleUrl: s.subtitleUrl,
+      isDefault: s.isDefault,
+    }));
+  } catch (error) {
+    console.error('Error fetching video subtitles:', error);
+    return [];
+  }
 }

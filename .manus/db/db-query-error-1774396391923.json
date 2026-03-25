@@ -1,0 +1,8 @@
+{
+  "query": "SELECT 'COURSES' as type, id, title, description, NULL as content FROM courses\nUNION ALL\nSELECT 'MODULES' as type, id, title, description, NULL as content FROM modules\nUNION ALL\nSELECT 'VIDEOS' as type, id, title, description, video_url as content FROM videos\nUNION ALL\nSELECT 'QUIZZES' as type, id, title, description, NULL as content FROM quizzes\nORDER BY type, id;",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway04.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 27SALpbbdFwiPRE.root --database kBmgeZHWTyHuceHoeAKRrp --execute SELECT 'COURSES' as type, id, title, description, NULL as content FROM courses\nUNION ALL\nSELECT 'MODULES' as type, id, title, description, NULL as content FROM modules\nUNION ALL\nSELECT 'VIDEOS' as type, id, title, description, video_url as content FROM videos\nUNION ALL\nSELECT 'QUIZZES' as type, id, title, description, NULL as content FROM quizzes\nORDER BY type, id;",
+  "returncode": 1,
+  "logs": [
+    "ERROR 1146 (42S02) at line 1: Table 'kbmgezhwtyhucehoeakrrp.modules' doesn't exist"
+  ]
+}

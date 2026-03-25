@@ -1,0 +1,30 @@
+{
+  "query": "SELECT * FROM courses LIMIT 5;",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway04.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 27SALpbbdFwiPRE.root --database kBmgeZHWTyHuceHoeAKRrp --execute SELECT * FROM courses LIMIT 5;",
+  "rows": [],
+  "messages": [
+    "1\t9\tBiblical Foundations for Deacons\tExplore the scriptural basis for the diaconate, studying Acts 6, 1 Timothy 3, and Titus 1. Understand the spiritual qualifications and responsibilities of deacons in the New Testament church.\tModule 1: The Role of Deacons in Acts",
+    "Module 2: Qualifications from 1 Timothy 3",
+    "Module 3: Servant Leadership in Practice",
+    "Module 4: Deacons in the Early Church\t12\t24\t2026-03-09 18:36:32",
+    "2\t9\tSpiritual Formation and Character\tDevelop spiritual maturity and Christian character essential for diaconal ministry. Focus on prayer, Bible study, holiness, and personal discipleship.\tModule 1: Prayer and Communion with God",
+    "Module 2: Scripture Study Methods",
+    "Module 3: Living a Holy Life",
+    "Module 4: Personal Discipleship Journey\t10\t20\t2026-03-09 18:36:32",
+    "3\t9\tPastoral Care and Counseling Basics\tLearn fundamental skills for providing pastoral care, visiting the sick, and offering basic spiritual counseling to church members.\tModule 1: Listening and Empathy",
+    "Module 2: Visiting the Sick and Homebound",
+    "Module 3: Grief and Crisis Support",
+    "Module 4: Boundaries in Pastoral Care\t10\t20\t2026-03-09 18:36:32",
+    "4\t10\tEvangelism Theology and Methods\tUnderstand the theological foundation for evangelism and learn proven methods for sharing the gospel effectively across cultures.\tModule 1: The Great Commission",
+    "Module 2: Gospel Presentation Methods",
+    "Module 3: Cultural Sensitivity in Evangelism",
+    "Module 4: Follow-up and Discipleship\t12\t24\t2026-03-09 18:36:32",
+    "5\t10\tChurch Planting and Growth\tDevelop skills for planting new churches and helping existing churches grow spiritually and numerically.\tModule 1: Church Planting Principles",
+    "Module 2: Leadership Development",
+    "Module 3: Community Engagement",
+    "Module 4: Sustainability and Growth\t12\t24\t2026-03-09 18:36:32"
+  ],
+  "stdout": "id\ttrackId\ttitle\tdescription\tsyllabus\tsessionsCount\tcommitmentHours\tcreatedAt\n1\t9\tBiblical Foundations for Deacons\tExplore the scriptural basis for the diaconate, studying Acts 6, 1 Timothy 3, and Titus 1. Understand the spiritual qualifications and responsibilities of deacons in the New Testament church.\tModule 1: The Role of Deacons in Acts\nModule 2: Qualifications from 1 Timothy 3\nModule 3: Servant Leadership in Practice\nModule 4: Deacons in the Early Church\t12\t24\t2026-03-09 18:36:32\n2\t9\tSpiritual Formation and Character\tDevelop spiritual maturity and Christian character essential for diaconal ministry. Focus on prayer, Bible study, holiness, and personal discipleship.\tModule 1: Prayer and Communion with God\nModule 2: Scripture Study Methods\nModule 3: Living a Holy Life\nModule 4: Personal Discipleship Journey\t10\t20\t2026-03-09 18:36:32\n3\t9\tPastoral Care and Counseling Basics\tLearn fundamental skills for providing pastoral care, visiting the sick, and offering basic spiritual counseling to church members.\tModule 1: Listening and Empathy\nModule 2: Visiting the Sick and Homebound\nModule 3: Grief and Crisis Support\nModule 4: Boundaries in Pastoral Care\t10\t20\t2026-03-09 18:36:32\n4\t10\tEvangelism Theology and Methods\tUnderstand the theological foundation for evangelism and learn proven methods for sharing the gospel effectively across cultures.\tModule 1: The Great Commission\nModule 2: Gospel Presentation Methods\nModule 3: Cultural Sensitivity in Evangelism\nModule 4: Follow-up and Discipleship\t12\t24\t2026-03-09 18:36:32\n5\t10\tChurch Planting and Growth\tDevelop skills for planting new churches and helping existing churches grow spiritually and numerically.\tModule 1: Church Planting Principles\nModule 2: Leadership Development\nModule 3: Community Engagement\nModule 4: Sustainability and Growth\t12\t24\t2026-03-09 18:36:32\n",
+  "stderr": "",
+  "execution_time_ms": 431
+}

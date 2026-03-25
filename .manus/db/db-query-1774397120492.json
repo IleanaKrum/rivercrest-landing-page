@@ -1,0 +1,50 @@
+{
+  "query": "SELECT id, title, moduleId FROM quizzes LIMIT 20;",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway04.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 27SALpbbdFwiPRE.root --database kBmgeZHWTyHuceHoeAKRrp --execute SELECT id, title, moduleId FROM quizzes LIMIT 20;",
+  "rows": [
+    {
+      "id": "1",
+      "title": "FMC Origins: Our Heritage",
+      "moduleId": "NULL"
+    },
+    {
+      "id": "2",
+      "title": "FMC Core Beliefs",
+      "moduleId": "NULL"
+    },
+    {
+      "id": "3",
+      "title": "Holy Living: Practical Examples",
+      "moduleId": "NULL"
+    },
+    {
+      "id": "4",
+      "title": "FMC Church Organization",
+      "moduleId": "NULL"
+    },
+    {
+      "id": "5",
+      "title": "FMC Leadership Roles",
+      "moduleId": "NULL"
+    },
+    {
+      "id": "6",
+      "title": "FMC Social Justice",
+      "moduleId": "NULL"
+    },
+    {
+      "id": "30001",
+      "title": "Wesleyan Theology Assessment",
+      "moduleId": "16"
+    },
+    {
+      "id": "60001",
+      "title": "Introduction to Christian Doctrine Assessment",
+      "moduleId": "60001"
+    }
+  ],
+  "messages": [],
+  "stdout": "id\ttitle\tmoduleId\n1\tFMC Origins: Our Heritage\tNULL\n2\tFMC Core Beliefs\tNULL\n3\tHoly Living: Practical Examples\tNULL\n4\tFMC Church Organization\tNULL\n5\tFMC Leadership Roles\tNULL\n6\tFMC Social Justice\tNULL\n30001\tWesleyan Theology Assessment\t16\n60001\tIntroduction to Christian Doctrine Assessment\t60001\n",
+  "stderr": "",
+  "execution_time_ms": 366
+}

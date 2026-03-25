@@ -1,0 +1,29 @@
+{
+  "query": "SELECT * FROM applications LIMIT 5;",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway04.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 27SALpbbdFwiPRE.root --database kBmgeZHWTyHuceHoeAKRrp --execute SELECT * FROM applications LIMIT 5;",
+  "rows": [
+    {
+      "id": "1",
+      "userId": "1",
+      "trackId": "9",
+      "candidateName": "Ilean Marie",
+      "candidateAddress": "225 N. Gleneagles Rd.",
+      "churchName": "Rivercrest Free Methodist Church",
+      "leadPastorName": "Ileana Krum",
+      "recommendationLetterUrl": "NULL",
+      "essay": "Central Region Conference Ordination Candidate",
+      "status": "pending",
+      "createdAt": "2026-03-24 19:09:55",
+      "updatedAt": "2026-03-24 19:09:55",
+      "candidateEmail": "",
+      "candidatePhone": "NULL",
+      "approvedBy": "NULL",
+      "approvedAt": "NULL",
+      "rejectionReason": "NULL"
+    }
+  ],
+  "messages": [],
+  "stdout": "id\tuserId\ttrackId\tcandidateName\tcandidateAddress\tchurchName\tleadPastorName\trecommendationLetterUrl\tessay\tstatus\tcreatedAt\tupdatedAt\tcandidateEmail\tcandidatePhone\tapprovedBy\tapprovedAt\trejectionReason\n1\t1\t9\tIlean Marie\t225 N. Gleneagles Rd.\tRivercrest Free Methodist Church\tIleana Krum\tNULL\tCentral Region Conference Ordination Candidate\tpending\t2026-03-24 19:09:55\t2026-03-24 19:09:55\t\tNULL\tNULL\tNULL\tNULL\n",
+  "stderr": "",
+  "execution_time_ms": 448
+}

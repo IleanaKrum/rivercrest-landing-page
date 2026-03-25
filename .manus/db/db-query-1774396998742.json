@@ -1,0 +1,129 @@
+{
+  "query": "SELECT id, title, description, sessionsCount, commitmentHours FROM courses ORDER BY id;",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway04.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 27SALpbbdFwiPRE.root --database kBmgeZHWTyHuceHoeAKRrp --execute SELECT id, title, description, sessionsCount, commitmentHours FROM courses ORDER BY id;",
+  "rows": [
+    {
+      "id": "1",
+      "title": "Biblical Foundations for Deacons",
+      "description": "Explore the scriptural basis for the diaconate, studying Acts 6, 1 Timothy 3, and Titus 1. Understand the spiritual qualifications and responsibilities of deacons in the New Testament church.",
+      "sessionsCount": "12",
+      "commitmentHours": "24"
+    },
+    {
+      "id": "2",
+      "title": "Spiritual Formation and Character",
+      "description": "Develop spiritual maturity and Christian character essential for diaconal ministry. Focus on prayer, Bible study, holiness, and personal discipleship.",
+      "sessionsCount": "10",
+      "commitmentHours": "20"
+    },
+    {
+      "id": "3",
+      "title": "Pastoral Care and Counseling Basics",
+      "description": "Learn fundamental skills for providing pastoral care, visiting the sick, and offering basic spiritual counseling to church members.",
+      "sessionsCount": "10",
+      "commitmentHours": "20"
+    },
+    {
+      "id": "4",
+      "title": "Evangelism Theology and Methods",
+      "description": "Understand the theological foundation for evangelism and learn proven methods for sharing the gospel effectively across cultures.",
+      "sessionsCount": "12",
+      "commitmentHours": "24"
+    },
+    {
+      "id": "5",
+      "title": "Church Planting and Growth",
+      "description": "Develop skills for planting new churches and helping existing churches grow spiritually and numerically.",
+      "sessionsCount": "12",
+      "commitmentHours": "24"
+    },
+    {
+      "id": "6",
+      "title": "Cross-Cultural Ministry",
+      "description": "Prepare for effective ministry across different cultural contexts, understanding worldviews and communication styles.",
+      "sessionsCount": "10",
+      "commitmentHours": "20"
+    },
+    {
+      "id": "7",
+      "title": "Local Church Leadership",
+      "description": "Equip local church leaders with skills for effective congregational leadership, vision casting, and team building.",
+      "sessionsCount": "10",
+      "commitmentHours": "20"
+    },
+    {
+      "id": "8",
+      "title": "Worship and Liturgy",
+      "description": "Understand worship theology and learn to lead meaningful worship experiences that draw congregations closer to God.",
+      "sessionsCount": "8",
+      "commitmentHours": "16"
+    },
+    {
+      "id": "9",
+      "title": "Discipleship and Small Groups",
+      "description": "Develop systems for discipling believers and facilitating small groups that foster spiritual growth and community.",
+      "sessionsCount": "10",
+      "commitmentHours": "20"
+    },
+    {
+      "id": "10",
+      "title": "Advanced Theology and Doctrine",
+      "description": "Deep study of Christian theology, Free Methodist doctrine, and contemporary theological issues.",
+      "sessionsCount": "16",
+      "commitmentHours": "48"
+    },
+    {
+      "id": "11",
+      "title": "Denominational Polity and History",
+      "description": "Comprehensive study of Free Methodist Church polity, governance, and historical development.",
+      "sessionsCount": "12",
+      "commitmentHours": "24"
+    },
+    {
+      "id": "12",
+      "title": "Advanced Leadership and Ministry",
+      "description": "Develop advanced leadership competencies for conference-level ministry and organizational leadership.",
+      "sessionsCount": "14",
+      "commitmentHours": "35"
+    },
+    {
+      "id": "13",
+      "title": "Pastoral Care and Counseling Advanced",
+      "description": "Advanced training in pastoral counseling, crisis intervention, and mental health awareness for conference ministers.",
+      "sessionsCount": "12",
+      "commitmentHours": "24"
+    },
+    {
+      "id": "14",
+      "title": "FMC History & Polity",
+      "description": "A comprehensive course designed for Swahili-speaking leaders in training. This course simplifies complex academic language while maintaining rigorous Wesleyan theology and missional foundations required for deacons and ministerial candidates in the Free Methodist Church (FMC) USA.",
+      "sessionsCount": "15",
+      "commitmentHours": "30"
+    },
+    {
+      "id": "15",
+      "title": "FMC History & Polity",
+      "description": "A comprehensive course designed for Swahili-speaking leaders in training. This course simplifies complex academic language while maintaining rigorous Wesleyan theology and missional foundations required for deacons and ministerial candidates in the Free Methodist Church (FMC) USA.",
+      "sessionsCount": "15",
+      "commitmentHours": "30"
+    },
+    {
+      "id": "16",
+      "title": "FMC History & Polity",
+      "description": "A comprehensive course designed for Swahili-speaking leaders in training. This course simplifies complex academic language while maintaining rigorous Wesleyan theology and missional foundations required for deacons and ministerial candidates in the Free Methodist Church (FMC) USA.",
+      "sessionsCount": "15",
+      "commitmentHours": "30"
+    },
+    {
+      "id": "17",
+      "title": "FMC History & Polity",
+      "description": "A comprehensive course designed for Swahili-speaking leaders in training. This course simplifies complex academic language while maintaining rigorous Wesleyan theology and missional foundations required for deacons and ministerial candidates in the Free Methodist Church (FMC) USA.",
+      "sessionsCount": "15",
+      "commitmentHours": "30"
+    }
+  ],
+  "messages": [],
+  "stdout": "id\ttitle\tdescription\tsessionsCount\tcommitmentHours\n1\tBiblical Foundations for Deacons\tExplore the scriptural basis for the diaconate, studying Acts 6, 1 Timothy 3, and Titus 1. Understand the spiritual qualifications and responsibilities of deacons in the New Testament church.\t12\t24\n2\tSpiritual Formation and Character\tDevelop spiritual maturity and Christian character essential for diaconal ministry. Focus on prayer, Bible study, holiness, and personal discipleship.\t10\t20\n3\tPastoral Care and Counseling Basics\tLearn fundamental skills for providing pastoral care, visiting the sick, and offering basic spiritual counseling to church members.\t10\t20\n4\tEvangelism Theology and Methods\tUnderstand the theological foundation for evangelism and learn proven methods for sharing the gospel effectively across cultures.\t12\t24\n5\tChurch Planting and Growth\tDevelop skills for planting new churches and helping existing churches grow spiritually and numerically.\t12\t24\n6\tCross-Cultural Ministry\tPrepare for effective ministry across different cultural contexts, understanding worldviews and communication styles.\t10\t20\n7\tLocal Church Leadership\tEquip local church leaders with skills for effective congregational leadership, vision casting, and team building.\t10\t20\n8\tWorship and Liturgy\tUnderstand worship theology and learn to lead meaningful worship experiences that draw congregations closer to God.\t8\t16\n9\tDiscipleship and Small Groups\tDevelop systems for discipling believers and facilitating small groups that foster spiritual growth and community.\t10\t20\n10\tAdvanced Theology and Doctrine\tDeep study of Christian theology, Free Methodist doctrine, and contemporary theological issues.\t16\t48\n11\tDenominational Polity and History\tComprehensive study of Free Methodist Church polity, governance, and historical development.\t12\t24\n12\tAdvanced Leadership and Ministry\tDevelop advanced leadership competencies for conference-level ministry and organizational leadership.\t14\t35\n13\tPastoral Care and Counseling Advanced\tAdvanced training in pastoral counseling, crisis intervention, and mental health awareness for conference ministers.\t12\t24\n14\tFMC History & Polity\tA comprehensive course designed for Swahili-speaking leaders in training. This course simplifies complex academic language while maintaining rigorous Wesleyan theology and missional foundations required for deacons and ministerial candidates in the Free Methodist Church (FMC) USA.\t15\t30\n15\tFMC History & Polity\tA comprehensive course designed for Swahili-speaking leaders in training. This course simplifies complex academic language while maintaining rigorous Wesleyan theology and missional foundations required for deacons and ministerial candidates in the Free Methodist Church (FMC) USA.\t15\t30\n16\tFMC History & Polity\tA comprehensive course designed for Swahili-speaking leaders in training. This course simplifies complex academic language while maintaining rigorous Wesleyan theology and missional foundations required for deacons and ministerial candidates in the Free Methodist Church (FMC) USA.\t15\t30\n17\tFMC History & Polity\tA comprehensive course designed for Swahili-speaking leaders in training. This course simplifies complex academic language while maintaining rigorous Wesleyan theology and missional foundations required for deacons and ministerial candidates in the Free Methodist Church (FMC) USA.\t15\t30\n",
+  "stderr": "",
+  "execution_time_ms": 463
+}
