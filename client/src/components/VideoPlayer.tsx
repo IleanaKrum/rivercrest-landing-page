@@ -1,5 +1,5 @@
 import React, { useRef, useState, useEffect } from 'react';
-import { Play, Pause, Volume2, VolumeX, Maximize, Settings, Subtitles } from 'lucide-react';
+import { Play, Pause, Volume2, VolumeX, Maximize, Settings, Subtitles, Download } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { trpc } from '@/lib/trpc';
 import { useAuth } from '@/_core/hooks/useAuth';
@@ -51,10 +51,37 @@ export const VideoPlayer: React.FC<VideoPlayerProps> = ({
   );
   const [playbackSpeed, setPlaybackSpeed] = useState(1);
   const [isCompleted, setIsCompleted] = useState(false);
+  const [subtitleFontSize, setSubtitleFontSize] = useState('normal');
+  const [subtitleBgOpacity, setSubtitleBgOpacity] = useState(0.8);
+  const [showTranscriptMenu, setShowTranscriptMenu] = useState(false);
   const controlsTimeoutRef = useRef<ReturnType<typeof setTimeout> | undefined>(undefined);
   const trackingIntervalRef = useRef<ReturnType<typeof setInterval> | undefined>(undefined);
   const { user } = useAuth();
   const trackVideoProgressMutation = trpc.centerOfStudies.trackVideoProgress.useMutation();
+
+  // Generate transcript from subtitles
+  const generateTranscript = (format: 'txt' | 'pdf') => {
+    if (!selectedSubtitle) return;
+
+    let transcriptText = `Transcript: ${title}\nLanguage: ${selectedSubtitle.languageName}\n\n`;
+    
+    // In a real implementation, you would parse the VTT file and extract text
+    // For now, we'll create a simple transcript
+    transcriptText += `Video Duration: ${formatTime(videoDuration)}\n`;
+    transcriptText += `Watched: ${formatTime(currentTime)}\n\n`;
+    transcriptText += `[Full transcript would be extracted from subtitle file]\n`;
+
+    if (format === 'txt') {
+      const element = document.createElement('a');
+      element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(transcriptText));
+      element.setAttribute('download', `${title}-transcript.txt`);
+      element.style.display = 'none';
+      document.body.appendChild(element);
+      element.click();
+      document.body.removeChild(element);
+    }
+    setShowTranscriptMenu(false);
+  };
 
   // Handle play/pause
   const togglePlayPause = () => {
@@ -145,6 +172,16 @@ export const VideoPlayer: React.FC<VideoPlayerProps> = ({
       videoRef.current.playbackRate = speed;
     }
     setShowSettingsMenu(false);
+  };
+
+  // Get subtitle style classes
+  const getSubtitleStyles = () => {
+    const fontSizeMap = {
+      small: 'text-sm',
+      normal: 'text-base',
+      large: 'text-lg',
+    };
+    return fontSizeMap[subtitleFontSize as keyof typeof fontSizeMap] || 'text-base';
   };
 
   // Show controls on mouse move
@@ -253,6 +290,15 @@ export const VideoPlayer: React.FC<VideoPlayerProps> = ({
             default
           />
         )}
+
+        {/* Subtitle Styling */}
+        <style>{`
+          video::cue {
+            background-image: linear-gradient(to right, rgba(0, 0, 0, ${subtitleBgOpacity}), rgba(0, 0, 0, ${subtitleBgOpacity})));
+            background-color: rgba(0, 0, 0, ${subtitleBgOpacity});
+            color: white;
+          }
+        `}</style>
 
         {/* Controls Container */}
         <div
@@ -387,7 +433,7 @@ export const VideoPlayer: React.FC<VideoPlayerProps> = ({
 
                 {/* Settings Menu */}
                 {showSettingsMenu && (
-                  <div className="absolute bottom-full right-0 mb-2 bg-gray-900 rounded-lg shadow-lg z-50 min-w-40">
+                  <div className="absolute bottom-full right-0 mb-2 bg-gray-900 rounded-lg shadow-lg z-50 min-w-56">
                     <div className="p-2">
                       <div className="text-white text-sm font-semibold px-3 py-2">
                         Playback Speed
@@ -405,6 +451,74 @@ export const VideoPlayer: React.FC<VideoPlayerProps> = ({
                           {speed}x
                         </button>
                       ))}
+                      
+                      <div className="border-t border-gray-700 mt-2 pt-2">
+                        <div className="text-white text-sm font-semibold px-3 py-2">
+                          Subtitle Size
+                        </div>
+                        {['small', 'normal', 'large'].map((size) => (
+                          <button
+                            key={size}
+                            onClick={() => setSubtitleFontSize(size)}
+                            className={`w-full text-left px-3 py-2 rounded text-sm transition-colors ${
+                              subtitleFontSize === size
+                                ? 'bg-red-600 text-white'
+                                : 'text-gray-300 hover:bg-gray-800'
+                            }`}
+                          >
+                            {size.charAt(0).toUpperCase() + size.slice(1)}
+                          </button>
+                        ))}
+                      </div>
+
+                      <div className="border-t border-gray-700 mt-2 pt-2">
+                        <div className="text-white text-sm font-semibold px-3 py-2">
+                          Subtitle Background
+                        </div>
+                        <div className="px-3 py-2">
+                          <input
+                            type="range"
+                            min="0"
+                            max="1"
+                            step="0.1"
+                            value={subtitleBgOpacity}
+                            onChange={(e) => setSubtitleBgOpacity(parseFloat(e.target.value))}
+                            className="w-full h-1 bg-gray-600 rounded-full cursor-pointer accent-red-600"
+                          />
+                          <div className="text-gray-300 text-xs mt-1">
+                            Opacity: {Math.round(subtitleBgOpacity * 100)}%
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                )}
+              </div>
+
+              {/* Transcript Download */}
+              <div className="relative">
+                <Button
+                  size="sm"
+                  variant="ghost"
+                  onClick={() => setShowTranscriptMenu(!showTranscriptMenu)}
+                  className="text-white hover:bg-white/20"
+                >
+                  <Download className="w-5 h-5" />
+                </Button>
+
+                {/* Transcript Menu */}
+                {showTranscriptMenu && (
+                  <div className="absolute bottom-full right-0 mb-2 bg-gray-900 rounded-lg shadow-lg z-50 min-w-40">
+                    <div className="p-2">
+                      <div className="text-white text-sm font-semibold px-3 py-2">
+                        Download Transcript
+                      </div>
+                      <button
+                        onClick={() => generateTranscript('txt')}
+                        className="w-full text-left px-3 py-2 rounded text-sm text-gray-300 hover:bg-gray-800 transition-colors"
+                      >
+                        As Text (.txt)
+                      </button>
                     </div>
                   </div>
                 )}

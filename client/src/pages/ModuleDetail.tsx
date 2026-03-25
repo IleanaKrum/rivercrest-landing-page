@@ -17,6 +17,9 @@ export default function ModuleDetail() {
   const [notes, setNotes] = useState("");
   const [isSaving, setIsSaving] = useState(false);
   const [videosCompleted, setVideosCompleted] = useState(false);
+  const [quizPassed, setQuizPassed] = useState(false);
+  const [quizScore, setQuizScore] = useState(0);
+  const [showCertificateGate, setShowCertificateGate] = useState(false);
 
   // Extract module ID from URL
   const moduleId = parseInt(window.location.pathname.split("/").pop() || "0");

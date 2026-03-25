@@ -177,6 +177,11 @@ export function QuizComponent({ quizId, moduleId, onComplete }: QuizComponentPro
     setQuizPassed(passed);
     setShowResults(true);
 
+    // Call completion callback
+    if (onComplete) {
+      onComplete(passed, score);
+    }
+
     // Submit to backend
     if (user) {
       try {
@@ -197,8 +202,6 @@ export function QuizComponent({ quizId, moduleId, onComplete }: QuizComponentPro
         console.error("Error submitting quiz:", error);
       }
     }
-
-    onComplete?.(passed, score);
   };
 
   const handleRetakeQuiz = () => {

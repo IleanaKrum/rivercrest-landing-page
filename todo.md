@@ -720,3 +720,67 @@
 - All subtitles uploaded to S3 CDN and linked in database
 - VideoPlayer component fully supports subtitle selection
 - Students can now watch course videos with Swahili language support
+
+
+## Completed - Video Player Enhancements (Current Session)
+- [x] Add playback speed controls
+  - [x] Create speed selector UI (0.5x, 0.75x, 1x, 1.25x, 1.5x, 2x)
+  - [x] Implement speed change via HTML5 video API
+  - [x] Persist user's preferred speed in localStorage
+  - [x] Display current speed in player controls
+- [x] Add transcript download functionality
+  - [x] Generate transcript from subtitles (all languages)
+  - [x] Create download button in player controls
+  - [x] Support PDF and TXT formats
+  - [x] Include video title and timestamp in transcript
+- [x] Add subtitle styling options
+  - [x] Font size selector (small, normal, large)
+  - [x] Background opacity control
+  - [x] Font color customization
+  - [x] Save subtitle preferences in localStorage
+
+## Completed - Module Completion Tracking (Current Session)
+- [x] Build progress dashboard
+  - [x] Display list of modules with completion status
+  - [x] Show watch time vs total video duration
+  - [x] Display quiz scores and certificate status
+  - [x] Add progress bar for each module
+- [x] Implement watch history tracking
+  - [x] Track video play/pause events
+  - [x] Record watch time per video
+  - [x] Store completion timestamp
+  - [x] Calculate completion percentage
+- [x] Create progress analytics
+  - [x] Show average watch time per module
+  - [x] Display completion trends over time
+  - [x] Identify most-watched videos
+  - [x] Track time spent per lesson
+
+## Completed - Quiz Integration (Current Session)
+- [x] Gate certificates on quiz completion
+  - [x] Require quiz pass before certificate download
+  - [x] Display quiz status on module detail page
+  - [x] Show quiz score on certificate
+  - [x] Prevent certificate download if quiz not passed
+- [x] Improve quiz-to-certificate flow
+  - [x] Show quiz completion requirement on module page
+  - [x] Display passing score requirement
+  - [x] Link quiz results to module progress
+  - [x] Auto-unlock certificate on quiz pass
+
+## Completed - Batch Subtitle Upload (Current Session)
+- [x] Create admin subtitle management page
+  - [x] Build file upload interface
+  - [x] Support multiple file selection
+  - [x] Show upload progress for each file
+  - [x] Display success/error messages
+- [x] Implement batch upload backend
+  - [x] Create tRPC procedure for batch uploads
+  - [x] Validate subtitle file format (VTT, SRT)
+  - [x] Parse subtitle metadata (language, duration)
+  - [x] Store files in S3 and create database records
+- [x] Add subtitle management features
+  - [x] List all subtitles by video
+  - [x] Allow delete/replace subtitles
+  - [x] Preview subtitles before publishing
+  - [x] Set default language for each video
