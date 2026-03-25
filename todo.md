@@ -784,3 +784,11 @@
   - [x] Allow delete/replace subtitles
   - [x] Preview subtitles before publishing
   - [x] Set default language for each video
+
+## Completed - Homepage Content Update
+- [x] Replace "The Global Turning: Psalm 22" section with "The Clarion Call: Arise and Build"
+- [x] Add "A Covenant of Empowerment" subsection
+- [x] Add "From Our Backyards to the Ends of the Earth" subsection
+- [x] Include mission-focused bullet points and Isaiah 60:1 quote
+- [x] Update mission statement to reflect church planting vision
+- [x] Test homepage rendering and layout

@@ -162,21 +162,60 @@ export default function Home() {
                 </p>
               </div>
               
-              {/* Psalm Section */}
+              {/* The Clarion Call Section */}
               <div className="bg-white rounded-lg p-8 shadow-sm border border-border">
-                <h3 className="text-2xl font-bold text-primary mb-4">The Global Turning: Psalm 22</h3>
-                <p className="text-foreground/80 mb-6 leading-relaxed">
-                  Psalm 22 shifts from individual agony to a declaration of international triumph:
+                <h3 className="text-2xl font-bold text-primary mb-4">The Clarion Call: Arise and Build</h3>
+                <p className="text-foreground/80 mb-6 leading-relaxed font-semibold">
+                  The world is in flux. As immigrant and refugee communities navigate a wilderness of unprecedented challenges and closed doors, the Spirit of God is moving with a distinct urgency. Now, more than ever, the Church cannot remain seated. The Church must arise!
                 </p>
-                <blockquote className="border-l-4 border-accent pl-6 py-4 italic text-foreground/80 bg-accent/5 rounded">
-                  "All the ends of the earth will remember and turn to the Lord, and all the families of the nations will bow down before him, for dominion belongs to the Lord and he rules over the nations." (Psalm 22:27-28)
+              </div>
+
+              {/* A Covenant of Empowerment */}
+              <div className="bg-accent/5 rounded-lg p-8 border border-accent/20 mt-6">
+                <h4 className="text-xl font-bold text-primary mb-4">A Covenant of Empowerment</h4>
+                <p className="text-foreground/80 mb-4 leading-relaxed">
+                  Guided by the Great Commission and a commitment to the "least of these," <span className="font-semibold">Rivercrest Free Methodist Church</span>, in steadfast partnership with the <span className="font-semibold">FMC Central Region Conference</span> and the <span className="font-semibold">FMC USA Pastoral Formation Center of Studies</span>, is stepping into the gap. We are not merely providing aid; we are raising up a harvest from within.
+                </p>
+                <p className="text-foreground/80 leading-relaxed">
+                  We are dedicated to the equipping of leaders from our <span className="font-semibold">Swahili-speaking communities</span>—both here in our local neighborhoods and across the globe. We believe that the most effective, culturally resonant, and biblically sound way to minister to the brokenhearted and the seeker is through the hands and voices of their own brothers and sisters.
+                </p>
+              </div>
+
+              {/* From Our Backyards to the Ends of the Earth */}
+              <div className="bg-white rounded-lg p-8 shadow-sm border border-border mt-6">
+                <h4 className="text-xl font-bold text-primary mb-4">From Our Backyards to the Ends of the Earth</h4>
+                <p className="text-foreground/80 mb-4 leading-relaxed">
+                  This mission is wide-reaching and multi-generational, designed to touch the lives of:
+                </p>
+                <ul className="space-y-3 mb-6">
+                  <li className="flex items-start gap-3">
+                    <span className="text-accent font-bold text-lg mt-0.5">•</span>
+                    <span className="text-foreground/80"><span className="font-semibold">Men and women</span> seeking a spiritual home.</span>
+                  </li>
+                  <li className="flex items-start gap-3">
+                    <span className="text-accent font-bold text-lg mt-0.5">•</span>
+                    <span className="text-foreground/80"><span className="font-semibold">The elders</span> who carry our history.</span>
+                  </li>
+                  <li className="flex items-start gap-3">
+                    <span className="text-accent font-bold text-lg mt-0.5">•</span>
+                    <span className="text-foreground/80"><span className="font-semibold">The youth</span> who represent our future.</span>
+                  </li>
+                </ul>
+                <p className="text-foreground/80 mb-4 leading-relaxed">
+                  Our vision is bold: to equip thousands for the <span className="font-semibold">planting of new churches</span> and to ignite vital mission fields right here in our own backyards. We are not acting on human whim, but on the firm calling and divine commission of the Lord.
+                </p>
+                <blockquote className="border-l-4 border-accent pl-6 py-4 italic text-foreground/80 bg-accent/5 rounded mb-4">
+                  "Arise, shine, for your light has come, and the glory of the Lord rises upon you." — Isaiah 60:1
                 </blockquote>
+                <p className="text-foreground/80 font-semibold leading-relaxed">
+                  The fields are white for harvest. Together, we move. Together, we act. Together, we fulfill the work the Lord has set before us.
+                </p>
               </div>
             </div>
             
             <div className="mt-12 p-8 bg-primary/5 rounded-lg border border-primary/20">
               <p className="text-center text-lg text-foreground/80 leading-relaxed">
-                This mission statement guides our Swahili-speaking Center of Studies—equipping leaders to serve not just their local communities, but to participate in God's global redemptive work across nations.
+                This vision guides our Swahili-speaking Center of Studies—equipping leaders to serve not just their local communities, but to plant churches and participate in God's global redemptive work across nations.
               </p>
             </div>
           </div>
