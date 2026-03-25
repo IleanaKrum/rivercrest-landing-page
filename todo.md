@@ -802,3 +802,55 @@
 - [x] Support public/private prayer requests
 - [x] Create comprehensive test suite (6 tests)
 - [x] Verify form submission and database storage
+
+## In Progress - Admin Prayer Request Dashboard (Current Session)
+- [ ] Build admin dashboard component with table view
+  - [ ] Display all prayer requests with columns (name, email, category, status, date)
+  - [ ] Implement pagination for large datasets
+  - [ ] Add row selection with checkboxes
+  - [ ] Show prayer request preview on hover
+- [ ] Implement filtering and search
+  - [ ] Filter by status (new, acknowledged, praying, answered)
+  - [ ] Filter by category (church planting, leadership, etc.)
+  - [ ] Filter by date range
+  - [ ] Search by name or email
+- [ ] Add bulk actions
+  - [ ] Mark selected as "praying"
+  - [ ] Mark selected as "answered"
+  - [ ] Delete selected requests
+  - [ ] Bulk status updates with confirmation
+- [ ] Create admin route and navigation
+  - [ ] Add /admin/prayer-requests route
+  - [ ] Add link in admin navigation
+  - [ ] Protect route with admin role check
+- [ ] Write tests for admin functionality
+  - [ ] Test filtering logic
+  - [ ] Test bulk actions
+  - [ ] Test permission checks
+
+## Completed - Admin Prayer Request Dashboard (Current Session)
+- [x] Build admin dashboard component with table view
+  - [x] Display all prayer requests with columns (name, email, category, status, date)
+  - [x] Implement pagination for large datasets
+  - [x] Add row selection with checkboxes
+  - [x] Show prayer request preview on hover
+- [x] Implement filtering and search
+  - [x] Filter by status (new, acknowledged, praying, answered)
+  - [x] Filter by category (church planting, leadership, etc.)
+  - [x] Filter by date range
+  - [x] Search by name or email
+- [x] Add bulk actions
+  - [x] Mark selected as "praying"
+  - [x] Mark selected as "answered"
+  - [x] Delete selected requests
+  - [x] Bulk status updates with confirmation
+- [x] Create admin route and navigation
+  - [x] Add /admin/prayer-requests route
+  - [x] Add link in admin navigation
+  - [x] Protect route with admin role check
+- [x] Write tests for admin functionality
+  - [x] Test filtering logic
+  - [x] Test bulk actions (8 tests passing)
+  - [x] Test permission checks
+  - [x] Test status transitions
+  - [x] Test concurrent operations

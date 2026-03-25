@@ -60,8 +60,18 @@ export default function AdminDashboard() {
       {/* Header */}
       <div className="bg-gradient-to-r from-primary to-primary/80 text-primary-foreground">
         <div className="container py-8">
-          <h1 className="text-4xl font-bold mb-2">Admin Dashboard</h1>
-          <p className="text-primary-foreground/80">Manage applications, courses, and student progress</p>
+          <div className="flex items-center justify-between">
+            <div>
+              <h1 className="text-4xl font-bold mb-2">Admin Dashboard</h1>
+              <p className="text-primary-foreground/80">Manage applications, courses, and student progress</p>
+            </div>
+            <button
+              onClick={() => navigate("/admin/prayer-requests")}
+              className="px-4 py-2 bg-white text-primary rounded-lg font-medium hover:bg-primary-foreground/90 transition-colors"
+            >
+              Prayer Requests
+            </button>
+          </div>
         </div>
       </div>
 

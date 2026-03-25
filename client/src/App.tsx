@@ -16,6 +16,7 @@ import Resources from "./pages/Resources";
 import EmailNotificationShowcase from "./pages/EmailNotificationShowcase";
 import IndependentStudyModules from "./pages/IndependentStudyModules";
 import ModuleDetail from "./pages/ModuleDetail";
+import AdminPrayerRequests from "./pages/AdminPrayerRequests";
 
 function Router() {
   // make sure to consider if you need authentication for certain routes
@@ -31,6 +32,7 @@ function Router() {
       <Route path={"/module/:moduleId"} component={ModuleDetail} />
       <Route path={"/student-dashboard"} component={StudentDashboard} />
       <Route path={"/admin"} component={AdminDashboard} />
+      <Route path={"/admin/prayer-requests"} component={AdminPrayerRequests} />
       <Route path={"/student-submissions"} component={StudentSubmissions} />
       <Route path={"/admin-submissions"} component={AdminSubmissions} />
       <Route path={"/404"} component={NotFound} />

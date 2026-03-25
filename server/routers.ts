@@ -723,6 +723,36 @@ export const appRouter = router({
         }
         return db.updatePrayerRequestStatus(input.id, input.status);
       }),
+
+    bulkUpdateStatus: protectedProcedure
+      .input(z.object({
+        ids: z.array(z.number()),
+        status: z.enum(["new", "acknowledged", "praying", "answered"]),
+      }))
+      .mutation(async ({ input, ctx }) => {
+        if (!ctx.user || ctx.user.role !== "admin") {
+          throw new TRPCError({ code: "FORBIDDEN" });
+        }
+        return db.bulkUpdatePrayerRequestStatus(input.ids, input.status);
+      }),
+
+    deletePrayerRequest: protectedProcedure
+      .input(z.object({ id: z.number() }))
+      .mutation(async ({ input, ctx }) => {
+        if (!ctx.user || ctx.user.role !== "admin") {
+          throw new TRPCError({ code: "FORBIDDEN" });
+        }
+        return db.deletePrayerRequest(input.id);
+      }),
+
+    bulkDelete: protectedProcedure
+      .input(z.object({ ids: z.array(z.number()) }))
+      .mutation(async ({ input, ctx }) => {
+        if (!ctx.user || ctx.user.role !== "admin") {
+          throw new TRPCError({ code: "FORBIDDEN" });
+        }
+        return db.bulkDeletePrayerRequests(input.ids);
+      }),
   }),
 });
 

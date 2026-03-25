@@ -1027,3 +1027,56 @@ export async function updatePrayerRequestStatus(id: number, status: string) {
     throw error;
   }
 }
+
+
+export async function bulkUpdatePrayerRequestStatus(ids: number[], status: string) {
+  const db = await getDb();
+  if (!db) {
+    throw new Error("Database not available");
+  }
+
+  try {
+    const result = await db
+      .update(prayerRequests)
+      .set({ status: status as any })
+      .where(inArray(prayerRequests.id, ids));
+    return result;
+  } catch (error) {
+    console.error('Error bulk updating prayer request status:', error);
+    throw error;
+  }
+}
+
+export async function deletePrayerRequest(id: number) {
+  const db = await getDb();
+  if (!db) {
+    throw new Error("Database not available");
+  }
+
+  try {
+    const result = await db
+      .delete(prayerRequests)
+      .where(eq(prayerRequests.id, id));
+    return result;
+  } catch (error) {
+    console.error('Error deleting prayer request:', error);
+    throw error;
+  }
+}
+
+export async function bulkDeletePrayerRequests(ids: number[]) {
+  const db = await getDb();
+  if (!db) {
+    throw new Error("Database not available");
+  }
+
+  try {
+    const result = await db
+      .delete(prayerRequests)
+      .where(inArray(prayerRequests.id, ids));
+    return result;
+  } catch (error) {
+    console.error('Error bulk deleting prayer requests:', error);
+    throw error;
+  }
+}
