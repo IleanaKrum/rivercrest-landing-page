@@ -792,3 +792,13 @@
 - [x] Include mission-focused bullet points and Isaiah 60:1 quote
 - [x] Update mission statement to reflect church planting vision
 - [x] Test homepage rendering and layout
+
+## Completed - Prayer Request Form Integration (Current Session)
+- [x] Create prayer request database schema (prayerRequests table)
+- [x] Add tRPC procedures for submit, getAll, updateStatus
+- [x] Build PrayerRequestForm component with validation
+- [x] Integrate prayer form into homepage
+- [x] Add 8 prayer categories (church planting, leadership, refugee support, etc.)
+- [x] Support public/private prayer requests
+- [x] Create comprehensive test suite (6 tests)
+- [x] Verify form submission and database storage

@@ -490,3 +490,28 @@ export const videoCompletions = mysqlTable("video_completions", {
 
 export type VideoCompletion = typeof videoCompletions.$inferSelect;
 export type InsertVideoCompletion = typeof videoCompletions.$inferInsert;
+
+// Prayer Requests - Community prayer requests related to mission work
+export const prayerRequests = mysqlTable("prayer_requests", {
+  id: int("id").autoincrement().primaryKey(),
+  name: varchar("name", { length: 255 }).notNull(), // Requester's name
+  email: varchar("email", { length: 320 }).notNull(), // Requester's email
+  prayerCategory: mysqlEnum("prayerCategory", [
+    "church_planting",
+    "leadership_development",
+    "refugee_support",
+    "community_outreach",
+    "missions",
+    "healing",
+    "family",
+    "other"
+  ]).default("other").notNull(),
+  prayerRequest: text("prayerRequest").notNull(), // The prayer request text
+  isPublic: int("isPublic").default(0).notNull(), // 0 = private, 1 = can be shared in prayer circle
+  status: mysqlEnum("status", ["new", "acknowledged", "praying", "answered"]).default("new").notNull(),
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+  updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull()
+});
+
+export type PrayerRequest = typeof prayerRequests.$inferSelect;
+export type InsertPrayerRequest = typeof prayerRequests.$inferInsert;

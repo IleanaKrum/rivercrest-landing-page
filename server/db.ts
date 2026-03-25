@@ -1,6 +1,6 @@
 import { eq, and, inArray } from "drizzle-orm";
 import { drizzle } from "drizzle-orm/mysql2";
-import { InsertUser, users, trainingTracks, courses, courseSessions, applications, enrollments, studentProgress, assignments, submissions, courseRegistrations, resources, independentStudyModules, trackModuleLinks, moduleProgress, videoCompletions, moduleVideos, videoSubtitles, quizzes, quizResults, InsertApplication, InsertEnrollment, InsertStudentProgress, InsertCourse, InsertCourseSession, InsertAssignment, InsertSubmission, InsertCourseRegistration, InsertResource, Resource, InsertIndependentStudyModule, InsertTrackModuleLink, InsertModuleProgress, InsertVideoCompletion } from "../drizzle/schema";
+import { InsertUser, users, trainingTracks, courses, courseSessions, applications, enrollments, studentProgress, assignments, submissions, courseRegistrations, resources, independentStudyModules, trackModuleLinks, moduleProgress, videoCompletions, moduleVideos, videoSubtitles, quizzes, quizResults, prayerRequests, InsertApplication, InsertEnrollment, InsertStudentProgress, InsertCourse, InsertCourseSession, InsertAssignment, InsertSubmission, InsertCourseRegistration, InsertResource, Resource, InsertIndependentStudyModule, InsertTrackModuleLink, InsertModuleProgress, InsertVideoCompletion, InsertPrayerRequest } from "../drizzle/schema";
 import { eq as drizzleEq } from "drizzle-orm";
 import { ENV } from './_core/env';
 
@@ -975,5 +975,55 @@ export async function getVideoSubtitles(videoId: number) {
   } catch (error) {
     console.error('Error fetching video subtitles:', error);
     return [];
+  }
+}
+
+
+// Prayer Request Functions
+export async function createPrayerRequest(data: InsertPrayerRequest) {
+  const db = await getDb();
+  if (!db) {
+    throw new Error("Database not available");
+  }
+
+  try {
+    const result = await db.insert(prayerRequests).values(data);
+    return result;
+  } catch (error) {
+    console.error('Error creating prayer request:', error);
+    throw error;
+  }
+}
+
+export async function getAllPrayerRequests() {
+  const db = await getDb();
+  if (!db) {
+    return [];
+  }
+
+  try {
+    const requests = await db.select().from(prayerRequests).orderBy(prayerRequests.createdAt);
+    return requests;
+  } catch (error) {
+    console.error('Error fetching prayer requests:', error);
+    return [];
+  }
+}
+
+export async function updatePrayerRequestStatus(id: number, status: string) {
+  const db = await getDb();
+  if (!db) {
+    throw new Error("Database not available");
+  }
+
+  try {
+    const result = await db
+      .update(prayerRequests)
+      .set({ status: status as any })
+      .where(eq(prayerRequests.id, id));
+    return result;
+  } catch (error) {
+    console.error('Error updating prayer request status:', error);
+    throw error;
   }
 }

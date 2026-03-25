@@ -6,6 +6,7 @@ import { useState } from "react";
 import { MissionalCommitment } from "@/components/MissionalCommitment";
 import { useLocation } from "wouter";
 import { FMCValuesSlideshow } from "@/components/FMCValuesSlideshow";
+import { PrayerRequestForm } from "@/components/PrayerRequestForm";
 
 /**
  * Design: Modern & Vibrant
@@ -601,6 +602,24 @@ export default function Home() {
               </Card>
             </div>
           </div>
+        </div>
+      </section>
+
+      {/* Prayer Request Section */}
+      <section className="py-20 bg-gradient-to-b from-primary/5 to-transparent">
+        <div className="container max-w-2xl">
+          <div className="text-center mb-12">
+            <p className="text-sm font-semibold text-accent uppercase tracking-wide mb-4">
+              Spiritual Support
+            </p>
+            <h2 className="text-4xl lg:text-5xl font-bold text-primary mb-4">
+              Prayer Requests
+            </h2>
+            <p className="text-lg text-foreground/70">
+              Join us in lifting up prayers for our mission work and community. Your prayers strengthen our ministry.
+            </p>
+          </div>
+          <PrayerRequestForm />
         </div>
       </section>
 

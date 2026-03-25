@@ -665,6 +665,65 @@ export const appRouter = router({
         return db.isModuleVideosCompleted(ctx.user.id, input.moduleId);
       }),
   }),
+
+  prayerRequests: router({
+    submit: publicProcedure
+      .input(z.object({
+        name: z.string().min(2, "Name must be at least 2 characters"),
+        email: z.string().email("Invalid email address"),
+        prayerCategory: z.enum([
+          "church_planting",
+          "leadership_development",
+          "refugee_support",
+          "community_outreach",
+          "missions",
+          "healing",
+          "family",
+          "other"
+        ]),
+        prayerRequest: z.string().min(10, "Prayer request must be at least 10 characters"),
+        isPublic: z.boolean().default(false),
+      }))
+      .mutation(async ({ input }) => {
+        try {
+          const result = await db.createPrayerRequest({
+            name: input.name,
+            email: input.email,
+            prayerCategory: input.prayerCategory,
+            prayerRequest: input.prayerRequest,
+            isPublic: input.isPublic ? 1 : 0,
+            status: "new",
+          });
+          return { success: true, message: "Prayer request submitted successfully" };
+        } catch (error) {
+          console.error("Error submitting prayer request:", error);
+          throw new TRPCError({
+            code: "INTERNAL_SERVER_ERROR",
+            message: "Failed to submit prayer request",
+          });
+        }
+      }),
+
+    getAll: protectedProcedure
+      .query(async ({ ctx }) => {
+        if (!ctx.user || ctx.user.role !== "admin") {
+          throw new TRPCError({ code: "FORBIDDEN" });
+        }
+        return db.getAllPrayerRequests();
+      }),
+
+    updateStatus: protectedProcedure
+      .input(z.object({
+        id: z.number(),
+        status: z.enum(["new", "acknowledged", "praying", "answered"]),
+      }))
+      .mutation(async ({ input, ctx }) => {
+        if (!ctx.user || ctx.user.role !== "admin") {
+          throw new TRPCError({ code: "FORBIDDEN" });
+        }
+        return db.updatePrayerRequestStatus(input.id, input.status);
+      }),
+  }),
 });
 
 export type AppRouter = typeof appRouter;
