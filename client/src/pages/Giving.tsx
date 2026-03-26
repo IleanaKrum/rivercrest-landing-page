@@ -356,6 +356,10 @@ export default function Giving() {
                   <span className="text-accent font-bold">•</span>
                   <span>Enable spiritual growth initiatives</span>
                 </li>
+                <li className="flex gap-3">
+                  <span className="text-accent font-bold">•</span>
+                  <span>Partner with FMC Central Region Conference and Swahili Center of Studies Initiative</span>
+                </li>
               </ul>
             </div>
 
