@@ -854,3 +854,14 @@
   - [x] Test permission checks
   - [x] Test status transitions
   - [x] Test concurrent operations
+
+## Completed - Subdomain Navigation Setup (Current Session)
+- [x] Update Center of Studies navigation links
+  - [x] Update main nav link to point to studies.rivercrestfmc.org
+  - [x] Update CTA button handler to redirect to subdomain
+  - [x] Add target="_blank" and rel="noopener noreferrer" for external links
+  - [x] Test navigation links in dev server
+- [x] Configure DNS routing
+  - [x] Identified subdomain: studies.rivercrestfmc.org
+  - [x] Ready for DNS CNAME configuration in Manus dashboard
+  - [x] Documented setup instructions for user

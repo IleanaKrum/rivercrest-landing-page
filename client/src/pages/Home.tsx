@@ -30,7 +30,7 @@ export default function Home() {
   const [submitted, setSubmitted] = useState(false);
 
   const handleApplyCenterOfStudies = () => {
-    setLocation("/center-of-studies");
+    window.location.href = "https://studies.rivercrestfmc.org/center-of-studies";
   };
 
   const handleInputChange = (
@@ -80,8 +80,10 @@ export default function Home() {
               Giving
             </a>
             <a
-              href="/center-of-studies"
+              href="https://studies.rivercrestfmc.org/center-of-studies"
               className="text-sm text-foreground hover:text-primary transition-colors"
+              target="_blank"
+              rel="noopener noreferrer"
             >
               Center of Studies
             </a>
