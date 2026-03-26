@@ -350,19 +350,11 @@ export default function Giving() {
               <ul className="space-y-3 text-foreground/70">
                 <li className="flex gap-3">
                   <span className="text-accent font-bold">•</span>
-                  <span>Support our worship and prayer services</span>
-                </li>
-                <li className="flex gap-3">
-                  <span className="text-accent font-bold">•</span>
                   <span>Fund community outreach programs</span>
                 </li>
                 <li className="flex gap-3">
                   <span className="text-accent font-bold">•</span>
                   <span>Enable spiritual growth initiatives</span>
-                </li>
-                <li className="flex gap-3">
-                  <span className="text-accent font-bold">•</span>
-                  <span>Support our pastoral and staff team</span>
                 </li>
               </ul>
             </div>
