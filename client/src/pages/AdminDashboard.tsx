@@ -61,9 +61,16 @@ export default function AdminDashboard() {
       <div className="bg-gradient-to-r from-primary to-primary/80 text-primary-foreground">
         <div className="container py-8">
           <div className="flex items-center justify-between">
-            <div>
-              <h1 className="text-4xl font-bold mb-2">Admin Dashboard</h1>
-              <p className="text-primary-foreground/80">Manage applications, courses, and student progress</p>
+            <div className="flex items-center gap-4">
+              <img
+                src="https://d2xsxph8kpxj0f.cloudfront.net/310519663416906571/kBmgeZHWTyHuceHoeAKRrp/RivercrestFreeMethodistChurch-Logo25_98841074.png"
+                alt="Rivercrest Free Methodist Church Logo"
+                className="h-20 w-auto"
+              />
+              <div>
+                <h1 className="text-4xl font-bold mb-2">Admin Dashboard</h1>
+                <p className="text-primary-foreground/80">Manage applications, courses, and student progress</p>
+              </div>
             </div>
             <button
               onClick={() => navigate("/admin/prayer-requests")}

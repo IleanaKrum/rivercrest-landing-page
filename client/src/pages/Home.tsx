@@ -57,7 +57,7 @@ export default function Home() {
         <div className="container flex items-center justify-between py-4">
           <div className="flex items-center gap-2 group relative">
             <img
-              src="https://d2xsxph8kpxj0f.cloudfront.net/310519663416906571/kBmgeZHWTyHuceHoeAKRrp/RivercrestFreeMethodistChurch-Logo25_203a03dd.png"
+              src="https://d2xsxph8kpxj0f.cloudfront.net/310519663416906571/kBmgeZHWTyHuceHoeAKRrp/RivercrestFreeMethodistChurch-Logo25_98841074.png"
               alt="Rivercrest Free Methodist Church Logo"
               className="h-20 w-auto transition-transform duration-300 group-hover:scale-110 cursor-pointer"
             />
@@ -633,7 +633,11 @@ export default function Home() {
         <div className="container">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
             <div>
-              <h3 className="font-bold text-lg mb-4">Rivercrest FMC</h3>
+              <img
+                src="https://d2xsxph8kpxj0f.cloudfront.net/310519663416906571/kBmgeZHWTyHuceHoeAKRrp/RivercrestFreeMethodistChurch-Logo25_98841074.png"
+                alt="Rivercrest Free Methodist Church Logo"
+                className="h-24 w-auto mb-4"
+              />
               <p className="text-primary-foreground/80">
                 A House of Prayer for The Nations, serving Wichita with faith, hope, and love.
               </p>
