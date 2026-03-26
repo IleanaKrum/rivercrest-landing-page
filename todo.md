@@ -883,3 +883,29 @@
   - [x] Dev server running and logo visible on all pages
   - [x] Logo responsive and properly sized
   - [x] Hover effects working on header logos
+
+
+## In Progress - Bilingual English/Swahili Implementation
+- [ ] Create i18n infrastructure with translation system
+  - [ ] Install i18n library (react-i18next)
+  - [ ] Create translation files (en.json, sw.json)
+  - [ ] Set up language context and provider
+  - [ ] Create useLanguage hook for components
+- [ ] Translate Home page content
+  - [ ] Extract all English text to translation files
+  - [ ] Create Swahili translations
+  - [ ] Test Home page in both languages
+- [ ] Translate Giving, Center of Studies, Contact pages
+  - [ ] Extract all English text from all pages
+  - [ ] Create comprehensive Swahili translations
+  - [ ] Test all pages in both languages
+- [ ] Add language toggle functionality
+  - [ ] Create language toggle button in header
+  - [ ] Implement language switching logic
+  - [ ] Add language flag icons
+  - [ ] Persist language preference in localStorage
+- [ ] Final testing and refinement
+  - [ ] Test all pages in English and Swahili
+  - [ ] Verify language persistence across page navigation
+  - [ ] Check mobile responsiveness of language toggle
+  - [ ] Ensure all forms work in both languages

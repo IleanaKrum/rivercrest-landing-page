@@ -1,0 +1,92 @@
+{
+  "common": {
+    "home": "Nyumbani",
+    "services": "Huduma",
+    "giving": "Kutoa",
+    "centerOfStudies": "Kituo cha Masomo",
+    "contact": "Wasiliana",
+    "visitUs": "Tembelea Sisi",
+    "joinUsSunday": "Jiunga Nasi Jumapili",
+    "learnMore": "Jifunze Zaidi",
+    "welcome": "Karibu",
+    "language": "Lugha"
+  },
+  "hero": {
+    "welcome": "Karibu kwa Jamii Yetu",
+    "tagline": "Nyumba ya Sala kwa Mataifa",
+    "description": "Rivercrest Free Methodist Church ni jamii yenye imani inayojitolea kuishi Injili katika muktadha wa utamaduni wetu, ikijenga umoja wakati wa kuheshimu zawadi za kipekee za kila jamii tunayohudumiia.",
+    "joinUsSunday": "Jiunga Nasi Jumapili",
+    "learnMore": "Jifunze Zaidi"
+  },
+  "clarionCall": {
+    "title": "Wito wa Kuzama: Simama na Jenga",
+    "intro": "Dunia iko katika mabadiliko. Jamii za wahamiaji na wakimbizi zinayonavigeti nyikani ya changamoto zisizopata mfano na milango iliyofungwa, Roho wa Mungu inatenda kazi na haraka ya kipekee. Sasa zaidi kuliko hapo awali, Kanisa halilazimi kubaki kimya. Kanisa lazima simame!",
+    "covenant": "Agano la Kuwezesha",
+    "covenantText": "Inaongozwa na Agano Kubwa na kujitolea kwa \"walio duni zaidi,\" Rivercrest Free Methodist Church, kwa ushirikiano thabiti na FMC Central Region Conference na FMC USA Pastoral Formation Center of Studies, inaingilia pengo. Hatuwezi tu kutoa msaada; tunaandaa mavuno kutoka ndani.",
+    "dedication": "Tumejitolea kuwawezesha viongozi kutoka jamii zetu za Kiswahili—hapa katika vitongoji vyetu vya ndani na kote ulimwenguni. Tunaninini kwamba njia yenye ufanisi zaidi, yenye sauti ya kitamaduni, na yenye msingi wa Biblia ya kuhudumiia wasiojali na mtafutaji ni kupitia mikono na sauti ya ndugu na dada zao wenyewe.",
+    "backyards": "Kutoka Vitongoji Vyetu hadi Miisho ya Dunia",
+    "missionText": "Harakati hii ina upana na inaendelea kwa kizazi, iliyoundwa kuathiri maisha ya:",
+    "menWomen": "Wanaume na wanawake wanayotafuta nyumba ya roho.",
+    "elders": "Wazee wanayobeba historia yetu.",
+    "youth": "Vijana wanaowakilisha sisi ya baadaye.",
+    "vision": "Macho yetu ni makali: kuwezesha maelfu kwa ajili ya kupanda kanisa jipya na kumweka moto katika maeneo ya harakati muhimu hapa katika vitongoji vyetu venyewe. Hatufanyi kazi kwa hamu ya binadamu, lakini kwa wito thabiti na agizo la kimungu la Mungu.",
+    "scripture": "\"Simama, angaza, kwa sababu nuru yako imekuja, na utukufu wa Mungu umeinuka juu yako.\" — Isaya 60:1",
+    "harvest": "Mashambani yanakamatia mavuno. Pamoja, tunaenda. Pamoja, tunafanya. Pamoja, tunatimiza kazi ambayo Mungu ameweka mbele yetu."
+  },
+  "giving": {
+    "title": "Kutoa",
+    "subtitle": "Kusaidia Harakati Yetu",
+    "description": "Zawadi zako za karama zinaturuhusu kuhudumiia jamii yetu na kutimiza harakati yetu ya kuwezesha viongozi kwa dunia ya Kiswahili.",
+    "howItHelps": "Jinsi Zawadi Zako Zinasaidia",
+    "fundCommunity": "Pesa za programu za huduma ya jamii",
+    "enableSpiritual": "Kuwezesha mipango ya ukuaji wa roho",
+    "partnerFMC": "Kujitokeleza na FMC Central Region Conference na Swahili Center of Studies Initiative",
+    "contactInfo": "Taarifa za Mawasiliano",
+    "givingMethods": "Njia za Kutoa",
+    "onlineGiving": "Kutoa Mtandaoni",
+    "checkPayable": "Hundi (Inayolipwa kwa Rivercrest FMC)",
+    "bankTransfer": "Uhamishaji wa Benki",
+    "questions": "Maswali kuhusu kutoa?",
+    "contactUs": "Wasiliana nasi kwa taarifa zaidi"
+  },
+  "contact": {
+    "title": "Wasiliana Nasi",
+    "name": "Jina",
+    "email": "Barua Pepe",
+    "message": "Ujumbe",
+    "send": "Tuma Ujumbe",
+    "sending": "Inatuma...",
+    "success": "Ujumbe ulitumwa kwa mafanikio! Tutakupigia simu haraka.",
+    "error": "Kutuma ujumbe kulifeli. Tafadhali jaribu tena.",
+    "required": "Sehemu hii inahitajika",
+    "invalidEmail": "Tafadhali ingiza anwani ya barua pepe halali"
+  },
+  "prayer": {
+    "title": "Ombi za Sala",
+    "subtitle": "Wasilisha ombi la sala kwa jamii yetu kuomba kwa ajili yako",
+    "yourName": "Jina Lako",
+    "yourEmail": "Barua Pepe Yako",
+    "category": "Kategoria ya Sala",
+    "churchPlanting": "Kupanda Kanisa",
+    "leadership": "Ukuaji wa Uongozaji",
+    "refugee": "Msaada wa Wahamiaji na Wakimbizi",
+    "community": "Huduma ya Jamii",
+    "spiritual": "Ukuaji wa Roho",
+    "healing": "Uponyaji na Faraja",
+    "family": "Familia na Mahusiano",
+    "other": "Nyingine",
+    "prayerRequest": "Ombi la Sala",
+    "isPublic": "Fanya ombi hili la sala kuwa la umma",
+    "submit": "Wasilisha Ombi la Sala",
+    "submitting": "Inawasilisha...",
+    "successMessage": "Asante kwa ombi lako la sala! Jamii yetu itakuomba pamoja nawe.",
+    "errorMessage": "Kuwasilisha ombi la sala kulifeli. Tafadhali jaribu tena."
+  },
+  "footer": {
+    "address": "Barabara 123, Jiji Lako, Jimbo 12345",
+    "phone": "Simu: (123) 456-7890",
+    "email": "Barua Pepe: contact@rivercrestfmc.org",
+    "copyright": "© 2026 Rivercrest Free Methodist Church. Haki zote zimehifadhiwa.",
+    "tagline": "Nyumba ya Sala kwa Mataifa"
+  }
+}

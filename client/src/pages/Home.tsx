@@ -7,6 +7,8 @@ import { MissionalCommitment } from "@/components/MissionalCommitment";
 import { useLocation } from "wouter";
 import { FMCValuesSlideshow } from "@/components/FMCValuesSlideshow";
 import { PrayerRequestForm } from "@/components/PrayerRequestForm";
+import { LanguageToggle } from "@/components/LanguageToggle";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 /**
  * Design: Modern & Vibrant
@@ -17,6 +19,7 @@ import { PrayerRequestForm } from "@/components/PrayerRequestForm";
  */
 
 export default function Home() {
+  const { t } = useLanguage();
   // The userAuth hooks provides authentication state
   // To implement login/logout functionality, simply call logout() or redirect to getLoginUrl()
   let { user, loading, error, isAuthenticated, logout } = useAuth();
@@ -71,13 +74,13 @@ export default function Home() {
               href="#services"
               className="text-sm text-foreground hover:text-primary transition-colors"
             >
-              Services
+              {t('nav.services')}
             </a>
             <a
               href="/giving"
               className="text-sm text-foreground hover:text-primary transition-colors"
             >
-              Giving
+              {t('nav.giving')}
             </a>
             <a
               href="https://studies.rivercrestfmc.org/center-of-studies"
@@ -85,17 +88,18 @@ export default function Home() {
               target="_blank"
               rel="noopener noreferrer"
             >
-              Center of Studies
+              {t('nav.centerOfStudies')}
             </a>
             <a
               href="#contact"
               className="text-sm text-foreground hover:text-primary transition-colors"
             >
-              Contact
+              {t('nav.contact')}
             </a>
             <Button variant="default" size="sm">
               Visit Us
             </Button>
+            <LanguageToggle />
           </div>
         </div>
       </nav>
