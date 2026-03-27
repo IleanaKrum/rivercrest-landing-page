@@ -158,14 +158,11 @@ export default function Home() {
             </h2>
             
             <div className="space-y-8">
-              {/* Genesis Section */}
+              {/* God of the Nations Section */}
               <div className="bg-white rounded-lg p-8 shadow-sm border border-border">
-                <h3 className="text-2xl font-bold text-primary mb-4">The Promise: Genesis 12 & 17</h3>
+                <h3 className="text-2xl font-bold text-primary mb-4">The God of the Nations Today: From Promise to Commission</h3>
                 <p className="text-foreground/80 mb-4 leading-relaxed">
-                  God entered into a covenant with Abraham—not an exclusive club meant to shut others out, but a "blessed to be a blessing" strategy. God promised Abraham that he would be the <span className="italic">"father of many nations"</span> (Genesis 17:5), and explicitly stated that <span className="italic">"all peoples on earth will be blessed through you"</span> (Genesis 12:3).
-                </p>
-                <p className="text-foreground/70 leading-relaxed">
-                  This establishes that the God of Israel was never intended to be a national deity confined by borders. He was the Creator reclaiming His entire creation through one family line.
+                  The narrative of Scripture is often mistaken for a localized tribal history, but from the first pages of Genesis to the closing visions of Revelation, the scope has always been global. Today, the "God of the Nations" is not a title of distant sovereignty, but a direct fulfillment of an ancient legal and spiritual contract.
                 </p>
               </div>
               
