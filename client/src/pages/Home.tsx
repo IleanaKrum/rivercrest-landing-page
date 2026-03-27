@@ -194,36 +194,6 @@ export default function Home() {
                 </p>
               </div>
 
-              {/* From Our Backyards to the Ends of the Earth */}
-              <div className="bg-white rounded-lg p-8 shadow-sm border border-border mt-6">
-                <h4 className="text-xl font-bold text-primary mb-4">From Our Backyards to the Ends of the Earth</h4>
-                <p className="text-foreground/80 mb-4 leading-relaxed">
-                  This mission is wide-reaching and multi-generational, designed to touch the lives of:
-                </p>
-                <ul className="space-y-3 mb-6">
-                  <li className="flex items-start gap-3">
-                    <span className="text-accent font-bold text-lg mt-0.5">•</span>
-                    <span className="text-foreground/80"><span className="font-semibold">Men and women</span> seeking a spiritual home.</span>
-                  </li>
-                  <li className="flex items-start gap-3">
-                    <span className="text-accent font-bold text-lg mt-0.5">•</span>
-                    <span className="text-foreground/80"><span className="font-semibold">The elders</span> who carry our history.</span>
-                  </li>
-                  <li className="flex items-start gap-3">
-                    <span className="text-accent font-bold text-lg mt-0.5">•</span>
-                    <span className="text-foreground/80"><span className="font-semibold">The youth</span> who represent our future.</span>
-                  </li>
-                </ul>
-                <p className="text-foreground/80 mb-4 leading-relaxed">
-                  Our vision is bold: to equip thousands for the <span className="font-semibold">planting of new churches</span> and to ignite vital mission fields right here in our own backyards. We are not acting on human whim, but on the firm calling and divine commission of the Lord.
-                </p>
-                <blockquote className="border-l-4 border-accent pl-6 py-4 italic text-foreground/80 bg-accent/5 rounded mb-4">
-                  "Arise, shine, for your light has come, and the glory of the Lord rises upon you." — Isaiah 60:1
-                </blockquote>
-                <p className="text-foreground/80 font-semibold leading-relaxed">
-                  The fields are white for harvest. Together, we move. Together, we act. Together, we fulfill the work the Lord has set before us.
-                </p>
-              </div>
             </div>
             
             <div className="mt-12 p-8 bg-primary/5 rounded-lg border border-primary/20">
