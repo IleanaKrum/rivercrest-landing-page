@@ -161,9 +161,18 @@ export default function Home() {
               {/* God of the Nations Section */}
               <div className="bg-white rounded-lg p-8 shadow-sm border border-border">
                 <h3 className="text-2xl font-bold text-primary mb-4">The God of the Nations Today: From Promise to Commission</h3>
-                <p className="text-foreground/80 mb-4 leading-relaxed">
+                <p className="text-foreground/80 mb-6 leading-relaxed">
                   The narrative of Scripture is often mistaken for a localized tribal history, but from the first pages of Genesis to the closing visions of Revelation, the scope has always been global. Today, the "God of the Nations" is not a title of distant sovereignty, but a direct fulfillment of an ancient legal and spiritual contract.
                 </p>
+                <a
+                  href="https://studies.rivercrestfmc.org/center-of-studies"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <Button className="bg-primary hover:bg-primary/90 text-white">
+                    Learn More
+                  </Button>
+                </a>
               </div>
               
               {/* The Clarion Call Section */}
