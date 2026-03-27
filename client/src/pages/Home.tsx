@@ -129,18 +129,7 @@ export default function Home() {
               <p className="text-lg text-foreground/80 mb-8 leading-relaxed">
                 Rivercrest Free Methodist Church is a faith-centered community dedicated to living out the gospel in our cultural contexts, fostering unity while honoring the distinct gifts of every community we serve.
               </p>
-              <div className="flex flex-col sm:flex-row gap-4">
-                <Button size="lg" className="bg-primary hover:bg-primary/90">
-                  Join Us Sunday
-                </Button>
-                <Button
-                  variant="outline"
-                  size="lg"
-                  className="border-primary text-primary hover:bg-primary/5"
-                >
-                  Learn More
-                </Button>
-              </div>
+
             </div>
           </div>
         </div>
