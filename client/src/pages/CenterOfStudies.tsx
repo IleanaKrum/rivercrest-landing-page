@@ -27,12 +27,15 @@ export default function CenterOfStudies() {
   const { data: tracks } = trpc.centerOfStudies.getTrainingTracks.useQuery();
   const submitApp = trpc.centerOfStudies.submitApplication.useMutation();
   
-  // Get all track access statuses in a single query
+  // Get all track access statuses in a single query - ONLY if authenticated
   const trackIds = useMemo(() => tracks?.map(t => t.id) || [], [tracks]);
   const { data: allTrackAccess } = trpc.centerOfStudies.checkTrackAccess.useQuery(
     { trackId: trackIds[0] || 0 },
     { enabled: isAuthenticated && trackIds.length > 0 }
   );
+  
+  // For unauthenticated users, show public information only
+  // They can still see tracks and apply, but won't see their access status
   
   // Helper to get access status for a specific track
   const getTrackAccess = (trackId: number) => {
@@ -90,6 +93,7 @@ export default function CenterOfStudies() {
   };
 
   const renderTrackButton = (track: any) => {
+    // For unauthenticated users, show Apply button
     if (!isAuthenticated) {
       return (
         <Button
@@ -104,6 +108,8 @@ export default function CenterOfStudies() {
         </Button>
       );
     }
+    
+    // For authenticated users, show their access status
 
     const trackAccess = getTrackAccess(track.id);
     const hasApproval = trackAccess?.hasAccess;
@@ -158,6 +164,7 @@ export default function CenterOfStudies() {
   };
 
   const getStatusBadge = (track: any) => {
+    // Only show status badge for authenticated users
     if (!isAuthenticated) return null;
 
     const trackAccess = getTrackAccess(track.id);
@@ -228,7 +235,7 @@ export default function CenterOfStudies() {
               </Button>
             ) : (
               <Button variant="default" size="sm" onClick={() => window.location.href = getLoginUrl()}>
-                Login
+                Sign In
               </Button>
             )}
           </div>
