@@ -1,6 +1,6 @@
 import { eq, and, inArray } from "drizzle-orm";
 import { drizzle } from "drizzle-orm/mysql2";
-import { InsertUser, users, trainingTracks, courses, courseSessions, applications, enrollments, studentProgress, assignments, submissions, courseRegistrations, resources, independentStudyModules, trackModuleLinks, moduleProgress, videoCompletions, moduleVideos, videoSubtitles, quizzes, quizResults, prayerRequests, InsertApplication, InsertEnrollment, InsertStudentProgress, InsertCourse, InsertCourseSession, InsertAssignment, InsertSubmission, InsertCourseRegistration, InsertResource, Resource, InsertIndependentStudyModule, InsertTrackModuleLink, InsertModuleProgress, InsertVideoCompletion, InsertPrayerRequest } from "../drizzle/schema";
+import { InsertUser, users, trainingTracks, courses, courseSessions, applications, enrollments, studentProgress, assignments, submissions, courseRegistrations, resources, independentStudyModules, trackModuleLinks, moduleProgress, videoCompletions, moduleVideos, videoSubtitles, quizzes, quizResults, prayerRequests, forumThreads, forumPosts, InsertApplication, InsertEnrollment, InsertStudentProgress, InsertCourse, InsertCourseSession, InsertAssignment, InsertSubmission, InsertCourseRegistration, InsertResource, Resource, InsertIndependentStudyModule, InsertTrackModuleLink, InsertModuleProgress, InsertVideoCompletion, InsertPrayerRequest, InsertForumThread, InsertForumPost } from "../drizzle/schema";
 import { eq as drizzleEq } from "drizzle-orm";
 import { ENV } from './_core/env';
 
@@ -1077,6 +1077,169 @@ export async function bulkDeletePrayerRequests(ids: number[]) {
     return result;
   } catch (error) {
     console.error('Error bulk deleting prayer requests:', error);
+    throw error;
+  }
+}
+
+
+// ============ FORUM FUNCTIONS ============
+
+export async function getForumThreadsByCourse(courseId: number) {
+  const db = await getDb();
+  if (!db) {
+    throw new Error("Database not available");
+  }
+
+  try {
+    const threads = await db
+      .select()
+      .from(forumThreads)
+      .where(eq(forumThreads.courseId, courseId))
+      .orderBy(forumThreads.createdAt);
+    return threads;
+  } catch (error) {
+    console.error('Error fetching forum threads:', error);
+    throw error;
+  }
+}
+
+export async function getForumPostsByThread(threadId: number) {
+  const db = await getDb();
+  if (!db) {
+    throw new Error("Database not available");
+  }
+
+  try {
+    const posts = await db
+      .select()
+      .from(forumPosts)
+      .where(eq(forumPosts.threadId, threadId))
+      .orderBy(forumPosts.createdAt);
+    return posts;
+  } catch (error) {
+    console.error('Error fetching forum posts:', error);
+    throw error;
+  }
+}
+
+export async function createForumThread(data: {
+  courseId: number;
+  userId: number;
+  title: string;
+  content: string;
+}) {
+  const db = await getDb();
+  if (!db) {
+    throw new Error("Database not available");
+  }
+
+  try {
+    const thread: InsertForumThread = {
+      courseId: data.courseId,
+      userId: data.userId,
+      title: data.title,
+      content: data.content,
+      createdAt: new Date(),
+      updatedAt: new Date(),
+    };
+    const result = await db.insert(forumThreads).values(thread);
+    return result;
+  } catch (error) {
+    console.error('Error creating forum thread:', error);
+    throw error;
+  }
+}
+
+export async function createForumPost(data: {
+  threadId: number;
+  userId: number;
+  content: string;
+}) {
+  const db = await getDb();
+  if (!db) {
+    throw new Error("Database not available");
+  }
+
+  try {
+    const post: InsertForumPost = {
+      threadId: data.threadId,
+      userId: data.userId,
+      content: data.content,
+      createdAt: new Date(),
+      updatedAt: new Date(),
+    };
+    const result = await db.insert(forumPosts).values(post);
+    return result;
+  } catch (error) {
+    console.error('Error creating forum post:', error);
+    throw error;
+  }
+}
+
+export async function deleteForumPost(postId: number, userId: number, isAdmin: boolean) {
+  const db = await getDb();
+  if (!db) {
+    throw new Error("Database not available");
+  }
+
+  try {
+    // Check if user is the post author or admin
+    const post = await db
+      .select()
+      .from(forumPosts)
+      .where(eq(forumPosts.id, postId));
+
+    if (!post || post.length === 0) {
+      throw new Error("Post not found");
+    }
+
+    if (post[0].userId !== userId && !isAdmin) {
+      throw new Error("Unauthorized: You can only delete your own posts");
+    }
+
+    const result = await db
+      .delete(forumPosts)
+      .where(eq(forumPosts.id, postId));
+    return result;
+  } catch (error) {
+    console.error('Error deleting forum post:', error);
+    throw error;
+  }
+}
+
+export async function deleteForumThread(threadId: number, userId: number, isAdmin: boolean) {
+  const db = await getDb();
+  if (!db) {
+    throw new Error("Database not available");
+  }
+
+  try {
+    // Check if user is the thread author or admin
+    const thread = await db
+      .select()
+      .from(forumThreads)
+      .where(eq(forumThreads.id, threadId));
+
+    if (!thread || thread.length === 0) {
+      throw new Error("Thread not found");
+    }
+
+    if (thread[0].userId !== userId && !isAdmin) {
+      throw new Error("Unauthorized: You can only delete your own threads");
+    }
+
+    // Delete all posts in the thread first
+    await db
+      .delete(forumPosts)
+      .where(eq(forumPosts.threadId, threadId));
+
+    // Delete the thread
+    const result = await db
+      .delete(forumThreads)
+      .where(eq(forumThreads.id, threadId));
+    return result;
+  } catch (error) {
+    console.error('Error deleting forum thread:', error);
     throw error;
   }
 }

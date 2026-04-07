@@ -515,3 +515,33 @@ export const prayerRequests = mysqlTable("prayer_requests", {
 
 export type PrayerRequest = typeof prayerRequests.$inferSelect;
 export type InsertPrayerRequest = typeof prayerRequests.$inferInsert;
+
+// Forum/Discussion Board Tables
+export const forumThreads = mysqlTable("forum_threads", {
+  id: int("id").autoincrement().primaryKey(),
+  courseId: int("courseId").notNull(),
+  userId: int("userId").notNull(),
+  title: varchar("title", { length: 255 }).notNull(),
+  content: text("content").notNull(),
+  isApproved: int("isApproved").default(1),
+  isDeleted: int("isDeleted").default(0),
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+  updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
+});
+
+export type ForumThread = typeof forumThreads.$inferSelect;
+export type InsertForumThread = typeof forumThreads.$inferInsert;
+
+export const forumPosts = mysqlTable("forum_posts", {
+  id: int("id").autoincrement().primaryKey(),
+  threadId: int("threadId").notNull(),
+  userId: int("userId").notNull(),
+  content: text("content").notNull(),
+  isApproved: int("isApproved").default(1),
+  isDeleted: int("isDeleted").default(0),
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+  updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
+});
+
+export type ForumPost = typeof forumPosts.$inferSelect;
+export type InsertForumPost = typeof forumPosts.$inferInsert;

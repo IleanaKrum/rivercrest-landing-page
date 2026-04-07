@@ -754,6 +754,78 @@ export const appRouter = router({
         return db.bulkDeletePrayerRequests(input.ids);
       }),
   }),
+
+  forum: router({
+    // Get all threads for a course
+    getThreadsByCourse: publicProcedure
+      .input(z.object({ courseId: z.number() }))
+      .query(async ({ input }) => {
+        return db.getForumThreadsByCourse(input.courseId);
+      }),
+
+    // Get posts for a thread
+    getPostsByThread: publicProcedure
+      .input(z.object({ threadId: z.number() }))
+      .query(async ({ input }) => {
+        return db.getForumPostsByThread(input.threadId);
+      }),
+
+    // Create a new thread (requires authentication)
+    createThread: protectedProcedure
+      .input(z.object({
+        courseId: z.number(),
+        title: z.string().min(3).max(255),
+        content: z.string().min(10),
+      }))
+      .mutation(async ({ input, ctx }) => {
+        if (!ctx.user) {
+          throw new TRPCError({ code: "UNAUTHORIZED" });
+        }
+        return db.createForumThread({
+          courseId: input.courseId,
+          userId: ctx.user.id,
+          title: input.title,
+          content: input.content,
+        });
+      }),
+
+    // Create a post in a thread (requires authentication)
+    createPost: protectedProcedure
+      .input(z.object({
+        threadId: z.number(),
+        content: z.string().min(1),
+      }))
+      .mutation(async ({ input, ctx }) => {
+        if (!ctx.user) {
+          throw new TRPCError({ code: "UNAUTHORIZED" });
+        }
+        return db.createForumPost({
+          threadId: input.threadId,
+          userId: ctx.user.id,
+          content: input.content,
+        });
+      }),
+
+    // Delete a post (admin only or post author)
+    deletePost: protectedProcedure
+      .input(z.object({ postId: z.number() }))
+      .mutation(async ({ input, ctx }) => {
+        if (!ctx.user) {
+          throw new TRPCError({ code: "UNAUTHORIZED" });
+        }
+        return db.deleteForumPost(input.postId, ctx.user.id, ctx.user.role === "admin");
+      }),
+
+    // Delete a thread (admin only or thread author)
+    deleteThread: protectedProcedure
+      .input(z.object({ threadId: z.number() }))
+      .mutation(async ({ input, ctx }) => {
+        if (!ctx.user) {
+          throw new TRPCError({ code: "UNAUTHORIZED" });
+        }
+        return db.deleteForumThread(input.threadId, ctx.user.id, ctx.user.role === "admin");
+      }),
+  }),
 });
 
 export type AppRouter = typeof appRouter;

@@ -8,12 +8,14 @@ import { getLoginUrl } from "@/const";
 import { useState } from "react";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { LanguageSelector } from "@/components/LanguageSelector";
+import { CourseForum } from "@/components/CourseForum";
 
 export default function StudentDashboard() {
   const { user, logout, isAuthenticated } = useAuth();
   const { t } = useLanguage();
   const [, setLocation] = useLocation();
   const [selectedCourse, setSelectedCourse] = useState<number | null>(null);
+  const [showForum, setShowForum] = useState(false);
 
   // Redirect to login if not authenticated
   if (!isAuthenticated) {
@@ -35,12 +37,17 @@ export default function StudentDashboard() {
     { enrollmentId: enrollments?.[0]?.id || 0 },
     { enabled: enrollments && enrollments.length > 0 && selectedCourse !== null }
   );
+  const selectedEnrollment = enrollments?.find(e => e.courseId === selectedCourse);
 
   const updateProgress = trpc.centerOfStudies.updateSessionProgress.useMutation();
 
   const handleLogout = async () => {
     await logout();
     setLocation("/");
+  };
+
+  const handleShowForum = () => {
+    setShowForum(!showForum);
   };
 
   const handleToggleSessionProgress = async (enrollmentId: number, sessionId: number, currentStatus: boolean) => {
@@ -254,10 +261,17 @@ export default function StudentDashboard() {
                     </div>
                   </Card>
                 )}
+
+                {/* Discussion Forum */}
+                {selectedCourse && courseDetails && (
+                  <Card className="p-8 border-0 shadow-lg">
+                    <CourseForum courseId={selectedCourse} courseName={courseDetails.title} />
+                  </Card>
+                )}
               </div>
             ) : (
               <Card className="p-12 border-0 shadow-lg text-center">
-                <Clock className="w-16 h-16 text-muted-foreground mx-auto mb-4 opacity-50" />
+                <BookOpen className="w-16 h-16 text-muted-foreground mx-auto mb-4 opacity-50" />
                 <p className="text-lg text-foreground/70 mb-4">Select a course to view details and track your progress</p>
                 {enrollments && enrollments.length === 0 && (
                   <Button
