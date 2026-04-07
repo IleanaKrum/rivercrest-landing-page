@@ -945,3 +945,44 @@
   - [x] Test data validation and edge cases
   - [x] All forum tests passing
 - [x] Ready for Railway deployment
+
+
+## In Progress - Railway Deployment
+- [ ] Prepare seed data with forum sample data
+  - [ ] Add sample forum threads to seed.ts
+  - [ ] Add sample forum posts for testing
+  - [ ] Verify seed data includes all 21 courses
+  - [ ] Test seed script locally
+- [ ] Create migration scripts
+  - [ ] Create Railway database initialization script
+  - [ ] Set up environment variables for Railway
+  - [ ] Create deployment checklist
+- [ ] Comprehensive end-to-end testing
+  - [ ] Test all public pages (Home, Giving, Center of Studies, Resources)
+  - [ ] Test student application workflow
+  - [ ] Test course enrollment and access
+  - [ ] Test forum creation and posting
+  - [ ] Test admin dashboard functionality
+  - [ ] Test bilingual content switching (EN/SW)
+  - [ ] Test email notifications
+  - [ ] Test prayer request submission
+  - [ ] Verify all forms work correctly
+  - [ ] Test on mobile devices
+- [ ] Deploy to Railway
+  - [ ] Create Railway project
+  - [ ] Configure environment variables
+  - [ ] Deploy PostgreSQL database
+  - [ ] Deploy application
+  - [ ] Run database migrations
+  - [ ] Verify all services running
+- [ ] Configure custom domain
+  - [ ] Set up www.rivercrestfmc.org domain
+  - [ ] Configure DNS records
+  - [ ] Verify SSL certificate
+  - [ ] Test domain accessibility
+- [ ] Post-deployment verification
+  - [ ] Test all functionality on production
+  - [ ] Verify email service working
+  - [ ] Check performance and load times
+  - [ ] Monitor error logs
+  - [ ] Provide user with admin credentials and access

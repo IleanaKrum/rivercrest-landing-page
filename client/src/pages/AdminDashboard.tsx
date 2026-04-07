@@ -15,6 +15,13 @@ export default function AdminDashboard() {
   const [, navigate] = useLocation();
   const [activeTab, setActiveTab] = useState("analytics");
 
+  // Fetch admin data with conditional enabling
+  const { data: applications = [], isLoading: appsLoading } = (trpc.admin.getAllApplications as any).useQuery(undefined, { enabled: isAuthenticated && user?.role === "admin" });
+  const { data: courses = [], isLoading: coursesLoading } = (trpc.admin.getAllCourses as any).useQuery(undefined, { enabled: isAuthenticated && user?.role === "admin" });
+  const { data: enrollments = [], isLoading: enrollmentsLoading } = (trpc.admin.getAllEnrollments as any).useQuery(undefined, { enabled: isAuthenticated && user?.role === "admin" });
+  const { data: dashboardSummary = {} as any } = (trpc.admin.getDashboardSummary as any).useQuery(undefined, { enabled: isAuthenticated && user?.role === "admin" });
+  const updateAppStatus = trpc.admin.updateApplicationStatus.useMutation();
+
   // Check if user is admin
   if (!isAuthenticated || user?.role !== "admin") {
     return (
@@ -31,14 +38,6 @@ export default function AdminDashboard() {
       </div>
     );
   }
-
-  // Fetch admin data
-  const { data: applications = [], isLoading: appsLoading } = (trpc.admin.getAllApplications as any).useQuery();
-  const { data: courses = [], isLoading: coursesLoading } = (trpc.admin.getAllCourses as any).useQuery();
-  const { data: enrollments = [], isLoading: enrollmentsLoading } = (trpc.admin.getAllEnrollments as any).useQuery();
-  const { data: dashboardSummary = {} as any } = (trpc.admin.getDashboardSummary as any).useQuery();
-
-  const updateAppStatus = trpc.admin.updateApplicationStatus.useMutation();
 
   const handleApplicationStatus = async (appId: number, status: "approved" | "rejected") => {
     try {
