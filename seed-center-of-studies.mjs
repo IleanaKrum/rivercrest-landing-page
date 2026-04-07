@@ -164,6 +164,94 @@ async function seed() {
       },
     ]);
 
+    // Add Introduction to Christian Doctrine to all tracks
+    const doctrineCourses = await db.insert(courses).values([
+      {
+        trackId: deaconTrack.id,
+        title: "Introduction to Christian Doctrine",
+        description:
+          "Comprehensive introduction to core Christian doctrines including God, Christ, the Holy Spirit, the Church, salvation, and eschatology. Bilingual content in English and Swahili for accessibility to diverse learners.",
+        syllabus:
+          "Lesson 1: God - Creator and Sustainer\nLesson 2: Christ - The Son of God\nLesson 3: The Holy Spirit - God's Presence\nLesson 4: The Church - God's People\nLesson 5: Humanity - Created in God's Image\nLesson 6: Salvation - God's Redemptive Work\nLesson 7: The Word of God - Scripture\nLesson 8: Eschatology - God's Future Plan",
+        sessionsCount: 8,
+        commitmentHours: 24,
+      },
+      {
+        trackId: evangelistTrack.id,
+        title: "Introduction to Christian Doctrine",
+        description:
+          "Comprehensive introduction to core Christian doctrines including God, Christ, the Holy Spirit, the Church, salvation, and eschatology. Bilingual content in English and Swahili for accessibility to diverse learners.",
+        syllabus:
+          "Lesson 1: God - Creator and Sustainer\nLesson 2: Christ - The Son of God\nLesson 3: The Holy Spirit - God's Presence\nLesson 4: The Church - God's People\nLesson 5: Humanity - Created in God's Image\nLesson 6: Salvation - God's Redemptive Work\nLesson 7: The Word of God - Scripture\nLesson 8: Eschatology - God's Future Plan",
+        sessionsCount: 8,
+        commitmentHours: 24,
+      },
+      {
+        trackId: localChurchTrack.id,
+        title: "Introduction to Christian Doctrine",
+        description:
+          "Comprehensive introduction to core Christian doctrines including God, Christ, the Holy Spirit, the Church, salvation, and eschatology. Bilingual content in English and Swahili for accessibility to diverse learners.",
+        syllabus:
+          "Lesson 1: God - Creator and Sustainer\nLesson 2: Christ - The Son of God\nLesson 3: The Holy Spirit - God's Presence\nLesson 4: The Church - God's People\nLesson 5: Humanity - Created in God's Image\nLesson 6: Salvation - God's Redemptive Work\nLesson 7: The Word of God - Scripture\nLesson 8: Eschatology - God's Future Plan",
+        sessionsCount: 8,
+        commitmentHours: 24,
+      },
+      {
+        trackId: conferenceTrack.id,
+        title: "Introduction to Christian Doctrine",
+        description:
+          "Comprehensive introduction to core Christian doctrines including God, Christ, the Holy Spirit, the Church, salvation, and eschatology. Bilingual content in English and Swahili for accessibility to diverse learners.",
+        syllabus:
+          "Lesson 1: God - Creator and Sustainer\nLesson 2: Christ - The Son of God\nLesson 3: The Holy Spirit - God's Presence\nLesson 4: The Church - God's People\nLesson 5: Humanity - Created in God's Image\nLesson 6: Salvation - God's Redemptive Work\nLesson 7: The Word of God - Scripture\nLesson 8: Eschatology - God's Future Plan",
+        sessionsCount: 8,
+        commitmentHours: 24,
+      },
+    ]);
+
+    // Add Theology of Worship to all tracks
+    const worshipCourses = await db.insert(courses).values([
+      {
+        trackId: deaconTrack.id,
+        title: "Theology of Worship",
+        description:
+          "In-depth exploration of worship theology and practice. Covers biblical foundations, historical development, contemporary worship movements, worship leadership, and practical applications. Bilingual content in English and Swahili.",
+        syllabus:
+          "Lesson 1: Foundations of Worship\nLesson 2: Biblical Foundations\nLesson 3: Worship in Spirit and Truth\nLesson 4: Elements of Worship\nLesson 5: Corporate Worship\nLesson 6: Worship and Prayer\nLesson 7: Worship Through Music\nLesson 8: Worship and Sacraments\nLesson 9: Worship and Discipleship\nLesson 10: Worship in the Early Church\nLesson 11: Historical Development\nLesson 12: Contemporary Worship\nLesson 13: Worship Leadership\nLesson 14: Special Occasions\nLesson 15: Worship and Justice\nLesson 16: Worship and Culture\nLesson 17: Personal Worship\nLesson 18: Future of Worship",
+        sessionsCount: 18,
+        commitmentHours: 54,
+      },
+      {
+        trackId: evangelistTrack.id,
+        title: "Theology of Worship",
+        description:
+          "In-depth exploration of worship theology and practice. Covers biblical foundations, historical development, contemporary worship movements, worship leadership, and practical applications. Bilingual content in English and Swahili.",
+        syllabus:
+          "Lesson 1: Foundations of Worship\nLesson 2: Biblical Foundations\nLesson 3: Worship in Spirit and Truth\nLesson 4: Elements of Worship\nLesson 5: Corporate Worship\nLesson 6: Worship and Prayer\nLesson 7: Worship Through Music\nLesson 8: Worship and Sacraments\nLesson 9: Worship and Discipleship\nLesson 10: Worship in the Early Church\nLesson 11: Historical Development\nLesson 12: Contemporary Worship\nLesson 13: Worship Leadership\nLesson 14: Special Occasions\nLesson 15: Worship and Justice\nLesson 16: Worship and Culture\nLesson 17: Personal Worship\nLesson 18: Future of Worship",
+        sessionsCount: 18,
+        commitmentHours: 54,
+      },
+      {
+        trackId: localChurchTrack.id,
+        title: "Theology of Worship",
+        description:
+          "In-depth exploration of worship theology and practice. Covers biblical foundations, historical development, contemporary worship movements, worship leadership, and practical applications. Bilingual content in English and Swahili.",
+        syllabus:
+          "Lesson 1: Foundations of Worship\nLesson 2: Biblical Foundations\nLesson 3: Worship in Spirit and Truth\nLesson 4: Elements of Worship\nLesson 5: Corporate Worship\nLesson 6: Worship and Prayer\nLesson 7: Worship Through Music\nLesson 8: Worship and Sacraments\nLesson 9: Worship and Discipleship\nLesson 10: Worship in the Early Church\nLesson 11: Historical Development\nLesson 12: Contemporary Worship\nLesson 13: Worship Leadership\nLesson 14: Special Occasions\nLesson 15: Worship and Justice\nLesson 16: Worship and Culture\nLesson 17: Personal Worship\nLesson 18: Future of Worship",
+        sessionsCount: 18,
+        commitmentHours: 54,
+      },
+      {
+        trackId: conferenceTrack.id,
+        title: "Theology of Worship",
+        description:
+          "In-depth exploration of worship theology and practice. Covers biblical foundations, historical development, contemporary worship movements, worship leadership, and practical applications. Bilingual content in English and Swahili.",
+        syllabus:
+          "Lesson 1: Foundations of Worship\nLesson 2: Biblical Foundations\nLesson 3: Worship in Spirit and Truth\nLesson 4: Elements of Worship\nLesson 5: Corporate Worship\nLesson 6: Worship and Prayer\nLesson 7: Worship Through Music\nLesson 8: Worship and Sacraments\nLesson 9: Worship and Discipleship\nLesson 10: Worship in the Early Church\nLesson 11: Historical Development\nLesson 12: Contemporary Worship\nLesson 13: Worship Leadership\nLesson 14: Special Occasions\nLesson 15: Worship and Justice\nLesson 16: Worship and Culture\nLesson 17: Personal Worship\nLesson 18: Future of Worship",
+        sessionsCount: 18,
+        commitmentHours: 54,
+      },
+    ]);
+
     // Conference Ministerial Candidates Courses
     const conferenceCourses = await db.insert(courses).values([
       {
