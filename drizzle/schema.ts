@@ -79,6 +79,9 @@ export const applications = mysqlTable("applications", {
   leadPastorName: varchar("leadPastorName", { length: 255 }).notNull(),
   recommendationLetterUrl: varchar("recommendationLetterUrl", { length: 512 }),
   essay: text("essay"),
+  interestExplanation: text("interestExplanation"), // Applicant's explanation of interest in the training program
+  ministryPursuit: text("ministryPursuit"), // What ministry are you pursuing or currently in the FMC?
+  leadPastorOrElder: varchar("leadPastorOrElder", { length: 255 }), // Who is your Lead Pastor/Elder?
   status: mysqlEnum("status", ["pending", "approved", "rejected"]).default("pending"),
   approvedBy: int("approvedBy"), // Foreign key to users (admin who approved)
   approvedAt: timestamp("approvedAt"), // When the application was approved
@@ -89,6 +92,12 @@ export const applications = mysqlTable("applications", {
 
 export type Application = typeof applications.$inferSelect;
 export type InsertApplication = typeof applications.$inferInsert;
+
+// Add ministry fields to Application type
+export type ApplicationWithMinistry = Application & {
+  ministryPursuit?: string;
+  leadPastorOrElder?: string;
+};
 
 // Admin approvers for Center of Studies applications
 export const adminApprovers = mysqlTable("admin_approvers", {

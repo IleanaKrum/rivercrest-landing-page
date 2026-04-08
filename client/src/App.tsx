@@ -18,6 +18,7 @@ import EmailNotificationShowcase from "./pages/EmailNotificationShowcase";
 import IndependentStudyModules from "./pages/IndependentStudyModules";
 import ModuleDetail from "./pages/ModuleDetail";
 import AdminPrayerRequests from "./pages/AdminPrayerRequests";
+import AvailableCourses from "./pages/AvailableCourses";
 
 function Router() {
   // make sure to consider if you need authentication for certain routes
@@ -26,6 +27,7 @@ function Router() {
       <Route path={"/"} component={Home} />
       <Route path={"/giving"} component={Giving} />
       <Route path={"/center-of-studies"} component={CenterOfStudies} />
+      <Route path={"/available-courses"} component={AvailableCourses} />
       <Route path={"/course-registration/:courseId?"} component={CourseRegistration} />
       <Route path={"/resources"} component={Resources} />
       <Route path={"/email-notifications"} component={EmailNotificationShowcase} />

@@ -21,10 +21,17 @@ export default function CenterOfStudies() {
     churchName: "",
     leadPastorName: "",
     essay: "",
+    interestExplanation: "",
+    ministryPursuit: "",
+    leadPastorOrElder: "",
   });
   const [submitted, setSubmitted] = useState(false);
 
   const { data: tracks } = trpc.centerOfStudies.getTrainingTracks.useQuery();
+  const { data: allCourses } = trpc.centerOfStudies.getCoursesByTrack.useQuery(
+    { trackId: expandedTrack || 0 },
+    { enabled: expandedTrack !== null }
+  );
   const submitApp = trpc.centerOfStudies.submitApplication.useMutation();
   
   // Get all track access statuses in a single query - ONLY if authenticated
@@ -71,6 +78,9 @@ export default function CenterOfStudies() {
         churchName: formData.churchName,
         leadPastorName: formData.leadPastorName,
         essay: formData.essay,
+        interestExplanation: formData.interestExplanation,
+        ministryPursuit: formData.ministryPursuit,
+        leadPastorOrElder: formData.leadPastorOrElder,
       });
       setSubmitted(true);
       setTimeout(() => {
@@ -83,6 +93,9 @@ export default function CenterOfStudies() {
           churchName: "",
           leadPastorName: "",
           essay: "",
+          interestExplanation: "",
+          ministryPursuit: "",
+          leadPastorOrElder: "",
         });
         setSelectedTrack(null);
         setSubmitted(false);
@@ -306,6 +319,24 @@ export default function CenterOfStudies() {
                     {track.description ||
                       "Comprehensive training for ministry leadership and pastoral formation."}
                   </p>
+                  
+                  {/* Show courses when track is expanded */}
+                  {expandedTrack === track.id && allCourses && allCourses.length > 0 && (
+                    <div className="mb-6 p-4 bg-background rounded-lg border border-border">
+                      <h4 className="font-semibold text-primary mb-3">Courses in this track:</h4>
+                      <ul className="space-y-2">
+                        {allCourses.map((course: any) => (
+                          <li key={course.id} className="text-sm text-foreground/80">
+                            <div className="font-medium text-foreground">{course.title}</div>
+                            <div className="text-xs text-foreground/60 mt-1">
+                              {course.sessionsCount} sessions • {course.commitmentHours} hours
+                            </div>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  )}
+                  
                   {renderTrackButton(track)}
                 </Card>
               );
@@ -466,6 +497,62 @@ export default function CenterOfStudies() {
                     rows={5}
                     className="w-full px-4 py-3 rounded-lg border border-border bg-background text-foreground placeholder-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-transparent transition-all resize-none"
                     placeholder="Share your motivation and goals for this training program..."
+                  />
+                </div>
+
+                <div>
+                  <label
+                    htmlFor="interestExplanation"
+                    className="block text-sm font-semibold text-foreground mb-2"
+                  >
+                    Tell us about your interest in this training track
+                  </label>
+                  <textarea
+                    id="interestExplanation"
+                    name="interestExplanation"
+                    value={formData.interestExplanation}
+                    onChange={handleInputChange}
+                    rows={4}
+                    className="w-full px-4 py-3 rounded-lg border border-border bg-background text-foreground placeholder-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-transparent transition-all resize-none"
+                    placeholder="Describe what specifically interests you about this training program and how it aligns with your ministry calling..."
+                  />
+                </div>
+
+                {/* Ministry Pursuit Field */}
+                <div>
+                  <label
+                    htmlFor="ministryPursuit"
+                    className="block text-sm font-semibold text-foreground mb-2"
+                  >
+                    What ministry are you going to be pursuing or are you currently in the Free Methodist Church? *
+                  </label>
+                  <textarea
+                    id="ministryPursuit"
+                    name="ministryPursuit"
+                    value={formData.ministryPursuit}
+                    onChange={handleInputChange}
+                    rows={3}
+                    className="w-full px-4 py-3 rounded-lg border border-border bg-background text-foreground placeholder-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-transparent transition-all resize-none"
+                    placeholder="Describe your current or intended ministry role in the Free Methodist Church..."
+                  />
+                </div>
+
+                {/* Lead Pastor/Elder Field */}
+                <div>
+                  <label
+                    htmlFor="leadPastorOrElder"
+                    className="block text-sm font-semibold text-foreground mb-2"
+                  >
+                    Who is your Lead Pastor/Elder? *
+                  </label>
+                  <input
+                    type="text"
+                    id="leadPastorOrElder"
+                    name="leadPastorOrElder"
+                    value={formData.leadPastorOrElder}
+                    onChange={handleInputChange}
+                    className="w-full px-4 py-3 rounded-lg border border-border bg-background text-foreground placeholder-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-transparent transition-all"
+                    placeholder="Name of your Lead Pastor or Elder"
                   />
                 </div>
 

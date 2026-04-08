@@ -953,6 +953,14 @@
 - [x] Opens in new tab with proper styling and hover effects
 - [x] Verified link appears in footer alongside CRCFMC partnership link
 
+## In Progress - Additional Application Questions
+- [ ] Add "What ministry are you pursuing/currently in FMC?" field
+- [ ] Add "Who is your Lead Pastor/Elder?" field
+- [ ] Update database schema with new fields
+- [ ] Update application form UI
+- [ ] Update tRPC procedures
+- [ ] Test new fields
+
 ## In Progress - Railway Deployment
 - [ ] Prepare seed data with forum sample data
   - [ ] Add sample forum threads to seed.ts

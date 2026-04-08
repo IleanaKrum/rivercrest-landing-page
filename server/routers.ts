@@ -41,6 +41,9 @@ export const appRouter = router({
         leadPastorName: z.string(),
         recommendationLetterUrl: z.string().optional(),
         essay: z.string(),
+        interestExplanation: z.string().optional(),
+        ministryPursuit: z.string().optional(),
+        leadPastorOrElder: z.string().optional(),
       }))
       .mutation(async ({ input, ctx }) => {
         return db.createApplication({
@@ -53,6 +56,9 @@ export const appRouter = router({
           leadPastorName: input.leadPastorName,
           recommendationLetterUrl: input.recommendationLetterUrl,
           essay: input.essay,
+          interestExplanation: input.interestExplanation,
+          ministryPursuit: input.ministryPursuit,
+          leadPastorOrElder: input.leadPastorOrElder,
           userId: ctx.user?.id,
           status: "pending",
         });

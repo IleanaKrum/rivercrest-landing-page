@@ -134,6 +134,20 @@
       "when": 1775526379996,
       "tag": "0018_green_bromley",
       "breakpoints": true
+    },
+    {
+      "idx": 19,
+      "version": "5",
+      "when": 1775669572017,
+      "tag": "0019_aromatic_guardian",
+      "breakpoints": true
+    },
+    {
+      "idx": 20,
+      "version": "5",
+      "when": 1775670355023,
+      "tag": "0020_chief_winter_soldier",
+      "breakpoints": true
     }
   ]
 }
