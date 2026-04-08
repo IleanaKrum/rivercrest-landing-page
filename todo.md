@@ -947,6 +947,12 @@
 - [x] Ready for Railway deployment
 
 
+## Completed - FMC USA Link Addition
+- [x] Added https://fmcusa.org/webelieve link to landing page footer
+- [x] Link displays as "Free Methodist Church USA - We Believe"
+- [x] Opens in new tab with proper styling and hover effects
+- [x] Verified link appears in footer alongside CRCFMC partnership link
+
 ## In Progress - Railway Deployment
 - [ ] Prepare seed data with forum sample data
   - [ ] Add sample forum threads to seed.ts

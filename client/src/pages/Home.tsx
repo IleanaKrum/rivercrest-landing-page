@@ -650,6 +650,16 @@ export default function Home() {
                 Free Methodist Church Central Region Conference
               </a>
             </p>
+            <p className="mt-4">
+              <a
+                href="https://fmcusa.org/webelieve"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-primary-foreground hover:underline transition-colors"
+              >
+                Free Methodist Church USA - We Believe
+              </a>
+            </p>
           </div>
         </div>
       </footer>
