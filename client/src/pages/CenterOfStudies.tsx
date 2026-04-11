@@ -8,7 +8,10 @@ import { useLocation } from "wouter";
 import { getLoginUrl } from "@/const";
 
 export default function CenterOfStudies() {
-  const { user, isAuthenticated, loading } = useAuth();
+  const { user, isAuthenticated: authIsAuthenticated, loading, error: authError } = useAuth();
+  // Treat any auth error as unauthenticated so the public catalog remains
+  // accessible even when no session cookie is present.
+  const isAuthenticated = authError ? false : authIsAuthenticated;
   const [location, setLocation] = useLocation();
   const [showApplicationForm, setShowApplicationForm] = useState(false);
   const [selectedTrack, setSelectedTrack] = useState<number | null>(null);
