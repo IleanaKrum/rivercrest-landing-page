@@ -97,6 +97,13 @@ export async function getTrainingTracks() {
   return db.select().from(trainingTracks);
 }
 
+export async function getTrainingTrackById(trackId: number) {
+  const db = await getDb();
+  if (!db) return undefined;
+  const result = await db.select().from(trainingTracks).where(eq(trainingTracks.id, trackId)).limit(1);
+  return result.length > 0 ? result[0] : undefined;
+}
+
 export async function getCoursesByTrack(trackId: number) {
   const db = await getDb();
   if (!db) return [];
