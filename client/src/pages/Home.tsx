@@ -30,7 +30,7 @@ export default function Home() {
   const [submitted, setSubmitted] = useState(false);
 
   const handleApplyCenterOfStudies = () => {
-    window.location.href = "https://studies.rivercrestfmc.org/center-of-studies";
+    window.location.href = "/center-of-studies";
   };
 
   const handleInputChange = (
@@ -80,10 +80,8 @@ export default function Home() {
               {t('nav.giving')}
             </a>
             <a
-              href="https://studies.rivercrestfmc.org/center-of-studies"
+              href="/center-of-studies"
               className="text-sm text-foreground hover:text-primary transition-colors"
-              target="_blank"
-              rel="noopener noreferrer"
             >
               {t('nav.centerOfStudies')}
             </a>
@@ -151,9 +149,7 @@ export default function Home() {
                   The narrative of Scripture is often mistaken for a localized tribal history, but from the first pages of Genesis to the closing visions of Revelation, the scope has always been global. Today, the "God of the Nations" is not a title of distant sovereignty, but a direct fulfillment of an ancient legal and spiritual contract.
                 </p>
                 <a
-                  href="https://studies.rivercrestfmc.org/center-of-studies"
-                  target="_blank"
-                  rel="noopener noreferrer"
+                  href="/center-of-studies"
                 >
                   <Button className="bg-primary hover:bg-primary/90 text-white">
                     Learn More
