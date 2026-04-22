@@ -8,6 +8,7 @@ import { sendCourseRegistrationEmail, sendAdminRegistrationNotification, sendCer
 import { ENV } from "./_core/env";
 import { generateCertificatePDF, generateCertificateFilename } from "./_core/certificate";
 import { TRPCError } from "@trpc/server";
+import { trainingTracks, courses, courseSessions } from "../drizzle/schema";
 
 export const appRouter = router({
     // if you need to use socket.io, read and register route in server/_core/index.ts, all api should start with '/api/' so that the gateway can route correctly
@@ -310,6 +311,322 @@ export const appRouter = router({
     getAllCoursesWithDetails: protectedProcedure.query(async ({ ctx }) => {
       if (ctx.user.role !== 'admin') throw new Error('Unauthorized');
       return db.getAllCourses();
+    }),
+
+    seedCenterOfStudies: protectedProcedure.mutation(async ({ ctx }) => {
+      if (ctx.user.role !== 'admin') {
+        throw new TRPCError({ code: 'FORBIDDEN', message: 'Only admins can seed the database' });
+      }
+
+      const drizzleDb = await db.getDb();
+      if (!drizzleDb) {
+        throw new TRPCError({ code: 'INTERNAL_SERVER_ERROR', message: 'Database not available' });
+      }
+
+      console.log('[Seed] Starting Center of Studies population...');
+
+      // Clear existing data
+      console.log('[Seed] Clearing existing data...');
+      await drizzleDb.delete(courseSessions);
+      await drizzleDb.delete(courses);
+      await drizzleDb.delete(trainingTracks);
+
+      // Insert training tracks
+      console.log('[Seed] Inserting training tracks...');
+      await drizzleDb.insert(trainingTracks).values([
+        {
+          name: 'Deacon Formation',
+          description:
+            'Comprehensive training program for candidates preparing for deacon ordination in the Free Methodist Church. This track focuses on spiritual formation, biblical understanding, and pastoral care skills.',
+        },
+        {
+          name: 'Evangelist Training',
+          description:
+            'Specialized training for evangelists called to proclaim the gospel and lead others to faith in Christ. Emphasizes evangelism strategies, discipleship, and church planting principles.',
+        },
+        {
+          name: 'Local Church Candidates',
+          description:
+            'Training pathway for local church leaders and candidates preparing for ministry within their congregations. Covers pastoral leadership, counseling, and congregational care.',
+        },
+        {
+          name: 'Conference Ministerial Candidates',
+          description:
+            'Advanced training for candidates preparing for conference-level ministry and ordination. Includes advanced theology, leadership development, and denominational polity.',
+        },
+      ]);
+
+      const tracks = await drizzleDb.select().from(trainingTracks);
+      console.log(`[Seed] Created ${tracks.length} training tracks`);
+
+      const deaconTrack = tracks[0];
+      const evangelistTrack = tracks[1];
+      const localChurchTrack = tracks[2];
+      const conferenceTrack = tracks[3];
+
+      // Deacon Formation Courses
+      await drizzleDb.insert(courses).values([
+        {
+          trackId: deaconTrack.id,
+          title: 'Biblical Foundations for Deacons',
+          description:
+            'Explore the scriptural basis for the diaconate, studying Acts 6, 1 Timothy 3, and Titus 1. Understand the spiritual qualifications and responsibilities of deacons in the New Testament church.',
+          syllabus:
+            'Module 1: The Role of Deacons in Acts\nModule 2: Qualifications from 1 Timothy 3\nModule 3: Servant Leadership in Practice\nModule 4: Deacons in the Early Church',
+          sessionsCount: 12,
+          commitmentHours: 24,
+        },
+        {
+          trackId: deaconTrack.id,
+          title: 'Spiritual Formation and Character',
+          description:
+            'Develop spiritual maturity and Christian character essential for diaconal ministry. Focus on prayer, Bible study, holiness, and personal discipleship.',
+          syllabus:
+            'Module 1: Prayer and Communion with God\nModule 2: Scripture Study Methods\nModule 3: Living a Holy Life\nModule 4: Personal Discipleship Journey',
+          sessionsCount: 10,
+          commitmentHours: 20,
+        },
+        {
+          trackId: deaconTrack.id,
+          title: 'Pastoral Care and Counseling Basics',
+          description:
+            'Learn fundamental skills for providing pastoral care, visiting the sick, and offering basic spiritual counseling to church members.',
+          syllabus:
+            'Module 1: Listening and Empathy\nModule 2: Visiting the Sick and Homebound\nModule 3: Grief and Crisis Support\nModule 4: Boundaries in Pastoral Care',
+          sessionsCount: 10,
+          commitmentHours: 20,
+        },
+      ]);
+
+      // Evangelist Training Courses
+      await drizzleDb.insert(courses).values([
+        {
+          trackId: evangelistTrack.id,
+          title: 'Evangelism Theology and Methods',
+          description:
+            'Understand the theological foundation for evangelism and learn proven methods for sharing the gospel effectively across cultures.',
+          syllabus:
+            'Module 1: The Great Commission\nModule 2: Gospel Presentation Methods\nModule 3: Cultural Sensitivity in Evangelism\nModule 4: Follow-up and Discipleship',
+          sessionsCount: 12,
+          commitmentHours: 24,
+        },
+        {
+          trackId: evangelistTrack.id,
+          title: 'Church Planting and Growth',
+          description:
+            'Develop skills for planting new churches and helping existing churches grow spiritually and numerically.',
+          syllabus:
+            'Module 1: Church Planting Principles\nModule 2: Leadership Development\nModule 3: Community Engagement\nModule 4: Sustainability and Growth',
+          sessionsCount: 12,
+          commitmentHours: 24,
+        },
+        {
+          trackId: evangelistTrack.id,
+          title: 'Cross-Cultural Ministry',
+          description:
+            'Prepare for effective ministry across different cultural contexts, understanding worldviews and communication styles.',
+          syllabus:
+            'Module 1: Cultural Anthropology Basics\nModule 2: Communication Across Cultures\nModule 3: Contextualization of the Gospel\nModule 4: Building Multicultural Teams',
+          sessionsCount: 10,
+          commitmentHours: 20,
+        },
+      ]);
+
+      // Local Church Candidates Courses
+      await drizzleDb.insert(courses).values([
+        {
+          trackId: localChurchTrack.id,
+          title: 'Local Church Leadership',
+          description:
+            'Equip local church leaders with skills for effective congregational leadership, vision casting, and team building.',
+          syllabus:
+            'Module 1: Leadership Foundations\nModule 2: Vision and Mission Development\nModule 3: Team Building and Delegation\nModule 4: Conflict Resolution',
+          sessionsCount: 10,
+          commitmentHours: 20,
+        },
+        {
+          trackId: localChurchTrack.id,
+          title: 'Worship and Liturgy',
+          description:
+            'Understand worship theology and learn to lead meaningful worship experiences that draw congregations closer to God.',
+          syllabus:
+            'Module 1: Theology of Worship\nModule 2: Liturgical Elements\nModule 3: Music and Worship Leading\nModule 4: Creating Meaningful Worship Experiences',
+          sessionsCount: 8,
+          commitmentHours: 16,
+        },
+        {
+          trackId: localChurchTrack.id,
+          title: 'Discipleship and Small Groups',
+          description:
+            'Develop systems for discipling believers and facilitating small groups that foster spiritual growth and community.',
+          syllabus:
+            'Module 1: Discipleship Models\nModule 2: Small Group Leadership\nModule 3: Curriculum and Resources\nModule 4: Measuring Spiritual Growth',
+          sessionsCount: 10,
+          commitmentHours: 20,
+        },
+      ]);
+
+      // Introduction to Christian Doctrine — all tracks
+      await drizzleDb.insert(courses).values([
+        {
+          trackId: deaconTrack.id,
+          title: 'Introduction to Christian Doctrine',
+          description:
+            'Comprehensive introduction to core Christian doctrines including God, Christ, the Holy Spirit, the Church, salvation, and eschatology. Bilingual content in English and Swahili for accessibility to diverse learners.',
+          syllabus:
+            'Lesson 1: God - Creator and Sustainer\nLesson 2: Christ - The Son of God\nLesson 3: The Holy Spirit - God\'s Presence\nLesson 4: The Church - God\'s People\nLesson 5: Humanity - Created in God\'s Image\nLesson 6: Salvation - God\'s Redemptive Work\nLesson 7: The Word of God - Scripture\nLesson 8: Eschatology - God\'s Future Plan',
+          sessionsCount: 8,
+          commitmentHours: 24,
+        },
+        {
+          trackId: evangelistTrack.id,
+          title: 'Introduction to Christian Doctrine',
+          description:
+            'Comprehensive introduction to core Christian doctrines including God, Christ, the Holy Spirit, the Church, salvation, and eschatology. Bilingual content in English and Swahili for accessibility to diverse learners.',
+          syllabus:
+            'Lesson 1: God - Creator and Sustainer\nLesson 2: Christ - The Son of God\nLesson 3: The Holy Spirit - God\'s Presence\nLesson 4: The Church - God\'s People\nLesson 5: Humanity - Created in God\'s Image\nLesson 6: Salvation - God\'s Redemptive Work\nLesson 7: The Word of God - Scripture\nLesson 8: Eschatology - God\'s Future Plan',
+          sessionsCount: 8,
+          commitmentHours: 24,
+        },
+        {
+          trackId: localChurchTrack.id,
+          title: 'Introduction to Christian Doctrine',
+          description:
+            'Comprehensive introduction to core Christian doctrines including God, Christ, the Holy Spirit, the Church, salvation, and eschatology. Bilingual content in English and Swahili for accessibility to diverse learners.',
+          syllabus:
+            'Lesson 1: God - Creator and Sustainer\nLesson 2: Christ - The Son of God\nLesson 3: The Holy Spirit - God\'s Presence\nLesson 4: The Church - God\'s People\nLesson 5: Humanity - Created in God\'s Image\nLesson 6: Salvation - God\'s Redemptive Work\nLesson 7: The Word of God - Scripture\nLesson 8: Eschatology - God\'s Future Plan',
+          sessionsCount: 8,
+          commitmentHours: 24,
+        },
+        {
+          trackId: conferenceTrack.id,
+          title: 'Introduction to Christian Doctrine',
+          description:
+            'Comprehensive introduction to core Christian doctrines including God, Christ, the Holy Spirit, the Church, salvation, and eschatology. Bilingual content in English and Swahili for accessibility to diverse learners.',
+          syllabus:
+            'Lesson 1: God - Creator and Sustainer\nLesson 2: Christ - The Son of God\nLesson 3: The Holy Spirit - God\'s Presence\nLesson 4: The Church - God\'s People\nLesson 5: Humanity - Created in God\'s Image\nLesson 6: Salvation - God\'s Redemptive Work\nLesson 7: The Word of God - Scripture\nLesson 8: Eschatology - God\'s Future Plan',
+          sessionsCount: 8,
+          commitmentHours: 24,
+        },
+      ]);
+
+      // Theology of Worship — all tracks
+      await drizzleDb.insert(courses).values([
+        {
+          trackId: deaconTrack.id,
+          title: 'Theology of Worship',
+          description:
+            'In-depth exploration of worship theology and practice. Covers biblical foundations, historical development, contemporary worship movements, worship leadership, and practical applications. Bilingual content in English and Swahili.',
+          syllabus:
+            'Lesson 1: Foundations of Worship\nLesson 2: Biblical Foundations\nLesson 3: Worship in Spirit and Truth\nLesson 4: Elements of Worship\nLesson 5: Corporate Worship\nLesson 6: Worship and Prayer\nLesson 7: Worship Through Music\nLesson 8: Worship and Sacraments\nLesson 9: Worship and Discipleship\nLesson 10: Worship in the Early Church\nLesson 11: Historical Development\nLesson 12: Contemporary Worship\nLesson 13: Worship Leadership\nLesson 14: Special Occasions\nLesson 15: Worship and Justice\nLesson 16: Worship and Culture\nLesson 17: Personal Worship\nLesson 18: Future of Worship',
+          sessionsCount: 18,
+          commitmentHours: 54,
+        },
+        {
+          trackId: evangelistTrack.id,
+          title: 'Theology of Worship',
+          description:
+            'In-depth exploration of worship theology and practice. Covers biblical foundations, historical development, contemporary worship movements, worship leadership, and practical applications. Bilingual content in English and Swahili.',
+          syllabus:
+            'Lesson 1: Foundations of Worship\nLesson 2: Biblical Foundations\nLesson 3: Worship in Spirit and Truth\nLesson 4: Elements of Worship\nLesson 5: Corporate Worship\nLesson 6: Worship and Prayer\nLesson 7: Worship Through Music\nLesson 8: Worship and Sacraments\nLesson 9: Worship and Discipleship\nLesson 10: Worship in the Early Church\nLesson 11: Historical Development\nLesson 12: Contemporary Worship\nLesson 13: Worship Leadership\nLesson 14: Special Occasions\nLesson 15: Worship and Justice\nLesson 16: Worship and Culture\nLesson 17: Personal Worship\nLesson 18: Future of Worship',
+          sessionsCount: 18,
+          commitmentHours: 54,
+        },
+        {
+          trackId: localChurchTrack.id,
+          title: 'Theology of Worship',
+          description:
+            'In-depth exploration of worship theology and practice. Covers biblical foundations, historical development, contemporary worship movements, worship leadership, and practical applications. Bilingual content in English and Swahili.',
+          syllabus:
+            'Lesson 1: Foundations of Worship\nLesson 2: Biblical Foundations\nLesson 3: Worship in Spirit and Truth\nLesson 4: Elements of Worship\nLesson 5: Corporate Worship\nLesson 6: Worship and Prayer\nLesson 7: Worship Through Music\nLesson 8: Worship and Sacraments\nLesson 9: Worship and Discipleship\nLesson 10: Worship in the Early Church\nLesson 11: Historical Development\nLesson 12: Contemporary Worship\nLesson 13: Worship Leadership\nLesson 14: Special Occasions\nLesson 15: Worship and Justice\nLesson 16: Worship and Culture\nLesson 17: Personal Worship\nLesson 18: Future of Worship',
+          sessionsCount: 18,
+          commitmentHours: 54,
+        },
+        {
+          trackId: conferenceTrack.id,
+          title: 'Theology of Worship',
+          description:
+            'In-depth exploration of worship theology and practice. Covers biblical foundations, historical development, contemporary worship movements, worship leadership, and practical applications. Bilingual content in English and Swahili.',
+          syllabus:
+            'Lesson 1: Foundations of Worship\nLesson 2: Biblical Foundations\nLesson 3: Worship in Spirit and Truth\nLesson 4: Elements of Worship\nLesson 5: Corporate Worship\nLesson 6: Worship and Prayer\nLesson 7: Worship Through Music\nLesson 8: Worship and Sacraments\nLesson 9: Worship and Discipleship\nLesson 10: Worship in the Early Church\nLesson 11: Historical Development\nLesson 12: Contemporary Worship\nLesson 13: Worship Leadership\nLesson 14: Special Occasions\nLesson 15: Worship and Justice\nLesson 16: Worship and Culture\nLesson 17: Personal Worship\nLesson 18: Future of Worship',
+          sessionsCount: 18,
+          commitmentHours: 54,
+        },
+      ]);
+
+      // Conference Ministerial Candidates Courses
+      await drizzleDb.insert(courses).values([
+        {
+          trackId: conferenceTrack.id,
+          title: 'Advanced Theology and Doctrine',
+          description:
+            'Deep study of Christian theology, Free Methodist doctrine, and contemporary theological issues.',
+          syllabus:
+            'Module 1: Systematic Theology\nModule 2: Free Methodist Heritage and Doctrine\nModule 3: Contemporary Theological Issues\nModule 4: Theological Research and Writing',
+          sessionsCount: 16,
+          commitmentHours: 48,
+        },
+        {
+          trackId: conferenceTrack.id,
+          title: 'Denominational Polity and History',
+          description:
+            'Comprehensive study of Free Methodist Church polity, governance, and historical development.',
+          syllabus:
+            'Module 1: Free Methodist History\nModule 2: Church Governance Structure\nModule 3: Ordination Standards\nModule 4: Denominational Missions and Vision',
+          sessionsCount: 12,
+          commitmentHours: 24,
+        },
+        {
+          trackId: conferenceTrack.id,
+          title: 'Advanced Leadership and Ministry',
+          description:
+            'Develop advanced leadership competencies for conference-level ministry and organizational leadership.',
+          syllabus:
+            'Module 1: Strategic Leadership\nModule 2: Organizational Development\nModule 3: Financial Management\nModule 4: Vision Casting and Change Management',
+          sessionsCount: 14,
+          commitmentHours: 35,
+        },
+        {
+          trackId: conferenceTrack.id,
+          title: 'Pastoral Care and Counseling Advanced',
+          description:
+            'Advanced training in pastoral counseling, crisis intervention, and mental health awareness for conference ministers.',
+          syllabus:
+            'Module 1: Counseling Theories and Techniques\nModule 2: Crisis Intervention\nModule 3: Mental Health and Spirituality\nModule 4: Ethical Issues in Counseling',
+          sessionsCount: 12,
+          commitmentHours: 24,
+        },
+      ]);
+
+      // Insert course sessions
+      console.log('[Seed] Inserting course sessions...');
+      const allCourses = await drizzleDb.select().from(courses);
+
+      const sessionsToInsert = [];
+      for (const course of allCourses) {
+        for (let i = 1; i <= (course.sessionsCount ?? 0); i++) {
+          sessionsToInsert.push({
+            courseId: course.id,
+            sessionNumber: i,
+            title: `${course.title} - Session ${i}`,
+            description: `Session ${i} of ${course.title}. This session covers key concepts and practical applications relevant to the course material.`,
+            topics: JSON.stringify(['Core concepts', 'Practical application', 'Discussion and reflection']),
+            assignments: JSON.stringify(['Reading assignment', 'Reflection paper', 'Group discussion']),
+          });
+        }
+      }
+
+      await drizzleDb.insert(courseSessions).values(sessionsToInsert);
+      console.log(`[Seed] Created ${sessionsToInsert.length} course sessions`);
+
+      console.log('[Seed] ✅ Center of Studies population completed successfully!');
+
+      return {
+        success: true,
+        tracksCreated: tracks.length,
+        coursesCreated: allCourses.length,
+        sessionsCreated: sessionsToInsert.length,
+      };
     }),
   }),
 
