@@ -574,3 +574,342 @@ export async function sendCertificateEmail(
     return false;
   }
 }
+
+/**
+ * Send application confirmation email to applicant
+ */
+export async function sendApplicationConfirmationEmail(
+  candidateName: string,
+  candidateEmail: string,
+  trackName: string,
+  applicationId: string | number
+): Promise<boolean> {
+  const client = getResendClient();
+  if (!client) {
+    console.warn("[Email] Resend client not available, skipping application confirmation email");
+    return false;
+  }
+
+  try {
+    const submissionDate = new Date().toLocaleDateString("en-US", {
+      year: "numeric",
+      month: "long",
+      day: "numeric",
+    });
+
+    const htmlContent = `
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <style>
+      body {
+        font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+        line-height: 1.6;
+        color: #333;
+        background-color: #f9fafb;
+      }
+      .container {
+        max-width: 600px;
+        margin: 0 auto;
+        background-color: #ffffff;
+        padding: 40px;
+        border-radius: 8px;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+      }
+      .header {
+        border-bottom: 3px solid #1a4d5c;
+        padding-bottom: 20px;
+        margin-bottom: 30px;
+      }
+      .header h1 {
+        color: #1a4d5c;
+        margin: 0;
+        font-size: 28px;
+        font-family: 'Crimson Text', serif;
+      }
+      .header p {
+        color: #6b7280;
+        margin: 5px 0 0 0;
+        font-size: 14px;
+      }
+      .content {
+        margin-bottom: 30px;
+      }
+      .content p {
+        margin: 0 0 15px 0;
+      }
+      .details-box {
+        background-color: #f0f9fc;
+        border-left: 4px solid #1a4d5c;
+        padding: 20px;
+        margin: 20px 0;
+        border-radius: 4px;
+      }
+      .details-box h3 {
+        color: #1a4d5c;
+        margin: 0 0 10px 0;
+        font-size: 16px;
+      }
+      .details-box p {
+        margin: 8px 0;
+        font-size: 14px;
+      }
+      .steps-box {
+        background-color: #f8fafc;
+        border: 1px solid #e2e8f0;
+        padding: 20px;
+        margin: 20px 0;
+        border-radius: 4px;
+      }
+      .steps-box h3 {
+        color: #1a4d5c;
+        margin: 0 0 12px 0;
+        font-size: 16px;
+      }
+      .steps-box ol {
+        margin: 0;
+        padding-left: 20px;
+      }
+      .steps-box li {
+        margin: 8px 0;
+        font-size: 14px;
+        color: #4b5563;
+      }
+      .footer {
+        border-top: 1px solid #e5e7eb;
+        padding-top: 20px;
+        margin-top: 30px;
+        font-size: 12px;
+        color: #6b7280;
+        text-align: center;
+      }
+      .footer p {
+        margin: 5px 0;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="header">
+        <h1>Application Received!</h1>
+        <p>Rivercrest Free Methodist Church — Center of Studies</p>
+      </div>
+
+      <div class="content">
+        <p>Dear <strong>${candidateName}</strong>,</p>
+
+        <p>Thank you for submitting your application to the Rivercrest Center of Studies. We have received your application and it is currently under review by our leadership team.</p>
+
+        <div class="details-box">
+          <h3>Application Details</h3>
+          <p><strong>Application ID:</strong> #${applicationId}</p>
+          <p><strong>Training Track:</strong> ${trackName}</p>
+          <p><strong>Applicant Name:</strong> ${candidateName}</p>
+          <p><strong>Email:</strong> ${candidateEmail}</p>
+          <p><strong>Submission Date:</strong> ${submissionDate}</p>
+          <p><strong>Status:</strong> Pending Review</p>
+        </div>
+
+        <div class="steps-box">
+          <h3>What Happens Next?</h3>
+          <ol>
+            <li>Our leadership team will review your application and supporting materials.</li>
+            <li>You may be contacted for additional information or an interview.</li>
+            <li>You will receive an email notification once a decision has been made.</li>
+            <li>If approved, you will receive instructions to access the student portal and begin your studies.</li>
+          </ol>
+        </div>
+
+        <p>If you have any questions about your application or the review process, please don't hesitate to reach out to us at <strong>rev.ileanakrum@rivercrestfmc.org</strong>.</p>
+
+        <p>We appreciate your interest in deepening your faith and leadership through our training programs. May God bless your journey!</p>
+
+        <p>
+          In Christ,<br />
+          <strong>Rivercrest Free Methodist Church</strong><br />
+          Center of Studies
+        </p>
+      </div>
+
+      <div class="footer">
+        <p>This is an automated confirmation email. Please do not reply to this message.</p>
+        <p>&copy; ${new Date().getFullYear()} Rivercrest Free Methodist Church. All rights reserved.</p>
+        <p><a href="https://rivercrest.org" style="color: #1a4d5c; text-decoration: none;">Visit our website</a></p>
+      </div>
+    </div>
+  </body>
+</html>
+    `;
+
+    const response = await client.emails.send({
+      from: "Rivercrest FMC <onboarding@resend.dev>",
+      to: candidateEmail,
+      subject: `Application Received — ${trackName} | Rivercrest Center of Studies`,
+      html: htmlContent,
+    });
+
+    if (response.error) {
+      console.error("[Email] Failed to send application confirmation email:", JSON.stringify(response.error, null, 2));
+      return false;
+    }
+
+    console.log("[Email] Application confirmation sent to", candidateEmail);
+    return true;
+  } catch (error) {
+    console.error("[Email] Error sending application confirmation email:", error);
+    return false;
+  }
+}
+
+/**
+ * Send admin notification about a new Center of Studies application
+ */
+export async function sendApplicationAdminNotification(
+  candidateName: string,
+  candidateEmail: string,
+  trackName: string,
+  churchName: string,
+  applicationId: string | number,
+  adminEmail: string
+): Promise<boolean> {
+  const client = getResendClient();
+  if (!client) {
+    console.warn("[Email] Resend client not available, skipping application admin notification");
+    return false;
+  }
+
+  try {
+    const submissionDate = new Date().toLocaleString("en-US", {
+      year: "numeric",
+      month: "long",
+      day: "numeric",
+      hour: "2-digit",
+      minute: "2-digit",
+    });
+
+    const htmlContent = `
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <style>
+      body {
+        font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+        line-height: 1.6;
+        color: #333;
+      }
+      .container {
+        max-width: 600px;
+        margin: 0 auto;
+        background-color: #f9fafb;
+        padding: 20px;
+      }
+      .header {
+        background-color: #1a4d5c;
+        color: #ffffff;
+        padding: 24px;
+        border-radius: 8px;
+        margin-bottom: 20px;
+      }
+      .header h2 {
+        margin: 0 0 4px 0;
+        font-size: 20px;
+        font-family: 'Crimson Text', serif;
+      }
+      .header p {
+        margin: 0;
+        font-size: 13px;
+        opacity: 0.85;
+      }
+      .card {
+        background-color: #ffffff;
+        padding: 24px;
+        border-radius: 8px;
+        margin-bottom: 15px;
+        border: 1px solid #e5e7eb;
+      }
+      .card h3 {
+        margin: 0 0 16px 0;
+        color: #1a4d5c;
+        font-size: 15px;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+      }
+      .field {
+        margin: 10px 0;
+        font-size: 14px;
+        display: flex;
+        gap: 8px;
+      }
+      .field strong {
+        color: #1a4d5c;
+        min-width: 130px;
+        flex-shrink: 0;
+      }
+      .action-note {
+        background-color: #f0f9fc;
+        border-left: 4px solid #1a4d5c;
+        padding: 16px;
+        border-radius: 4px;
+        margin: 15px 0;
+        font-size: 14px;
+        color: #1a4d5c;
+      }
+      .footer-note {
+        font-size: 12px;
+        color: #6b7280;
+        text-align: center;
+        padding-top: 10px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="header">
+        <h2>New Training Track Application</h2>
+        <p>Center of Studies — Rivercrest Free Methodist Church</p>
+      </div>
+
+      <div class="card">
+        <h3>Applicant Information</h3>
+        <div class="field"><strong>Name:</strong> ${candidateName}</div>
+        <div class="field"><strong>Email:</strong> ${candidateEmail}</div>
+        <div class="field"><strong>Church:</strong> ${churchName}</div>
+        <div class="field"><strong>Training Track:</strong> ${trackName}</div>
+        <div class="field"><strong>Application ID:</strong> #${applicationId}</div>
+        <div class="field"><strong>Submitted:</strong> ${submissionDate}</div>
+        <div class="field"><strong>Status:</strong> Pending Review</div>
+      </div>
+
+      <div class="action-note">
+        <strong>Action Required:</strong> Please log in to the admin dashboard to review this application, view the applicant's essay and supporting materials, and approve or reject their request.
+      </div>
+
+      <div class="footer-note">
+        <p>This is an automated notification from the Rivercrest Center of Studies application system.</p>
+      </div>
+    </div>
+  </body>
+</html>
+    `;
+
+    const response = await client.emails.send({
+      from: "Rivercrest FMC <onboarding@resend.dev>",
+      to: adminEmail,
+      subject: `New Application: ${candidateName} — ${trackName}`,
+      html: htmlContent,
+    });
+
+    if (response.error) {
+      console.error("[Email] Failed to send application admin notification:", JSON.stringify(response.error, null, 2));
+      return false;
+    }
+
+    console.log("[Email] Application admin notification sent to", adminEmail);
+    return true;
+  } catch (error) {
+    console.error("[Email] Error sending application admin notification:", error);
+    return false;
+  }
+}

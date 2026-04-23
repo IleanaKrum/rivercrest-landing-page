@@ -4,7 +4,7 @@ import { systemRouter } from "./_core/systemRouter";
 import { publicProcedure, protectedProcedure, router } from "./_core/trpc";
 import { z } from "zod";
 import * as db from "./db";
-import { sendCourseRegistrationEmail, sendAdminRegistrationNotification, sendCertificateEmail } from "./_core/email";
+import { sendCourseRegistrationEmail, sendAdminRegistrationNotification, sendCertificateEmail, sendApplicationConfirmationEmail, sendApplicationAdminNotification } from "./_core/email";
 import { ENV } from "./_core/env";
 import { generateCertificatePDF, generateCertificateFilename } from "./_core/certificate";
 import { TRPCError } from "@trpc/server";
@@ -47,7 +47,7 @@ export const appRouter = router({
         leadPastorOrElder: z.string().optional(),
       }))
       .mutation(async ({ input, ctx }) => {
-        return db.createApplication({
+        const application = await db.createApplication({
           trackId: input.trackId,
           candidateName: input.candidateName,
           candidateEmail: input.candidateEmail,
@@ -63,6 +63,35 @@ export const appRouter = router({
           userId: ctx.user?.id,
           status: "pending",
         });
+
+        // Fetch track name for email context
+        const track = await db.getTrainingTrackById(input.trackId);
+        const trackName = track?.name ?? `Track #${input.trackId}`;
+        const applicationId = (application as any)?.insertId ?? "";
+
+        // Send confirmation email to applicant (non-blocking)
+        sendApplicationConfirmationEmail(
+          input.candidateName,
+          input.candidateEmail,
+          trackName,
+          applicationId
+        ).catch((err) =>
+          console.error("[submitApplication] Failed to send confirmation email:", err)
+        );
+
+        // Send admin notification (non-blocking)
+        sendApplicationAdminNotification(
+          input.candidateName,
+          input.candidateEmail,
+          trackName,
+          input.churchName,
+          applicationId,
+          "rev.ileanakrum@rivercrestfmc.org"
+        ).catch((err) =>
+          console.error("[submitApplication] Failed to send admin notification:", err)
+        );
+
+        return application;
       }),
     
     getMyApplications: protectedProcedure.query(({ ctx }) =>
